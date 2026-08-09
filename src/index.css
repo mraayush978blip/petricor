@@ -29,11 +29,9 @@
 
 @media (max-width: 768px) {
   /* Prevent horizontal scroll issues globally */
-  body, html {
+  #root {
     overflow-x: hidden;
     width: 100%;
-    margin: 0;
-    padding: 0;
   }
   
   /* Hero Section */
