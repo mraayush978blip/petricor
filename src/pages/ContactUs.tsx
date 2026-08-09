@@ -154,6 +154,7 @@ export default function ContactUs() {
                         <PhoneInput
                             international
                             defaultCountry="IN"
+                            limitMaxLength={true}
                             value={phone}
                             onChange={(value: any) => setPhone(value || '')}
                             required

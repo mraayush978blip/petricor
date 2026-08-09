@@ -174,6 +174,7 @@ export default function GeneralEnquiry() {
                 <PhoneInput
                   international
                   defaultCountry="IN"
+                  limitMaxLength={true}
                   value={formData.phone}
                   onChange={(value: any) => setFormData({ ...formData, phone: value || '' })}
                   required
