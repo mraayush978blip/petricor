@@ -185,12 +185,6 @@ export default function Header() {
 
                     {/* Right Side / Mobile Menu Button */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                        <button className="desktop-enquire" style={{ backgroundColor: '#7c5847', border: 'none', cursor: 'pointer', display: 'none', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', borderRadius: '50%', padding: '0', transition: 'background-color 0.2s' }}>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                        </button>
                         <Link to="/general-enquiry" className="desktop-enquire" style={{ backgroundColor: '#7c5847', color: 'white', padding: '10px 28px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '15px', display: 'none', transition: 'background-color 0.2s' }}>
                             Enquire Now
                         </Link>
