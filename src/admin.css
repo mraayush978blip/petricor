@@ -173,3 +173,11 @@
     font-size: 0.85rem;
   }
 }
+
+.admin-tabs-container::-webkit-scrollbar {
+  display: none;
+}
+.admin-tabs-container {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

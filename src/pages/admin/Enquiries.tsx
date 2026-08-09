@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
-import { Mail, Briefcase, Package, Search, Calendar, Filter } from 'lucide-react';
+import { Mail, Briefcase, Package, Search, Calendar, Filter, X } from 'lucide-react';
 
 interface Enquiry {
   id: string;
@@ -20,7 +20,7 @@ interface Enquiry {
   is_solved?: boolean;
 }
 
-const EnquiryRow = ({ enquiry, onUpdate }: { enquiry: Enquiry, onUpdate: () => void }) => {
+const EnquiryRow = ({ enquiry, onUpdate, onClick }: { enquiry: Enquiry, onUpdate: () => void, onClick: () => void }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [updating, setUpdating] = useState(false);
 
@@ -46,7 +46,8 @@ const EnquiryRow = ({ enquiry, onUpdate }: { enquiry: Enquiry, onUpdate: () => v
     ? messageText 
     : messageText.substring(0, 80) + '...';
 
-  const toggleSolved = async () => {
+  const toggleSolved = async (e: React.MouseEvent) => {
+    e.stopPropagation();
     setUpdating(true);
     const { error } = await supabase
       .from('enquiries')
@@ -62,7 +63,11 @@ const EnquiryRow = ({ enquiry, onUpdate }: { enquiry: Enquiry, onUpdate: () => v
   };
 
   return (
-    <tr style={{ opacity: enquiry.is_solved ? 0.7 : 1, backgroundColor: enquiry.is_solved ? '#fcfcfc' : 'white' }}>
+    <tr 
+      onClick={onClick}
+      style={{ opacity: enquiry.is_solved ? 0.7 : 1, backgroundColor: enquiry.is_solved ? '#fcfcfc' : 'white', cursor: 'pointer', transition: 'background-color 0.2s' }}
+      className="admin-table-row-hover"
+    >
       
       {/* Contact Column */}
       <td style={{ verticalAlign: 'top' }}>
@@ -71,8 +76,8 @@ const EnquiryRow = ({ enquiry, onUpdate }: { enquiry: Enquiry, onUpdate: () => v
           {enquiry.is_solved && <span style={{ marginLeft: '8px', fontSize: '10px', backgroundColor: '#e6ffed', color: '#38a169', padding: '2px 6px', borderRadius: '10px', verticalAlign: 'middle' }}>Solved</span>}
         </div>
         <div style={{ marginTop: '4px', fontSize: '13px' }}>
-          <a href={`mailto:${enquiry.email}`} style={{ color: '#7c5847', textDecoration: 'none', display: 'block', marginBottom: '2px' }}>{enquiry.email}</a>
-          {phone !== 'N/A' && <a href={`tel:${phone.replace(/\\s+/g, '')}`} style={{ color: '#666', textDecoration: 'none' }}>{phone}</a>}
+          <a href={`mailto:${enquiry.email}`} onClick={e => e.stopPropagation()} style={{ color: '#7c5847', textDecoration: 'none', display: 'block', marginBottom: '2px' }}>{enquiry.email}</a>
+          {phone !== 'N/A' && <a href={`tel:${phone.replace(/\s+/g, '')}`} onClick={e => e.stopPropagation()} style={{ color: '#666', textDecoration: 'none' }}>{phone}</a>}
         </div>
       </td>
 
@@ -126,7 +131,10 @@ const EnquiryRow = ({ enquiry, onUpdate }: { enquiry: Enquiry, onUpdate: () => v
               <div style={{ whiteSpace: 'pre-wrap', color: '#444', lineHeight: '1.5' }}>{displayText}</div>
               {isLongMessage && (
                 <button 
-                  onClick={() => setIsExpanded(!isExpanded)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsExpanded(!isExpanded);
+                  }}
                   style={{ background: 'none', border: 'none', color: '#7c5847', padding: 0, marginTop: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '12px' }}
                 >
                   {isExpanded ? 'Read less' : 'Read more'}
@@ -173,6 +181,7 @@ const EnquiryRow = ({ enquiry, onUpdate }: { enquiry: Enquiry, onUpdate: () => v
 const Enquiries = () => {
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedEnquiry, setSelectedEnquiry] = useState<Enquiry | null>(null);
   
   // Tabs
   const [activeTab, setActiveTab] = useState<'contact' | 'general' | 'product'>('general');
@@ -249,7 +258,7 @@ const Enquiries = () => {
       <h1 className="admin-page-title" style={{ marginBottom: '25px' }}>Enquiries Dashboard</h1>
       
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: '15px', marginBottom: '25px' }}>
+      <div className="admin-tabs-container" style={{ display: 'flex', gap: '15px', marginBottom: '25px', overflowX: 'auto', paddingBottom: '10px', WebkitOverflowScrolling: 'touch' }}>
         <button 
           onClick={() => setActiveTab('contact')}
           style={{ ...tabStyle, ...(activeTab === 'contact' ? activeTabStyle : {}) }}
@@ -339,12 +348,141 @@ const Enquiries = () => {
               </tr>
             ) : (
               filteredEnquiries.map((enquiry) => (
-                <EnquiryRow key={enquiry.id} enquiry={enquiry} onUpdate={fetchEnquiries} />
+                <EnquiryRow key={enquiry.id} enquiry={enquiry} onUpdate={fetchEnquiries} onClick={() => setSelectedEnquiry(enquiry)} />
               ))
             )}
           </tbody>
         </table>
       </div>
+      </div>
+
+      {/* Enquiry Detail Modal */}
+      {selectedEnquiry && (
+        <>
+          <div 
+            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1001, backdropFilter: 'blur(2px)' }}
+            onClick={() => setSelectedEnquiry(null)}
+          ></div>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', borderRadius: '12px', padding: '30px', width: '90%', maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto', zIndex: 1002, boxShadow: '0 10px 40px rgba(0,0,0,0.2)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
+              <div>
+                <h2 style={{ margin: '0 0 5px', color: '#333', fontSize: '20px' }}>{selectedEnquiry.name}</h2>
+                <div style={{ color: '#777', fontSize: '13px' }}>
+                  {new Date(selectedEnquiry.created_at).toLocaleString()} • <span style={{ textTransform: 'capitalize', fontWeight: '500', color: '#7c5847' }}>{selectedEnquiry.type} Enquiry</span>
+                </div>
+              </div>
+              <button onClick={() => setSelectedEnquiry(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#999' }}>
+                <X size={24} />
+              </button>
+            </div>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '25px' }}>
+              <div>
+                <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', fontWeight: '600', marginBottom: '4px' }}>Email</div>
+                <a href={`mailto:${selectedEnquiry.email}`} style={{ color: '#3182ce', textDecoration: 'none', fontSize: '14px' }}>{selectedEnquiry.email}</a>
+              </div>
+              {(() => {
+                let p = selectedEnquiry.phone;
+                if (!p && selectedEnquiry.message?.startsWith('Phone: ')) {
+                  p = selectedEnquiry.message.split('\n\n')[0].replace('Phone: ', '').trim();
+                }
+                return p ? (
+                  <div>
+                    <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', fontWeight: '600', marginBottom: '4px' }}>Phone</div>
+                    <a href={`tel:${p.replace(/\s+/g, '')}`} style={{ color: '#3182ce', textDecoration: 'none', fontSize: '14px' }}>{p}</a>
+                  </div>
+                ) : null;
+              })()}
+              {selectedEnquiry.company && (
+                <div>
+                  <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', fontWeight: '600', marginBottom: '4px' }}>Company</div>
+                  <div style={{ fontSize: '14px', color: '#444' }}>{selectedEnquiry.company}</div>
+                </div>
+              )}
+              {selectedEnquiry.country && (
+                <div>
+                  <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', fontWeight: '600', marginBottom: '4px' }}>Country</div>
+                  <div style={{ fontSize: '14px', color: '#444' }}>{selectedEnquiry.country}</div>
+                </div>
+              )}
+              {selectedEnquiry.role && (
+                <div>
+                  <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', fontWeight: '600', marginBottom: '4px' }}>Role</div>
+                  <div style={{ fontSize: '14px', color: '#444' }}>{selectedEnquiry.role}</div>
+                </div>
+              )}
+              {selectedEnquiry.product_name && (
+                <div>
+                  <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', fontWeight: '600', marginBottom: '4px' }}>Product</div>
+                  <div style={{ fontSize: '14px', color: '#7c5847', fontWeight: '500' }}>{selectedEnquiry.product_name}</div>
+                </div>
+              )}
+            </div>
+            
+            {selectedEnquiry.ingredients && selectedEnquiry.ingredients.length > 0 && (
+              <div style={{ marginBottom: '20px' }}>
+                <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', fontWeight: '600', marginBottom: '8px' }}>Requested Ingredients</div>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                  <thead>
+                    <tr style={{ backgroundColor: '#f9f9f9', borderBottom: '1px solid #eaeaea' }}>
+                      <th style={{ padding: '8px', textAlign: 'left', fontWeight: '500', color: '#666' }}>Herb</th>
+                      <th style={{ padding: '8px', textAlign: 'left', fontWeight: '500', color: '#666' }}>Form</th>
+                      <th style={{ padding: '8px', textAlign: 'left', fontWeight: '500', color: '#666' }}>Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {selectedEnquiry.ingredients.map((ing, i) => (
+                      <tr key={i} style={{ borderBottom: '1px solid #f0f0f0' }}>
+                        <td style={{ padding: '8px', color: '#333' }}>{ing.herb}</td>
+                        <td style={{ padding: '8px', color: '#666' }}>{ing.form || '-'}</td>
+                        <td style={{ padding: '8px', color: '#666' }}>{ing.qty || '-'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            
+            {(selectedEnquiry.end_application?.length > 0 || selectedEnquiry.documents_needed?.length > 0) && (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '25px', backgroundColor: '#fcfcfc', padding: '15px', borderRadius: '8px', border: '1px solid #eaeaea' }}>
+                {selectedEnquiry.end_application?.length > 0 && (
+                  <div>
+                    <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', fontWeight: '600', marginBottom: '6px' }}>Applications</div>
+                    <div style={{ fontSize: '13px', color: '#555', lineHeight: '1.4' }}>{selectedEnquiry.end_application.join(', ')}</div>
+                  </div>
+                )}
+                {selectedEnquiry.documents_needed?.length > 0 && (
+                  <div>
+                    <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', fontWeight: '600', marginBottom: '6px' }}>Documents</div>
+                    <div style={{ fontSize: '13px', color: '#555', lineHeight: '1.4' }}>{selectedEnquiry.documents_needed.join(', ')}</div>
+                  </div>
+                )}
+              </div>
+            )}
+            
+            {(() => {
+              let msg = selectedEnquiry.message || '';
+              if (msg.startsWith('Phone: ') && !selectedEnquiry.phone) {
+                const parts = msg.split('\n\n');
+                if (parts.length > 1) {
+                  msg = parts.slice(1).join('\n\n').trim();
+                } else {
+                  msg = '';
+                }
+              }
+              return msg ? (
+                <div>
+                  <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', fontWeight: '600', marginBottom: '8px' }}>Additional Message</div>
+                  <div style={{ backgroundColor: '#f9f9f9', padding: '15px', borderRadius: '8px', fontSize: '14px', color: '#444', lineHeight: '1.6', whiteSpace: 'pre-wrap', border: '1px solid #eaeaea' }}>
+                    {msg}
+                  </div>
+                </div>
+              ) : null;
+            })()}
+            
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -363,7 +501,9 @@ const tabStyle = {
   fontWeight: '600',
   cursor: 'pointer',
   transition: 'all 0.2s',
-  boxShadow: '0 2px 5px rgba(0,0,0,0.02)'
+  boxShadow: '0 2px 5px rgba(0,0,0,0.02)',
+  whiteSpace: 'nowrap',
+  flexShrink: 0
 };
 
 const activeTabStyle = {
