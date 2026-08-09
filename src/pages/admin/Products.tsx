@@ -95,7 +95,7 @@ const Products = () => {
                   </td>
                   <td style={{ textAlign: 'right' }}>
                     <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-                      <Link to={`/admin/products/edit/${product.id}`} className="admin-btn admin-btn-secondary" style={{ padding: '6px 12px' }}>
+                      <Link to={`/ad/products/edit/${product.id}`} className="admin-btn admin-btn-secondary" style={{ padding: '6px 12px' }}>
                         <Edit size={16} />
                         Edit
                       </Link>
