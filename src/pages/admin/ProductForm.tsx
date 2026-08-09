@@ -28,6 +28,7 @@ const ProductForm = () => {
   const [primaryImagePreview, setPrimaryImagePreview] = useState<string | null>(null);
   const [hoverImagePreview, setHoverImagePreview] = useState<string | null>(null);
   const [compressingImage, setCompressingImage] = useState<'primary' | 'hover' | null>(null);
+  const [dragActive, setDragActive] = useState<'primary' | 'hover' | null>(null);
 
   useEffect(() => {
     fetchCategories();
@@ -84,6 +85,27 @@ const ProductForm = () => {
       alert('Error compressing image. Please try another file.');
     } finally {
       setCompressingImage(null);
+    }
+  };
+
+  const handleDrag = (e: React.DragEvent, type: 'primary' | 'hover') => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(type);
+    } else if (e.type === "dragleave") {
+      setDragActive(null);
+    }
+  };
+
+  const handleDrop = async (e: React.DragEvent, type: 'primary' | 'hover') => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(null);
+    
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const syntheticEvent = { target: { files: e.dataTransfer.files } } as unknown as React.ChangeEvent<HTMLInputElement>;
+      await handleImageChange(syntheticEvent, type);
     }
   };
 
@@ -246,8 +268,22 @@ const ProductForm = () => {
           {/* Image Uploads */}
           <div className="admin-form-group" style={{ marginBottom: 0 }}>
             <label className="admin-form-label">Primary Image (Auto-compressed to &lt; 1MB)</label>
-            <div style={{ border: '2px dashed #ddd', borderRadius: '6px', padding: '30px', textAlign: 'center', backgroundColor: '#fcfcfc', position: 'relative' }}>
-              <div style={{ marginBottom: '15px' }}>
+            <div 
+              onDragEnter={(e) => handleDrag(e, 'primary')}
+              onDragOver={(e) => handleDrag(e, 'primary')}
+              onDragLeave={(e) => handleDrag(e, 'primary')}
+              onDrop={(e) => handleDrop(e, 'primary')}
+              style={{ 
+                border: dragActive === 'primary' ? '2px dashed #7c5847' : '2px dashed #ddd', 
+                backgroundColor: dragActive === 'primary' ? '#fdfaf8' : '#fcfcfc',
+                borderRadius: '6px', 
+                padding: '30px', 
+                textAlign: 'center', 
+                position: 'relative',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              <div style={{ marginBottom: '15px', pointerEvents: 'none' }}>
                 {primaryImagePreview ? (
                   <img src={primaryImagePreview} alt="Preview" style={{ maxHeight: '150px', objectFit: 'contain' }} />
                 ) : (
@@ -269,8 +305,22 @@ const ProductForm = () => {
 
           <div className="admin-form-group" style={{ marginBottom: 0 }}>
             <label className="admin-form-label">Hover Image (Auto-compressed to &lt; 1MB)</label>
-            <div style={{ border: '2px dashed #ddd', borderRadius: '6px', padding: '30px', textAlign: 'center', backgroundColor: '#fcfcfc', position: 'relative' }}>
-              <div style={{ marginBottom: '15px' }}>
+            <div 
+              onDragEnter={(e) => handleDrag(e, 'hover')}
+              onDragOver={(e) => handleDrag(e, 'hover')}
+              onDragLeave={(e) => handleDrag(e, 'hover')}
+              onDrop={(e) => handleDrop(e, 'hover')}
+              style={{ 
+                border: dragActive === 'hover' ? '2px dashed #7c5847' : '2px dashed #ddd', 
+                backgroundColor: dragActive === 'hover' ? '#fdfaf8' : '#fcfcfc',
+                borderRadius: '6px', 
+                padding: '30px', 
+                textAlign: 'center', 
+                position: 'relative',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              <div style={{ marginBottom: '15px', pointerEvents: 'none' }}>
                 {hoverImagePreview ? (
                   <img src={hoverImagePreview} alt="Preview" style={{ maxHeight: '150px', objectFit: 'contain' }} />
                 ) : (
