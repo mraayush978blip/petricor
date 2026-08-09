@@ -354,8 +354,6 @@ const Enquiries = () => {
           </tbody>
         </table>
       </div>
-      </div>
-
       {/* Enquiry Detail Modal */}
       {selectedEnquiry && (
         <>
