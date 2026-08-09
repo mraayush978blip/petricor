@@ -6,8 +6,18 @@ export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [showCategoriesMenu, setShowCategoriesMenu] = useState(false);
     const [categories, setCategories] = useState<{id: string, name: string}[]>([]);
+    const [isScrolled, setIsScrolled] = useState(false);
 
     const location = useLocation();
+
+    // Handle scroll transition
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 20);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     // Close mobile menu on route change
     useEffect(() => {
@@ -41,32 +51,51 @@ export default function Header() {
         color: '#4a4a4a',
         textDecoration: 'none',
         fontWeight: isActive(path) ? '600' as const : '500' as const,
-        fontSize: '14px',
+        fontSize: '15px',
         paddingBottom: '4px',
-        borderBottom: isActive(path) ? '2px solid #b3b3b3' : '2px solid transparent',
+        borderBottom: isActive(path) ? '2px solid #7c5847' : '2px solid transparent',
         transition: 'all 0.2s ease'
     });
+
+    const getMobileLinkStyle = (path: string) => {
+        const active = isActive(path);
+        return {
+            display: 'flex',
+            alignItems: 'center',
+            color: active ? '#7c5847' : '#4a4a4a',
+            textDecoration: 'none',
+            fontSize: '18px',
+            fontWeight: active ? '600' as const : '500' as const,
+            borderBottom: '1px solid #f0f0f0',
+            padding: '16px 20px',
+            backgroundColor: active ? '#fcf9f8' : 'transparent',
+            borderLeft: active ? '4px solid #7c5847' : '4px solid transparent',
+            transition: 'all 0.2s ease'
+        };
+    };
 
     return (
         <>
             <header style={{ 
-                padding: '10px 0',
-                backgroundColor: '#ececec',
-                position: 'sticky', // Fixed the header to top
+                padding: isScrolled ? '10px 0' : '20px 0',
+                backgroundColor: isScrolled ? 'rgba(236, 236, 236, 0.95)' : '#ececec',
+                backdropFilter: isScrolled ? 'blur(10px)' : 'none',
+                position: 'sticky',
                 top: 0,
                 zIndex: 1000,
-                borderBottom: '1px solid #e0e0e0',
-                boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
+                borderBottom: isScrolled ? '1px solid #ddd' : '1px solid #e0e0e0',
+                boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.06)' : 'none',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
             }}>
                 <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0' }}>
                     
-                    {/* Logo - Reduced size */}
-                    <Link to="/" style={{ display: 'block', width: '130px' }}>
+                    {/* Logo - Smooth scaling */}
+                    <Link to="/" style={{ display: 'block', width: isScrolled ? '120px' : '140px', transition: 'width 0.3s ease' }}>
                         <img src="/Logo-1-2.png" alt="Petricor" style={{ width: '100%', height: 'auto' }} />
                     </Link>
 
                     {/* Desktop Nav (Centered) */}
-                    <nav className="desktop-nav" style={{ display: 'none', gap: '35px', alignItems: 'center', margin: '0 auto' }}>
+                    <nav className="desktop-nav" style={{ display: 'none', gap: '40px', alignItems: 'center', margin: '0 auto' }}>
                         <Link to="/" style={getLinkStyle('/')}>Home</Link>
                         <Link to="/products" style={getLinkStyle('/products')}>Products</Link>
                         
@@ -76,8 +105,11 @@ export default function Header() {
                             onMouseEnter={() => setShowCategoriesMenu(true)}
                             onMouseLeave={() => setShowCategoriesMenu(false)}
                         >
-                            <Link to="/products" style={{ ...getLinkStyle('/products'), display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', border: 'none', background: 'none' }}>
-                                Category <span style={{ fontSize: '10px' }}>▼</span>
+                            <Link to="/products" style={{ ...getLinkStyle('/products'), display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', border: 'none', background: 'none' }}>
+                                Category 
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: showCategoriesMenu ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
                             </Link>
                             
                             {/* Dropdown Menu */}
@@ -88,12 +120,13 @@ export default function Header() {
                                     left: '50%',
                                     transform: 'translateX(-50%)',
                                     backgroundColor: '#fff',
-                                    boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+                                    boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
                                     borderRadius: '8px',
-                                    padding: '15px 0',
-                                    minWidth: '200px',
+                                    padding: '10px 0',
+                                    minWidth: '220px',
                                     zIndex: 1000,
-                                    marginTop: '15px'
+                                    marginTop: '20px',
+                                    border: '1px solid #eee'
                                 }}>
                                     {/* Triangle pointer */}
                                     <div style={{
@@ -114,14 +147,20 @@ export default function Header() {
                                             to={`/products?category=${encodeURIComponent(category.name)}`}
                                             style={{ 
                                                 display: 'block', 
-                                                padding: '8px 20px', 
-                                                color: '#333', 
+                                                padding: '10px 24px', 
+                                                color: '#4a4a4a', 
                                                 textDecoration: 'none',
                                                 fontSize: '14px',
-                                                transition: 'background-color 0.2s'
+                                                transition: 'all 0.2s ease'
                                             }}
-                                            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
-                                            onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                                            onMouseOver={(e) => {
+                                                e.currentTarget.style.backgroundColor = '#fdf9f7';
+                                                e.currentTarget.style.color = '#7c5847';
+                                            }}
+                                            onMouseOut={(e) => {
+                                                e.currentTarget.style.backgroundColor = 'transparent';
+                                                e.currentTarget.style.color = '#4a4a4a';
+                                            }}
                                         >
                                             {category.name}
                                         </Link>
@@ -135,14 +174,14 @@ export default function Header() {
                     </nav>
 
                     {/* Right Side / Mobile Menu Button */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                        <button className="desktop-enquire" style={{ backgroundColor: '#8b6352', border: 'none', cursor: 'pointer', display: 'none', alignItems: 'center', justifyContent: 'center', width: '38px', height: '38px', borderRadius: '50%', padding: '0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                        <button className="desktop-enquire" style={{ backgroundColor: '#7c5847', border: 'none', cursor: 'pointer', display: 'none', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', borderRadius: '50%', padding: '0', transition: 'background-color 0.2s' }}>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
                         </button>
-                        <Link to="/general-enquiry" className="desktop-enquire" style={{ backgroundColor: '#8b6352', color: 'white', padding: '10px 24px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '14px', display: 'none' }}>
+                        <Link to="/general-enquiry" className="desktop-enquire" style={{ backgroundColor: '#7c5847', color: 'white', padding: '10px 28px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '15px', display: 'none', transition: 'background-color 0.2s' }}>
                             Enquire Now
                         </Link>
                         
@@ -165,14 +204,10 @@ export default function Header() {
                         .desktop-nav, .desktop-enquire { display: flex !important; }
                         .mobile-menu-btn { display: none !important; }
                     }
-                    @keyframes marquee {
-                        0% { transform: translateX(0); }
-                        100% { transform: translateX(-50%); }
-                    }
                     
                     /* Hamburger Animation */
                     .hamburger {
-                        width: 24px;
+                        width: 26px;
                         height: 20px;
                         position: relative;
                         background: transparent;
@@ -187,7 +222,7 @@ export default function Header() {
                         position: absolute;
                         height: 2px;
                         width: 100%;
-                        background: #333;
+                        background: #4a4a4a;
                         border-radius: 2px;
                         opacity: 1;
                         left: 0;
@@ -216,17 +251,17 @@ export default function Header() {
                         position: fixed;
                         top: 0;
                         right: 0;
-                        width: 280px;
+                        width: 300px;
                         height: 100vh;
-                        background-color: #fff;
-                        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                        background-color: #ffffff;
+                        box-shadow: -10px 0 30px rgba(0,0,0,0.08);
                         z-index: 999;
-                        padding: 80px 30px 30px;
+                        padding: 90px 0 30px; /* Top padding to clear header */
                         display: flex;
                         flex-direction: column;
-                        gap: 20px;
                         transform: translateX(100%);
-                        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+                        overflow-y: auto;
                     }
                     .mobile-nav-drawer.open {
                         transform: translateX(0);
@@ -239,16 +274,16 @@ export default function Header() {
                         left: 0;
                         width: 100vw;
                         height: 100vh;
-                        background-color: rgba(0,0,0,0.5);
+                        background-color: rgba(0,0,0,0.6);
                         z-index: 998;
                         opacity: 0;
                         pointer-events: none;
-                        transition: opacity 0.3s ease-in-out;
+                        transition: opacity 0.4s ease;
                     }
                     .mobile-nav-overlay.open {
                         opacity: 1;
                         pointer-events: auto;
-                        backdrop-filter: blur(2px);
+                        backdrop-filter: blur(3px);
                     }
                 `}} />
             </header>
@@ -261,13 +296,29 @@ export default function Header() {
 
             {/* Mobile Nav Drawer */}
             <div className={`mobile-nav-drawer ${isMobileMenuOpen ? 'open' : ''}`}>
-                <Link to="/" style={{ color: '#333', textDecoration: 'none', fontSize: '18px', fontWeight: '500', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>Home</Link>
-                <Link to="/products" style={{ color: '#333', textDecoration: 'none', fontSize: '18px', fontWeight: '500', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>Products</Link>
-                <Link to="/about-us" style={{ color: '#333', textDecoration: 'none', fontSize: '18px', fontWeight: '500', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>About Us</Link>
-                <Link to="/contact-us" style={{ color: '#333', textDecoration: 'none', fontSize: '18px', fontWeight: '500', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>Contact Us</Link>
-                <Link to="/general-enquiry" style={{ backgroundColor: '#7c5847', color: 'white', padding: '14px', textAlign: 'center', borderRadius: '4px', textDecoration: 'none', fontWeight: '600', marginTop: '20px' }}>
-                    Enquire Now
-                </Link>
+                <div style={{ padding: '0 0 20px', display: 'flex', flexDirection: 'column' }}>
+                    <Link to="/" style={getMobileLinkStyle('/')}>Home</Link>
+                    <Link to="/products" style={getMobileLinkStyle('/products')}>Products</Link>
+                    <Link to="/about-us" style={getMobileLinkStyle('/about-us')}>About Us</Link>
+                    <Link to="/contact-us" style={getMobileLinkStyle('/contact-us')}>Contact Us</Link>
+                </div>
+                
+                <div style={{ padding: '0 20px', marginTop: 'auto' }}>
+                    <Link to="/general-enquiry" style={{ 
+                        display: 'block',
+                        backgroundColor: '#7c5847', 
+                        color: 'white', 
+                        padding: '14px', 
+                        textAlign: 'center', 
+                        borderRadius: '4px', 
+                        textDecoration: 'none', 
+                        fontWeight: '600', 
+                        fontSize: '16px',
+                        boxShadow: '0 4px 10px rgba(124, 88, 71, 0.2)'
+                    }}>
+                        Enquire Now
+                    </Link>
+                </div>
             </div>
         </>
     );
