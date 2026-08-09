@@ -85,12 +85,12 @@ export default function Header() {
                 zIndex: 1000,
                 borderBottom: isScrolled ? '1px solid #ddd' : '1px solid #e0e0e0',
                 boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.06)' : 'none',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                transition: 'all 0.15s ease-out'
             }}>
                 <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0' }}>
                     
                     {/* Logo - Smooth scaling */}
-                    <Link to="/" style={{ display: 'block', width: isScrolled ? '120px' : '140px', transition: 'width 0.3s ease' }}>
+                    <Link to="/" style={{ display: 'block', width: isScrolled ? '120px' : '140px', transition: 'width 0.15s ease-out' }}>
                         <img src="/Logo-1-2.png" alt="Petricor" style={{ width: '100%', height: 'auto' }} />
                     </Link>
 
