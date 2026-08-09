@@ -1,5 +1,5 @@
 /* admin.css */
-.admin-layout { display: flex; height: 100vh; background-color: #f9f9f9; font-family: inherit; }
+.admin-layout { display: flex; height: 100vh; background-color: #f9f9f9; font-family: inherit; overflow-x: hidden; width: 100vw; max-width: 100%; }
 .admin-sidebar { background-color: white; border-right: 1px solid #eee; transition: width 0.3s; }
 .admin-sidebar-open { width: 260px; }
 .admin-sidebar-closed { width: 80px; }
@@ -8,7 +8,7 @@
 .admin-nav { padding: 20px 15px; display: flex; flex-direction: column; gap: 10px; }
 .admin-nav-link { display: flex; align-items: center; gap: 15px; padding: 12px 15px; text-decoration: none; color: #555; border-radius: 6px; transition: 0.2s; font-weight: 500; }
 .admin-nav-link:hover { background-color: #fdfaf8; color: #7c5847; }
-.admin-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.admin-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
 .admin-header { background-color: white; padding: 15px 30px; display: flex; justify-content: flex-end; border-bottom: 1px solid #eee; }
 .admin-logout { background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #666; font-size: 1rem; font-weight: 500; }
 .admin-logout:hover { color: #d9534f; }

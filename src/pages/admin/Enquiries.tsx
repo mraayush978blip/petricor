@@ -258,7 +258,7 @@ const Enquiries = () => {
       <h1 className="admin-page-title" style={{ marginBottom: '25px' }}>Enquiries Dashboard</h1>
       
       {/* Tabs */}
-      <div className="admin-tabs-container" style={{ display: 'flex', gap: '15px', marginBottom: '25px', overflowX: 'auto', paddingBottom: '10px', WebkitOverflowScrolling: 'touch' }}>
+      <div className="admin-tabs-container" style={{ display: 'flex', gap: '15px', marginBottom: '25px', overflowX: 'auto', paddingBottom: '10px', WebkitOverflowScrolling: 'touch', maxWidth: '100%' }}>
         <button 
           onClick={() => setActiveTab('contact')}
           style={{ ...tabStyle, ...(activeTab === 'contact' ? activeTabStyle : {}) }}
