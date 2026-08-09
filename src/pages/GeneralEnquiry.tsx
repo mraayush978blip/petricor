@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Plus, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -35,9 +35,16 @@ export default function GeneralEnquiry() {
     message: ''
   });
 
-  const [ingredients, setIngredients] = useState([{ herb: '', form: '', qty: '' }]);
+  const [ingredients, setIngredients] = useState([{ herb: '', herbCustom: '', form: '', formCustom: '', qty: '', qtyCustom: '' }]);
   const [endApplications, setEndApplications] = useState<string[]>([]);
   const [documents, setDocuments] = useState<string[]>([]);
+  const [productOptions, setProductOptions] = useState<{title: string}[]>([]);
+
+  useEffect(() => {
+    supabase.from('products').select('title').order('title').then(({ data }) => {
+      if (data) setProductOptions(data);
+    });
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -51,7 +58,7 @@ export default function GeneralEnquiry() {
 
   const addIngredientRow = () => {
     if (ingredients.length < 10) {
-      setIngredients([...ingredients, { herb: '', form: '', qty: '' }]);
+      setIngredients([...ingredients, { herb: '', herbCustom: '', form: '', formCustom: '', qty: '', qtyCustom: '' }]);
     }
   };
 
@@ -92,7 +99,11 @@ export default function GeneralEnquiry() {
       }
     }
 
-    const validIngredients = ingredients.filter(ing => ing.herb.trim() !== '');
+    const finalIngredients = ingredients.map(ing => ({
+      herb: ing.herb === 'Other' ? ing.herbCustom : ing.herb,
+      form: ing.form === 'Other' ? ing.formCustom : ing.form,
+      qty: ing.qty === 'Other' ? ing.qtyCustom : ing.qty,
+    })).filter(ing => ing.herb && ing.herb.trim() !== '');
 
     const { error } = await supabase.from('enquiries').insert([
       {
@@ -103,7 +114,7 @@ export default function GeneralEnquiry() {
         phone: formData.phone,
         country: formData.country,
         message: formData.message,
-        ingredients: validIngredients,
+        ingredients: finalIngredients,
         end_application: endApplications,
         documents_needed: documents
       }
@@ -202,13 +213,53 @@ export default function GeneralEnquiry() {
             </div>
 
             {ingredients.map((ing, idx) => (
-              <div key={idx} className="ge-ingredient-row" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 40px', gap: '15px', marginBottom: '15px', alignItems: 'center' }}>
-                <input type="text" value={ing.herb} onChange={(e) => handleIngredientChange(idx, 'herb', e.target.value)} placeholder="Select herb or type..." style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box', backgroundColor: '#f9f9f9' }} />
-                <input type="text" value={ing.form} onChange={(e) => handleIngredientChange(idx, 'form', e.target.value)} placeholder="Form (optional)" style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box', backgroundColor: '#f9f9f9' }} />
-                <input type="text" value={ing.qty} onChange={(e) => handleIngredientChange(idx, 'qty', e.target.value)} placeholder="Qty (optional)" style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box', backgroundColor: '#f9f9f9' }} />
-                {idx > 0 && (
-                  <button type="button" onClick={() => removeIngredientRow(idx)} style={{ background: 'none', border: 'none', color: '#dc2626', cursor: 'pointer' }}><X size={20} /></button>
-                )}
+              <div key={idx} className="ge-ingredient-row" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 40px', gap: '15px', marginBottom: '15px', alignItems: 'start' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <select value={ing.herb} onChange={(e) => handleIngredientChange(idx, 'herb', e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box', backgroundColor: '#f9f9f9', appearance: 'auto', outline: 'none' }}>
+                    <option value="">Select product...</option>
+                    <option value="Other">Other (Please specify)</option>
+                    {productOptions.map(p => (
+                      <option key={p.title} value={p.title}>{p.title}</option>
+                    ))}
+                  </select>
+                  {ing.herb === 'Other' && (
+                    <input type="text" value={ing.herbCustom} onChange={(e) => handleIngredientChange(idx, 'herbCustom', e.target.value)} placeholder="Type custom herb..." style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box', backgroundColor: '#fff' }} />
+                  )}
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <select value={ing.form} onChange={(e) => handleIngredientChange(idx, 'form', e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box', backgroundColor: '#f9f9f9', appearance: 'auto', outline: 'none' }}>
+                    <option value="">Select form...</option>
+                    <option value="Dried whole / raw">Dried whole / raw</option>
+                    <option value="Powder">Powder</option>
+                    <option value="Standardised extract">Standardised extract</option>
+                    <option value="Ratio extract (e.g. 10:1)">Ratio extract (e.g. 10:1)</option>
+                    <option value="Oil / oleoresin">Oil / oleoresin</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  {ing.form === 'Other' && (
+                    <input type="text" value={ing.formCustom} onChange={(e) => handleIngredientChange(idx, 'formCustom', e.target.value)} placeholder="Specify form..." style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box', backgroundColor: '#fff' }} />
+                  )}
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <select value={ing.qty} onChange={(e) => handleIngredientChange(idx, 'qty', e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box', backgroundColor: '#f9f9f9', appearance: 'auto', outline: 'none' }}>
+                    <option value="">Select qty...</option>
+                    <option value="< 25 kg">&lt; 25 kg</option>
+                    <option value="25-100 kg">25-100 kg</option>
+                    <option value="100-500 kg">100-500 kg</option>
+                    <option value="500 kg-1 MT">500 kg-1 MT</option>
+                    <option value="1 MT+">1 MT+</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  {ing.qty === 'Other' && (
+                    <input type="text" value={ing.qtyCustom} onChange={(e) => handleIngredientChange(idx, 'qtyCustom', e.target.value)} placeholder="Specify qty..." style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #ddd', boxSizing: 'border-box', backgroundColor: '#fff' }} />
+                  )}
+                </div>
+                
+                {idx > 0 ? (
+                  <button type="button" onClick={() => removeIngredientRow(idx)} style={{ background: 'none', border: 'none', color: '#dc2626', cursor: 'pointer', marginTop: '12px' }}><X size={20} /></button>
+                ) : <div />}
               </div>
             ))}
 
