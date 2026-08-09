@@ -39,7 +39,10 @@ export async function verifyRecaptchaToken(token: string): Promise<boolean> {
             body: JSON.stringify({ token }),
         });
 
-        if (!res.ok) return false;
+        if (!res.ok) {
+            console.warn('reCAPTCHA endpoint returned an error. Failing open.');
+            return true;
+        }
         const data = await res.json();
         return data.success === true && (data.score ?? 0) >= 0.5;
     } catch {
