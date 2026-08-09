@@ -11,7 +11,6 @@ export default function ProductDetail() {
     const [mainImage, setMainImage] = useState('');
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [activeAccordion, setActiveAccordion] = useState<number | null>(0);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
