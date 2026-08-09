@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase';
 export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [showCategoriesMenu, setShowCategoriesMenu] = useState(false);
+    const [isMobileCategoryOpen, setIsMobileCategoryOpen] = useState(false);
     const [categories, setCategories] = useState<{id: string, name: string}[]>([]);
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -308,6 +309,57 @@ export default function Header() {
                 <div style={{ padding: '0 0 20px', display: 'flex', flexDirection: 'column' }}>
                     <Link to="/" style={getMobileLinkStyle('/')}>Home</Link>
                     <Link to="/products" style={getMobileLinkStyle('/products')}>Products</Link>
+                    
+                    {/* Mobile Category Dropdown */}
+                    <div style={{ borderBottom: '1px solid #f0f0f0' }}>
+                        <button 
+                            onClick={() => setIsMobileCategoryOpen(!isMobileCategoryOpen)}
+                            style={{ 
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                width: '100%',
+                                color: '#4a4a4a',
+                                fontSize: '18px',
+                                fontWeight: '500',
+                                padding: '16px 20px',
+                                backgroundColor: 'transparent',
+                                border: 'none',
+                                borderLeft: '4px solid transparent',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s ease'
+                            }}
+                        >
+                            Category
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isMobileCategoryOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        
+                        <div style={{ 
+                            maxHeight: isMobileCategoryOpen ? '500px' : '0px', 
+                            overflow: 'hidden', 
+                            transition: 'all 0.3s ease',
+                            backgroundColor: '#fcf9f8'
+                        }}>
+                            {categories.map(category => (
+                                <Link 
+                                    key={category.id}
+                                    to={`/products?category=${encodeURIComponent(category.name)}`}
+                                    style={{ 
+                                        display: 'block', 
+                                        padding: '12px 20px 12px 40px', 
+                                        color: '#7c5847', 
+                                        textDecoration: 'none',
+                                        fontSize: '15px'
+                                    }}
+                                >
+                                    {category.name}
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+
                     <Link to="/about-us" style={getMobileLinkStyle('/about-us')}>About Us</Link>
                     <Link to="/contact-us" style={getMobileLinkStyle('/contact-us')}>Contact Us</Link>
                 </div>

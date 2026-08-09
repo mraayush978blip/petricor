@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useMemo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
 import { ProductSkeleton } from '../components/Skeleton';
@@ -8,17 +8,11 @@ export default function AllProducts() {
     const [currentPage, setCurrentPage] = useState(1);
     const [productsData, setProductsData] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const location = useLocation();
     
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
     const [hoveredProductSlug, setHoveredProductSlug] = useState<string | null>(null);
-
-    const productsPerPage = 12;
-    const totalPages = Math.ceil(productsData.length / productsPerPage);
-
-    const indexOfLastProduct = currentPage * productsPerPage;
-    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-    const currentProducts = productsData.slice(indexOfFirstProduct, indexOfLastProduct);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -37,14 +31,35 @@ export default function AllProducts() {
         fetchProducts();
     }, []);
 
+    // Filter by category if URL has ?category=...
+    const queryParams = new URLSearchParams(location.search);
+    const categoryFilter = queryParams.get('category');
+    
+    const filteredProducts = useMemo(() => {
+        if (!categoryFilter) return productsData;
+        return productsData.filter(p => p.category === categoryFilter);
+    }, [productsData, categoryFilter]);
+
+    // Reset pagination when category changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [categoryFilter]);
+
+    const productsPerPage = 12;
+    const totalPages = Math.max(1, Math.ceil(filteredProducts.length / productsPerPage));
+
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
     return (
         <div style={{ backgroundColor: '#f9f9f9', paddingBottom: '80px' }}>
             <div style={{ textAlign: 'center', padding: '60px 15px', backgroundColor: '#fff', borderBottom: '1px solid #eaeaea' }}>
                 <div style={{ fontSize: '14px', color: '#888', marginBottom: '10px' }}>
                     <Link to="/" style={{ color: '#888', textDecoration: 'none' }}>Home</Link> / 
-                    <span style={{ color: '#333', fontWeight: '500', marginLeft: '5px' }}>All Product</span>
+                    <span style={{ color: '#333', fontWeight: '500', marginLeft: '5px' }}>{categoryFilter ? categoryFilter : 'All Products'}</span>
                 </div>
-                <h1 style={{ fontSize: '42px', color: '#333', fontWeight: 'bold', margin: 0 }}>All Product</h1>
+                <h1 style={{ fontSize: '42px', color: '#333', fontWeight: 'bold', margin: 0 }}>{categoryFilter ? categoryFilter : 'All Products'}</h1>
             </div>
 
             <div className="container" style={{ maxWidth: '1200px', margin: '60px auto 0', padding: '0 15px' }}>
