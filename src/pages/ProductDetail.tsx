@@ -96,7 +96,7 @@ export default function ProductDetail() {
                     </div>
                     {product.images && product.images.length > 1 && (
                         <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                            {product.images.map((img, idx) => (
+                            {product.images.map((img: string, idx: number) => (
                                 <div 
                                     key={idx} 
                                     onClick={() => setMainImage(img)}
