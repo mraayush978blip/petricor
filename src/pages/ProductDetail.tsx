@@ -211,56 +211,30 @@ export default function ProductDetail() {
                             </button>
                         </div>
 
-                        {/* Accordion */}
-                        <div style={{ borderTop: '1px solid #eaeaea', flexGrow: 1 }}>
+                        {/* Information Sections */}
+                        <div style={{ flexGrow: 1, marginTop: '10px' }}>
                             {sections.map((sec, idx) => (
-                                <div key={idx} style={{ borderBottom: '1px solid #eaeaea' }}>
-                                    <button 
-                                        onClick={() => setActiveAccordion(activeAccordion === idx ? null : idx)}
-                                        style={{
-                                            width: '100%',
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                            alignItems: 'center',
-                                            padding: '20px 0',
-                                            background: 'none',
-                                            border: 'none',
-                                            cursor: 'pointer',
-                                            color: '#1a1a1a',
-                                            fontSize: '18px',
-                                            fontWeight: '600',
-                                            textAlign: 'left'
-                                        }}
-                                    >
-                                        {sec.title}
-                                        <span style={{ 
-                                            fontSize: '24px', 
-                                            fontWeight: '300', 
-                                            color: '#7c5847',
-                                            transform: activeAccordion === idx ? 'rotate(45deg)' : 'rotate(0deg)',
-                                            transition: 'transform 0.3s ease'
-                                        }}>
-                                            +
-                                        </span>
-                                    </button>
-                                    <div style={{
-                                        maxHeight: activeAccordion === idx ? '1000px' : '0px',
-                                        overflow: 'hidden',
-                                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                                        opacity: activeAccordion === idx ? 1 : 0
+                                <div key={idx} style={{ marginBottom: '35px' }}>
+                                    <h3 style={{ 
+                                        color: '#7c5847',
+                                        fontSize: '18px',
+                                        fontWeight: '600',
+                                        marginBottom: '15px',
+                                        borderBottom: '1px solid #eaeaea',
+                                        paddingBottom: '10px'
                                     }}>
-                                        <div 
-                                            className="product-content"
-                                            style={{ 
-                                                paddingBottom: '25px', 
-                                                color: '#555', 
-                                                lineHeight: '1.8',
-                                                fontSize: '15px',
-                                                whiteSpace: 'pre-wrap'
-                                            }}
-                                            dangerouslySetInnerHTML={{ __html: sec.content }} 
-                                        />
-                                    </div>
+                                        {sec.title}
+                                    </h3>
+                                    <div 
+                                        className="product-content"
+                                        style={{ 
+                                            color: '#555', 
+                                            lineHeight: '1.8',
+                                            fontSize: '15.5px',
+                                            whiteSpace: 'pre-wrap'
+                                        }}
+                                        dangerouslySetInnerHTML={{ __html: sec.content }} 
+                                    />
                                 </div>
                             ))}
                         </div>
