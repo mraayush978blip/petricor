@@ -58,42 +58,118 @@
 .admin-header-action h1 { margin-bottom: 0; }
 
 /* Responsive Admin Panel */
+.admin-sidebar-overlay {
+  display: none;
+}
+.admin-desktop-toggle {
+  background: none; border: none; cursor: pointer; color: #555;
+}
+.admin-mobile-menu-btn {
+  display: none;
+  background: none; border: none; cursor: pointer; color: #333;
+}
+
 @media (max-width: 768px) {
   .admin-layout {
     flex-direction: column;
   }
-  .admin-sidebar {
-    width: 100% !important;
-    height: auto !important;
-    border-right: none;
-    border-bottom: 1px solid #eee;
+  .admin-header {
+    padding: 15px 20px;
+    justify-content: space-between;
   }
+  .admin-mobile-menu-btn {
+    display: block;
+  }
+  
+  /* Mobile Sidebar as Drawer */
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-right: 1px solid #eee;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.05);
+  }
+  .admin-sidebar.admin-sidebar-open {
+    transform: translateX(0);
+  }
+  
+  /* Overlay */
+  .admin-sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .admin-sidebar-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+    backdrop-filter: blur(2px);
+  }
+
   .admin-sidebar-closed .admin-nav {
-    display: none;
+    display: flex;
   }
   .admin-nav {
-    padding: 10px 15px;
+    padding: 20px 15px;
     flex-direction: column;
   }
+  
+  /* Compact content */
   .admin-content {
     padding: 20px 15px;
   }
   .admin-stats-grid {
     grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .admin-stat-card {
+    padding: 15px;
   }
   .admin-header-action {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-  }
-  .admin-table-container {
-    overflow-x: auto;
-  }
-  /* Ensure table elements don't get squished */
-  .admin-table {
-    min-width: 600px;
+    margin-bottom: 20px;
   }
   .admin-page-title {
     font-size: 1.4rem;
+    margin-bottom: 0;
+  }
+  
+  /* Ensure header action buttons are full width if they are single */
+  .admin-header-action .admin-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Responsive Tables */
+  .admin-table-container {
+    overflow-x: auto;
+    border-radius: 6px;
+    margin-top: 15px;
+  }
+  .admin-table {
+    min-width: 550px;
+  }
+  .admin-table th {
+    padding: 12px 15px;
+    font-size: 0.8rem;
+  }
+  .admin-table td {
+    padding: 12px 15px;
+    font-size: 0.85rem;
   }
 }
