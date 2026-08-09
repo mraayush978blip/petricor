@@ -42,6 +42,9 @@ body, html, * {
     flex: 1 1 100% !important;
     padding: 0 15px !important;
     border-right: none !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box;
   }
   .hero-right {
     margin-top: 40px !important;
@@ -125,6 +128,11 @@ body, html, * {
     grid-template-columns: 1fr !important;
   }
 
+  /* Feature Grid (Below Hero) */
+  .feature-grid {
+    grid-template-columns: 1fr !important;
+  }
+
   /* Compliance Credentials - horizontal scroll on mobile */
   .credentials-list {
     flex-direction: row !important;
@@ -132,15 +140,19 @@ body, html, * {
     overflow-y: hidden !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
-    gap: 12px !important;
-    padding-bottom: 8px !important;
+    gap: 15px !important;
+    padding-bottom: 10px !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    width: 100%;
   }
   .credentials-list::-webkit-scrollbar {
     display: none;
   }
   .credential-card {
-    flex: 0 0 75vw !important;
-    min-width: 0 !important;
+    flex: 0 0 80vw !important;
+    min-width: 250px !important;
+    height: auto !important;
   }
   
   /* Product Grids - Exactly 2 products per row */
