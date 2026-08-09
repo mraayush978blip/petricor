@@ -51,7 +51,7 @@ export default function Home() {
         : productsData.filter(p => p.category === activeTab);
 
     return (
-        <div style={{ paddingBottom: '60px' }}>
+        <div style={{ paddingBottom: '0' }}>
             {/* HERO SECTION */}
             <div style={{ backgroundColor: '#ececec', padding: '60px 0', borderBottom: '1px solid #dcdcdc' }}>
                 <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'wrap' }}>
@@ -320,8 +320,8 @@ export default function Home() {
             </div>
 
             {/* MAP SECTION */}
-            <div className="container" style={{ maxWidth: '100%', margin: '80px auto', padding: '0', textAlign: 'center' }}>
-                <img src="/images/Map-scaled.jpeg" alt="Global Export Map" style={{ width: '100%', maxWidth: '1400px', height: 'auto' }} />
+            <div className="container" style={{ maxWidth: '100%', margin: '80px auto 0', padding: '0', textAlign: 'center', display: 'flex' }}>
+                <img src="/images/Map-scaled.jpeg" alt="Global Export Map" style={{ width: '100%', maxWidth: '1400px', height: 'auto', margin: '0 auto', display: 'block' }} />
             </div>
             
             <ProductEnquiryModal 

@@ -76,12 +76,16 @@ export default function Header() {
 
     return (
         <>
+            {/* Spacer to prevent content from hiding under fixed header */}
+            <div style={{ height: isScrolled ? '65px' : '85px', transition: 'height 0.15s ease-out' }} />
             <header style={{ 
                 padding: isScrolled ? '10px 0' : '20px 0',
                 backgroundColor: isScrolled ? 'rgba(236, 236, 236, 0.95)' : '#ececec',
                 backdropFilter: isScrolled ? 'blur(10px)' : 'none',
-                position: 'sticky',
+                position: 'fixed',
                 top: 0,
+                left: 0,
+                right: 0,
                 zIndex: 1000,
                 borderBottom: isScrolled ? '1px solid #ddd' : '1px solid #e0e0e0',
                 boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.06)' : 'none',
