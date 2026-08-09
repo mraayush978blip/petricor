@@ -11,8 +11,10 @@ export default function ProductDetail() {
     const [mainImage, setMainImage] = useState('');
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [activeAccordion, setActiveAccordion] = useState<number | null>(0);
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         const fetchProductData = async () => {
             setLoading(true);
             const { data: prodData } = await supabase
@@ -75,150 +77,313 @@ export default function ProductDetail() {
     }, [id, navigate]);
 
     if (loading) {
-        return <div style={{ textAlign: 'center', padding: '60px' }}>Loading...</div>;
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+                <div className="spinner" style={{ width: '40px', height: '40px', border: '4px solid #f3f3f3', borderTop: '4px solid #7c5847', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+                <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+            </div>
+        );
     }
 
-    if (!product) {
-        return null; // Handled by redirect in useEffect
-    }
+    if (!product) return null;
+
+    const sections = [
+        { title: 'Description', content: product.description },
+        { title: 'Specification', content: product.specification },
+        { title: 'Plant Part & Origin', content: product.plant_part_origin },
+        { title: 'Uses & Benefits', content: product.uses_benefits }
+    ].filter(s => s.content);
 
     return (
-        <div className="container" style={{ padding: '60px 15px', maxWidth: '1200px', margin: '0 auto' }}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '50px', marginBottom: '80px' }}>
-                {/* Left Column - Gallery */}
-                <div style={{ flex: '1 1 45%', minWidth: '300px' }}>
-                    <div style={{ marginBottom: '20px', border: '1px solid #eee', position: 'relative' }}>
-                        {/* Organic badge placeholder if needed */}
-                        <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
-                            <img src="/images/organic-badge.png" alt="Organic" style={{ width: '40px', display: 'none' }} />
+        <div style={{ backgroundColor: '#fdfbf9', minHeight: '100vh', padding: '60px 0' }}>
+            <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+                
+                {/* Main Product Section */}
+                <div style={{ 
+                    display: 'flex', 
+                    flexWrap: 'wrap', 
+                    gap: '60px', 
+                    backgroundColor: '#fff',
+                    borderRadius: '24px',
+                    padding: '40px',
+                    boxShadow: '0 20px 40px rgba(0,0,0,0.04)',
+                    marginBottom: '80px'
+                }}>
+                    
+                    {/* Left Gallery */}
+                    <div style={{ flex: '1 1 45%', minWidth: '300px' }}>
+                        <div style={{ 
+                            borderRadius: '16px', 
+                            overflow: 'hidden', 
+                            boxShadow: '0 10px 30px rgba(0,0,0,0.06)',
+                            marginBottom: '20px',
+                            backgroundColor: '#f9f9f9',
+                            position: 'relative'
+                        }}>
+                            <img 
+                                src={mainImage} 
+                                alt={product.title} 
+                                style={{ 
+                                    width: '100%', 
+                                    aspectRatio: '1/1', 
+                                    objectFit: 'cover',
+                                    display: 'block',
+                                    transition: 'transform 0.5s ease',
+                                }} 
+                            />
                         </div>
-                        <img src={mainImage} alt={product.title} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                        
+                        {product.images && product.images.length > 1 && (
+                            <div style={{ display: 'flex', gap: '15px' }}>
+                                {product.images.map((img: string, idx: number) => (
+                                    <div 
+                                        key={idx} 
+                                        onClick={() => setMainImage(img)}
+                                        style={{ 
+                                            width: '80px', 
+                                            height: '80px', 
+                                            borderRadius: '12px',
+                                            border: mainImage === img ? '2px solid #7c5847' : '2px solid transparent', 
+                                            cursor: 'pointer',
+                                            overflow: 'hidden',
+                                            boxShadow: '0 4px 10px rgba(0,0,0,0.05)',
+                                            transition: 'all 0.2s ease',
+                                            opacity: mainImage === img ? 1 : 0.7
+                                        }}
+                                    >
+                                        <img src={img} alt={`Thumbnail ${idx}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
-                    {product.images && product.images.length > 1 && (
-                        <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                            {product.images.map((img: string, idx: number) => (
-                                <div 
-                                    key={idx} 
-                                    onClick={() => setMainImage(img)}
-                                    style={{ 
-                                        width: '100px', 
-                                        height: '100px', 
-                                        border: mainImage === img ? '2px solid #7c5847' : '1px solid #eee', 
-                                        cursor: 'pointer',
-                                        overflow: 'hidden'
-                                    }}
-                                >
-                                    <img src={img} alt={`Thumbnail ${idx}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+
+                    {/* Right Details */}
+                    <div style={{ flex: '1 1 45%', minWidth: '300px', display: 'flex', flexDirection: 'column' }}>
+                        <span style={{ 
+                            color: '#7c5847', 
+                            textTransform: 'uppercase', 
+                            fontSize: '13px', 
+                            fontWeight: '600', 
+                            letterSpacing: '1.5px',
+                            marginBottom: '10px',
+                            display: 'block'
+                        }}>
+                            {product.category}
+                        </span>
+                        
+                        <h1 style={{ 
+                            fontSize: 'clamp(28px, 4vw, 42px)', 
+                            color: '#1a1a1a', 
+                            marginBottom: '25px', 
+                            fontWeight: '600',
+                            lineHeight: '1.2'
+                        }}>
+                            {product.title}
+                        </h1>
+
+                        <div style={{ marginBottom: '40px' }}>
+                            <button 
+                                className="enquiry-btn-hero"
+                                onClick={() => setIsModalOpen(true)}
+                                style={{ 
+                                    display: 'inline-flex', 
+                                    alignItems: 'center', 
+                                    justifyContent: 'center',
+                                    backgroundColor: '#7c5847', 
+                                    color: 'white', 
+                                    padding: '16px 40px', 
+                                    fontSize: '16px', 
+                                    fontWeight: '600', 
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    borderRadius: '50px',
+                                    boxShadow: '0 8px 20px rgba(124, 88, 71, 0.3)',
+                                    transition: 'all 0.3s ease',
+                                    width: '100%',
+                                    maxWidth: '350px'
+                                }}
+                            >
+                                Request Enquiry 
+                                <svg style={{ marginLeft: '12px', width: '16px', fill: 'white', transition: 'transform 0.3s ease' }} viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        {/* Accordion */}
+                        <div style={{ borderTop: '1px solid #eaeaea', flexGrow: 1 }}>
+                            {sections.map((sec, idx) => (
+                                <div key={idx} style={{ borderBottom: '1px solid #eaeaea' }}>
+                                    <button 
+                                        onClick={() => setActiveAccordion(activeAccordion === idx ? null : idx)}
+                                        style={{
+                                            width: '100%',
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            padding: '20px 0',
+                                            background: 'none',
+                                            border: 'none',
+                                            cursor: 'pointer',
+                                            color: '#1a1a1a',
+                                            fontSize: '18px',
+                                            fontWeight: '600',
+                                            textAlign: 'left'
+                                        }}
+                                    >
+                                        {sec.title}
+                                        <span style={{ 
+                                            fontSize: '24px', 
+                                            fontWeight: '300', 
+                                            color: '#7c5847',
+                                            transform: activeAccordion === idx ? 'rotate(45deg)' : 'rotate(0deg)',
+                                            transition: 'transform 0.3s ease'
+                                        }}>
+                                            +
+                                        </span>
+                                    </button>
+                                    <div style={{
+                                        maxHeight: activeAccordion === idx ? '1000px' : '0px',
+                                        overflow: 'hidden',
+                                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                                        opacity: activeAccordion === idx ? 1 : 0
+                                    }}>
+                                        <div 
+                                            className="product-content"
+                                            style={{ 
+                                                paddingBottom: '25px', 
+                                                color: '#555', 
+                                                lineHeight: '1.8',
+                                                fontSize: '15px' 
+                                            }}
+                                            dangerouslySetInnerHTML={{ __html: sec.content }} 
+                                        />
+                                    </div>
                                 </div>
                             ))}
                         </div>
-                    )}
+                    </div>
                 </div>
 
-                {/* Right Column - Details */}
-                <div style={{ flex: '1 1 45%', minWidth: '300px' }}>
-                    <h1 style={{ fontSize: '24px', color: '#333', marginBottom: '20px', fontWeight: '400', fontFamily: 'inherit' }}>
-                        {product.title}
-                    </h1>
-                    
-                    <div style={{ marginBottom: '40px' }}>
-                        <button 
-                            onClick={() => setIsModalOpen(true)}
-                            style={{ 
-                                display: 'inline-flex', 
-                                alignItems: 'center', 
-                                justifyContent: 'center',
-                                backgroundColor: '#7c5847', 
-                                color: 'white', 
-                                padding: '12px 30px', 
-                                fontSize: '15px', 
-                                fontWeight: '500', 
-                                border: 'none',
-                                cursor: 'pointer',
-                                borderRadius: '3px',
-                                width: '100%',
-                                boxSizing: 'border-box'
-                            }}
-                        >
-                            Enquiry Now 
-                            <svg style={{ marginLeft: '10px', width: '14px', fill: 'white' }} viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"></path></svg>
-                        </button>
-                    </div>
-
-                    {/* Stacked Details */}
-                    <div>
-                        {[
-                            { title: 'Description', content: product.description },
-                            { title: 'Specification', content: product.specification },
-                            { title: 'Plant Part & Origin', content: product.plant_part_origin },
-                            { title: 'Uses & Benefits', content: product.uses_benefits }
-                        ].map((tab, idx) => {
-                            if (!tab.content) return null;
-                            return (
-                                <div key={idx} style={{ marginBottom: '25px', borderBottom: idx < 3 ? '1px solid #eaeaea' : 'none', paddingBottom: '25px' }}>
-                                    <h4 
-                                        style={{ 
-                                            color: '#7c5847',
-                                            fontWeight: '600',
-                                            fontSize: '15px',
-                                            margin: '0 0 15px 0'
-                                        }}
-                                    >
-                                        {tab.title}
-                                    </h4>
-                                    <div style={{ color: '#666', fontSize: '14px', lineHeight: '1.8' }}>
-                                        <div dangerouslySetInnerHTML={{ __html: tab.content }} />
+                {/* Related Products */}
+                {relatedProducts.length > 0 && (
+                    <div style={{ marginTop: '80px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '40px' }}>
+                            <h2 style={{ fontSize: '32px', color: '#1a1a1a', fontWeight: '600', margin: 0 }}>You May Also Like</h2>
+                            <Link to="/products" style={{ color: '#7c5847', fontWeight: '600', textDecoration: 'none', fontSize: '15px' }}>
+                                View All Products →
+                            </Link>
+                        </div>
+                        
+                        <div style={{ 
+                            display: 'grid', 
+                            gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', 
+                            gap: '30px' 
+                        }}>
+                            {relatedProducts.map(rp => (
+                                <div key={rp.slug} className="related-card" style={{ 
+                                    backgroundColor: '#fff',
+                                    borderRadius: '16px',
+                                    overflow: 'hidden',
+                                    boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
+                                    display: 'flex', 
+                                    flexDirection: 'column',
+                                    transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+                                }}>
+                                    <Link to={`/product/${rp.slug}`} style={{ display: 'block', overflow: 'hidden' }}>
+                                        <img 
+                                            className="related-img"
+                                            src={rp.images[0]} 
+                                            alt={rp.title} 
+                                            style={{ 
+                                                width: '100%', 
+                                                aspectRatio: '4/3', 
+                                                objectFit: 'cover', 
+                                                display: 'block',
+                                                transition: 'transform 0.5s ease'
+                                            }} 
+                                        />
+                                    </Link>
+                                    <div style={{ padding: '25px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                                        <div style={{ color: '#7c5847', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', marginBottom: '8px' }}>
+                                            {rp.category}
+                                        </div>
+                                        <h4 style={{ fontSize: '18px', margin: '0 0 20px 0', fontWeight: '600', lineHeight: '1.4' }}>
+                                            <Link to={`/product/${rp.slug}`} style={{ color: '#1a1a1a', textDecoration: 'none' }}>{rp.title}</Link>
+                                        </h4>
+                                        <button 
+                                            onClick={() => {
+                                                setProduct(rp);
+                                                setIsModalOpen(true);
+                                            }}
+                                            style={{ 
+                                                backgroundColor: '#f9f9f9', 
+                                                color: '#1a1a1a', 
+                                                padding: '12px 0', 
+                                                fontSize: '14px', 
+                                                fontWeight: '600', 
+                                                border: '1px solid #eaeaea',
+                                                borderRadius: '8px',
+                                                cursor: 'pointer',
+                                                marginTop: 'auto',
+                                                transition: 'all 0.2s ease',
+                                                width: '100%'
+                                            }}
+                                            onMouseOver={(e) => {
+                                                e.currentTarget.style.backgroundColor = '#7c5847';
+                                                e.currentTarget.style.color = 'white';
+                                                e.currentTarget.style.borderColor = '#7c5847';
+                                            }}
+                                            onMouseOut={(e) => {
+                                                e.currentTarget.style.backgroundColor = '#f9f9f9';
+                                                e.currentTarget.style.color = '#1a1a1a';
+                                                e.currentTarget.style.borderColor = '#eaeaea';
+                                            }}
+                                        >
+                                            Quick Enquiry
+                                        </button>
                                     </div>
                                 </div>
-                            );
-                        })}
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
+                
+                <ProductEnquiryModal 
+                    isOpen={isModalOpen} 
+                    onClose={() => setIsModalOpen(false)} 
+                    product={product} 
+                />
             </div>
 
-            {/* Related Products */}
-            <div style={{ borderTop: '1px solid #eaeaea', paddingTop: '50px' }}>
-                <h3 style={{ fontSize: '24px', color: '#333', marginBottom: '30px', fontWeight: '600' }}>Related products</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '30px' }}>
-                    {relatedProducts.map(rp => (
-                        <div key={rp.slug} style={{ display: 'flex', flexDirection: 'column' }}>
-                            <Link to={`/product/${rp.slug}`} style={{ display: 'block', marginBottom: '15px', border: '1px solid #eee' }}>
-                                <img src={rp.images[0]} alt={rp.title} style={{ width: '100%', height: 'auto', display: 'block' }} />
-                            </Link>
-                            <h4 style={{ fontSize: '16px', margin: '0 0 5px 0' }}>
-                                <Link to={`/product/${rp.slug}`} style={{ color: '#333', textDecoration: 'none' }}>{rp.title}</Link>
-                            </h4>
-                            <div style={{ color: '#999', fontSize: '13px', marginBottom: '15px' }}>{rp.category}</div>
-                            <button 
-                                onClick={() => {
-                                    setProduct(rp);
-                                    setIsModalOpen(true);
-                                }}
-                                style={{ 
-                                    backgroundColor: '#7c5847', 
-                                    color: 'white', 
-                                    textAlign: 'center', 
-                                    padding: '10px 0', 
-                                    fontSize: '14px', 
-                                    fontWeight: '600', 
-                                    textTransform: 'uppercase',
-                                    border: 'none',
-                                    cursor: 'pointer',
-                                    marginTop: 'auto'
-                                }}
-                            >
-                                Enquiry Now
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            </div>
-            
-            <ProductEnquiryModal 
-                isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
-                product={product} 
-            />
+            {/* Injected Styles for hover effects */}
+            <style>{`
+                .enquiry-btn-hero:hover {
+                    background-color: #614335 !important;
+                    transform: translateY(-2px);
+                }
+                .enquiry-btn-hero:hover svg {
+                    transform: translateX(5px);
+                }
+                .related-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 15px 40px rgba(0,0,0,0.08) !important;
+                }
+                .related-card:hover .related-img {
+                    transform: scale(1.05);
+                }
+                .product-content p {
+                    margin-top: 0;
+                    margin-bottom: 15px;
+                }
+                .product-content ul {
+                    padding-left: 20px;
+                }
+                .product-content li {
+                    margin-bottom: 8px;
+                }
+            `}</style>
         </div>
     );
 }
