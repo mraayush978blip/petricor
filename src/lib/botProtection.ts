@@ -44,7 +44,11 @@ export async function verifyRecaptchaToken(token: string): Promise<boolean> {
             return true;
         }
         const data = await res.json();
-        return data.success === true && (data.score ?? 0) >= 0.5;
+        console.log('reCAPTCHA verification result:', data);
+        
+        // Temporarily fail-open to unblock mobile users who might be getting low scores
+        // or failing verification due to domain/key issues.
+        return true;
     } catch {
         // If the edge function is unreachable, fail open (allow submission)
         // to avoid blocking real users due to network issues.
