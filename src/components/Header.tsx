@@ -263,15 +263,16 @@ export default function Header() {
                         right: 0;
                         width: 300px;
                         height: 100vh;
+                        height: 100dvh; /* Better for mobile Safari */
                         background-color: #ffffff;
                         box-shadow: -10px 0 30px rgba(0,0,0,0.08);
                         z-index: 999;
-                        padding: 90px 0 30px; /* Top padding to clear header */
                         display: flex;
                         flex-direction: column;
                         transform: translateX(100%);
                         transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-                        overflow-y: auto;
+                        overflow: hidden;
+                        overscroll-behavior: none;
                     }
                     .mobile-nav-drawer.open {
                         transform: translateX(0);
@@ -284,11 +285,13 @@ export default function Header() {
                         left: 0;
                         width: 100vw;
                         height: 100vh;
+                        height: 100dvh;
                         background-color: rgba(0,0,0,0.6);
                         z-index: 998;
                         opacity: 0;
                         pointer-events: none;
                         transition: opacity 0.4s ease;
+                        overscroll-behavior: none;
                     }
                     .mobile-nav-overlay.open {
                         opacity: 1;
@@ -306,7 +309,7 @@ export default function Header() {
 
             {/* Mobile Nav Drawer */}
             <div className={`mobile-nav-drawer ${isMobileMenuOpen ? 'open' : ''}`}>
-                <div style={{ padding: '0 0 20px', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ flex: '1', overflowY: 'auto', padding: '90px 0 20px', display: 'flex', flexDirection: 'column' }}>
                     <Link to="/" style={getMobileLinkStyle('/')}>Home</Link>
                     <Link to="/products" style={getMobileLinkStyle('/products')}>Products</Link>
                     
@@ -364,7 +367,7 @@ export default function Header() {
                     <Link to="/contact-us" style={getMobileLinkStyle('/contact-us')}>Contact Us</Link>
                 </div>
                 
-                <div style={{ padding: '0 20px', marginTop: 'auto' }}>
+                <div style={{ padding: '20px', borderTop: '1px solid #eee', backgroundColor: '#fff' }}>
                     <Link to="/general-enquiry" style={{ 
                         display: 'block',
                         backgroundColor: '#7c5847', 
