@@ -10,7 +10,7 @@ const AdminLayout = () => {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate('/petricor-hq/login');
+    navigate('/ad/login');
   };
 
   return (
@@ -19,7 +19,7 @@ const AdminLayout = () => {
       <div className={`admin-sidebar ${isSidebarOpen ? 'admin-sidebar-open' : 'admin-sidebar-closed'}`}>
         <div className="admin-sidebar-header">
           {isSidebarOpen && (
-            <Link to="/petricor-hq" style={{ display: 'block', width: '150px' }}>
+            <Link to="/ad" style={{ display: 'block', width: '150px' }}>
               <img src="/Logo-1-2.png" alt="Petricor" style={{ width: '100%', height: 'auto' }} />
             </Link>
           )}
@@ -28,23 +28,23 @@ const AdminLayout = () => {
           </button>
         </div>
         <nav className="admin-nav">
-          <Link to="/petricor-hq" className="admin-nav-link">
+          <Link to="/ad" className="admin-nav-link">
             <LayoutDashboard size={20} />
             {isSidebarOpen && <span>Dashboard</span>}
           </Link>
-          <Link to="/petricor-hq/enquiries" className="admin-nav-link">
+          <Link to="/ad/enquiries" className="admin-nav-link">
             <MessageSquare size={20} />
             {isSidebarOpen && <span>Enquiries</span>}
           </Link>
-          <Link to="/petricor-hq/categories" className="admin-nav-link">
+          <Link to="/ad/categories" className="admin-nav-link">
             <Tags size={20} />
             {isSidebarOpen && <span>Categories</span>}
           </Link>
-          <Link to="/petricor-hq/products" className="admin-nav-link">
+          <Link to="/ad/products" className="admin-nav-link">
             <Package size={20} />
             {isSidebarOpen && <span>Products</span>}
           </Link>
-          <Link to="/petricor-hq/settings" className="admin-nav-link">
+          <Link to="/ad/settings" className="admin-nav-link">
             <SettingsIcon size={20} />
             {isSidebarOpen && <span>Settings</span>}
           </Link>

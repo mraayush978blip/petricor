@@ -48,7 +48,7 @@ const ProtectedRoute = () => {
     );
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/petricor-hq/login" replace />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/ad/login" replace />;
 };
 
 export default ProtectedRoute;

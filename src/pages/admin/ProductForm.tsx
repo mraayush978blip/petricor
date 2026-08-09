@@ -132,7 +132,7 @@ const ProductForm = () => {
         await supabase.from('products').insert([productData]);
       }
 
-      navigate('/petricor-hq/products');
+      navigate('/ad/products');
     } catch (error) {
       console.error('Error saving product:', error);
       alert('Failed to save product.');
@@ -252,7 +252,7 @@ const ProductForm = () => {
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '15px', paddingTop: '20px', borderTop: '1px solid #eaeaea' }}>
           <button
             type="button"
-            onClick={() => navigate('/petricor-hq/products')}
+            onClick={() => navigate('/ad/products')}
             className="admin-btn admin-btn-secondary"
           >
             Cancel

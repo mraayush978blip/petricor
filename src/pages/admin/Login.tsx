@@ -122,7 +122,7 @@ const Login = () => {
     } else {
       // Success — clear lockout state
       clearLockState();
-      navigate('/petricor-hq');
+      navigate('/ad');
     }
   };
 
