@@ -1,3 +1,6 @@
+body, html, * {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
 
 .PhoneInput {
   display: flex;
