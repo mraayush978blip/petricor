@@ -1,0 +1,257 @@
+
+.PhoneInput {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.PhoneInputInput {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 15px;
+  background: transparent;
+}
+
+/* Responsive Overrides */
+/* Hide reCAPTCHA floating badge — disclosure shown in footer instead (Google-approved) */
+.grecaptcha-badge {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+@media (max-width: 768px) {
+  /* Prevent horizontal scroll issues globally */
+  body, html {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Hero Section */
+  .hero-left, .hero-right {
+    flex: 1 1 100% !important;
+    padding: 0 15px !important;
+    border-right: none !important;
+  }
+  .hero-right {
+    margin-top: 40px !important;
+  }
+  .hero-title {
+    font-size: 40px !important;
+  }
+  .hero-title-italic {
+    font-size: 34px !important;
+    margin-bottom: 25px !important;
+  }
+  
+  /* Section Titles */
+  .section-title {
+    font-size: 28px !important;
+  }
+  .section-title-italic {
+    font-size: 26px !important;
+  }
+
+  /* Hero CTA Buttons - full-width stacked rectangles */
+  .hero-cta-row {
+    flex-direction: column !important;
+    gap: 8px !important;
+    margin-bottom: 20px !important;
+  }
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Hero Stats - stack vertically as full-width rectangles */
+  .hero-stats {
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+  .hero-stat-item {
+    padding: 16px 0 !important;
+    border-bottom: 1px solid #dcdcdc !important;
+    flex: none !important;
+    width: 100% !important;
+  }
+  .hero-stat-item:last-child {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
+  .hero-stat-divider {
+    display: none !important;
+  }
+  
+  /* Formulation Grid - Horizontal Scroll */
+  .formulation-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important; /* Smooth scrolling */
+    scrollbar-width: none !important; /* Firefox */
+    gap: 15px !important;
+    padding-bottom: 10px !important;
+  }
+  .formulation-grid::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+  
+  .formulation-card {
+    flex: 0 0 65vw !important; /* Take up 65% of viewport width so next card peeks */
+    aspect-ratio: 1 / 1 !important; /* Make it square */
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding: 20px !important;
+  }
+
+  /* B2B Grid */
+  .b2b-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Compliance Credentials - horizontal scroll on mobile */
+  .credentials-list {
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    gap: 12px !important;
+    padding-bottom: 8px !important;
+  }
+  .credentials-list::-webkit-scrollbar {
+    display: none;
+  }
+  .credential-card {
+    flex: 0 0 75vw !important;
+    min-width: 0 !important;
+  }
+  
+  /* Product Grids - Exactly 2 products per row */
+  .all-products-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  
+  .home-products-grid {
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    /* Force grid columns to show 2 full + 1/4 of next card peeking */
+    grid-auto-columns: calc((100vw - 45px) / 2.25) !important;
+  }
+  .home-products-grid::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Product Cards inside home grid - match the column width */
+  .home-products-grid .product-card {
+    width: calc((100vw - 45px) / 2.25) !important;
+  }
+
+  /* Product Cards inside all-products grid */
+  .product-card {
+    width: 100% !important;
+  }
+  .product-card a {
+    padding: 10px !important;
+  }
+  .product-img {
+    height: 120px !important;
+  }
+  .product-card > div {
+    padding: 10px !important;
+  }
+  .product-card h3, .product-card a {
+    font-size: 13px !important;
+    white-space: normal !important;
+  }
+  .product-card button {
+    padding: 8px !important;
+    font-size: 12px !important;
+  }
+  
+  /* Containers */
+  .container {
+    width: 100% !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Skeleton Loading Animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton-shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, #f6f7f8 4%, #edeef1 25%, #f6f7f8 36%);
+  background-size: 1000px 100%;
+}
+
+/* General Enquiry Page - Mobile Responsive */
+@media (max-width: 768px) {
+  .ge-header {
+    margin-bottom: 30px !important;
+  }
+  .ge-title {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Section cards - reduce padding on mobile */
+  .ge-section {
+    padding: 20px !important;
+    border-radius: 8px !important;
+  }
+
+  /* Basic Info grid: 2 cols → 1 col on mobile */
+  .ge-grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 15px !important;
+  }
+
+  /* Ingredient header: hide column labels on mobile */
+  .ge-ingredient-header {
+    display: none !important;
+  }
+
+  /* Ingredient rows: stack all fields vertically on mobile */
+  .ge-ingredient-row {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    padding-bottom: 15px !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    position: relative !important;
+  }
+  /* Pill buttons — wrap naturally, never stretch full width */
+  .ge-pills {
+    gap: 8px !important;
+  }
+  .ge-pills button {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    font-size: '12px' !important;
+  }
+}
