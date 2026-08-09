@@ -78,9 +78,9 @@ function AppRoutes() {
           <Route path="general-enquiry" element={<PageTransition><GeneralEnquiry /></PageTransition>} />
         </Route>
 
-        <Route path="/admin/login" element={<PageTransition><Login /></PageTransition>} />
+        <Route path="/petricor-hq/login" element={<PageTransition><Login /></PageTransition>} />
         
-        <Route path="/admin" element={<ProtectedRoute />}>
+        <Route path="/petricor-hq" element={<ProtectedRoute />}>
           <Route element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="enquiries" element={<Enquiries />} />

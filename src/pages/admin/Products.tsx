@@ -56,7 +56,7 @@ const Products = () => {
     <div>
       <div className="admin-header-action">
         <h1 className="admin-page-title">Products</h1>
-        <Link to="/admin/products/new" className="admin-btn admin-btn-primary">
+        <Link to="/petricor-hq/products/new" className="admin-btn admin-btn-primary">
           <Plus size={20} />
           <span>Add New Product</span>
         </Link>
