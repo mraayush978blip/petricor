@@ -90,8 +90,8 @@ export default function ProductDetail() {
     const sections = [
         { title: 'Description', content: product.description },
         { title: 'Specification', content: product.specification },
-        { title: 'Plant Part & Origin', content: product.plant_part_origin },
-        { title: 'Uses & Benefits', content: product.uses_benefits }
+        { title: 'Plant Part & Origin', content: product.plant_and_origin },
+        { title: 'Uses & Benefits', content: product.uses_and_benefits }
     ].filter(s => s.content);
 
     return (
@@ -255,7 +255,8 @@ export default function ProductDetail() {
                                                 paddingBottom: '25px', 
                                                 color: '#555', 
                                                 lineHeight: '1.8',
-                                                fontSize: '15px' 
+                                                fontSize: '15px',
+                                                whiteSpace: 'pre-wrap'
                                             }}
                                             dangerouslySetInnerHTML={{ __html: sec.content }} 
                                         />

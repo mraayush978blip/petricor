@@ -17,6 +17,9 @@ const ProductForm = () => {
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [description, setDescription] = useState('');
+  const [specification, setSpecification] = useState('');
+  const [plantAndOrigin, setPlantAndOrigin] = useState('');
+  const [usesAndBenefits, setUsesAndBenefits] = useState('');
   const [categoryId, setCategoryId] = useState('');
   
   // Images
@@ -44,6 +47,9 @@ const ProductForm = () => {
       setTitle(data.title);
       setSlug(data.slug);
       setDescription(data.description || '');
+      setSpecification(data.specification || '');
+      setPlantAndOrigin(data.plant_and_origin || '');
+      setUsesAndBenefits(data.uses_and_benefits || '');
       setCategoryId(data.category_id || '');
       setPrimaryImagePreview(data.primary_image_url);
       setHoverImagePreview(data.hover_image_url);
@@ -121,6 +127,9 @@ const ProductForm = () => {
         title,
         slug,
         description,
+        specification,
+        plant_and_origin: plantAndOrigin,
+        uses_and_benefits: usesAndBenefits,
         category_id: categoryId || null,
         primary_image_url: finalPrimaryUrl,
         hover_image_url: finalHoverUrl,
@@ -198,6 +207,39 @@ const ProductForm = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="admin-form-input admin-form-textarea"
+            />
+          </div>
+
+          <div className="admin-form-group" style={{ gridColumn: '1 / -1', marginBottom: 0 }}>
+            <label className="admin-form-label">Specification</label>
+            <textarea
+              rows={4}
+              value={specification}
+              onChange={(e) => setSpecification(e.target.value)}
+              className="admin-form-input admin-form-textarea"
+              placeholder="e.g. &#10;• Dried fruit powder&#10;• Standardised extract — 20% tannins"
+            />
+          </div>
+
+          <div className="admin-form-group" style={{ gridColumn: '1 / -1', marginBottom: 0 }}>
+            <label className="admin-form-label">Plant Part & Origin</label>
+            <input
+              type="text"
+              value={plantAndOrigin}
+              onChange={(e) => setPlantAndOrigin(e.target.value)}
+              className="admin-form-input"
+              placeholder="e.g. Fruit (dried) — Neemuch / Madhya Pradesh, India"
+            />
+          </div>
+
+          <div className="admin-form-group" style={{ gridColumn: '1 / -1', marginBottom: 0 }}>
+            <label className="admin-form-label">Uses & Benefits</label>
+            <textarea
+              rows={4}
+              value={usesAndBenefits}
+              onChange={(e) => setUsesAndBenefits(e.target.value)}
+              className="admin-form-input admin-form-textarea"
+              placeholder="e.g. &#10;• Natural Vitamin C&#10;• Immune system support"
             />
           </div>
 
