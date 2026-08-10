@@ -73,7 +73,7 @@ export default function Home() {
                         <h1 className="hero-title-italic" style={{ fontSize: '68px', color: 'var(--primary-brown)', marginBottom: '35px', fontWeight: '500', lineHeight: '1.05', fontStyle: 'italic', letterSpacing: '-1.5px' }}>
                             You get the proof.
                         </h1>
-                        <p style={{ fontSize: '15px', color: '#555', lineHeight: '1.6', marginBottom: '40px', maxWidth: '520px', fontWeight: '500' }}>
+                        <p style={{ fontSize: '16px', color: '#595959', lineHeight: '25.6px', marginBottom: '40px', maxWidth: '100%', fontWeight: '500' }}>
                             Farm-origin botanical extracts from Neemuch, India where the herbs actually grow. Every batch traceable to its field, tested by NABL-accredited labs, documented for your import market. No middlemen. No assumptions.
                         </p>
                         <div className="hero-cta-row" style={{ display: 'flex', gap: '15px', marginBottom: '50px' }}>
