@@ -103,26 +103,26 @@ export default function Home() {
                         <div className="compliance-wrapper">
                             <h4 className="compliance-title" style={{ fontSize: '14px', color: '#8b9caa', marginBottom: '25px', fontWeight: '600' }}>Compliance Credentials</h4>
                             
-                            <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-                                <div className="credential-card" style={{ backgroundColor: '#ffffff', border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '40px' }}>
+                            <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                                <div className="credential-card textured-card" style={{ border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '25px' }}>
                                     <h3 style={{ fontSize: '18px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>✓ IEC - Import Export Code</h3>
                                     <p style={{ fontSize: '16px', color: '#595959', margin: '0 0 8px 0' }}>Directorate General of Foreign Trade (DGFT)</p>
                                     <p style={{ fontSize: '16px', color: '#595959', margin: 0, lineHeight: '1.5' }}>Registered Indian exporter under DGFT. All international shipments dispatched under valid IEC.</p>
                                 </div>
                                 
-                                <div className="credential-card" style={{ backgroundColor: '#ffffff', border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '40px' }}>
+                                <div className="credential-card textured-card" style={{ border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '25px' }}>
                                     <h3 style={{ fontSize: '18px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>✓ FSSAI - Food Safety Licensed</h3>
                                     <p style={{ fontSize: '16px', color: '#595959', margin: '0 0 8px 0' }}>Food Safety &amp; Standards Authority of India</p>
                                     <p style={{ fontSize: '16px', color: '#595959', margin: 0, lineHeight: '1.5' }}>FSSAI-licensed facility. Compliant with Indian food safety standards for export of botanical ingredients.</p>
                                 </div>
                                 
-                                <div className="credential-card" style={{ backgroundColor: '#ffffff', border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '40px' }}>
+                                <div className="credential-card textured-card" style={{ border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '25px' }}>
                                     <h3 style={{ fontSize: '18px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>✓ NABL Accredited Lab Testing</h3>
                                     <p style={{ fontSize: '16px', color: '#595959', margin: '0 0 8px 0' }}>Every batch independently tested - HPLC quantified</p>
                                     <p style={{ fontSize: '16px', color: '#595959', margin: 0, lineHeight: '1.5' }}>Active compound potency, heavy metals, pesticide residues, and microbial panels verified on every lot before dispatch.</p>
                                 </div>
                                 
-                                <div className="credential-card credential-card--highlight" style={{ backgroundColor: '#e9e3e0', border: '1px solid var(--primary-brown)', borderRadius: '6px', padding: '40px' }}>
+                                <div className="credential-card textured-card-highlight" style={{ borderRadius: '6px', padding: '25px' }}>
                                     <h3 style={{ fontSize: '18px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>📄 Complete documentation on every shipment</h3>
                                     <p style={{ fontSize: '16px', color: '#595959', margin: 0 }}>CoA - Phytosanitary - Certificate of Origin - MSDS - Allergen Declaration</p>
                                 </div>
