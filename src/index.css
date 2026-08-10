@@ -38,8 +38,8 @@ h1, h2, h3, h4, h5, h6, .hero-title, .hero-title-italic, .section-title, .sectio
 
 @media (max-width: 768px) {
   /* Prevent horizontal scroll issues globally without breaking pull-to-refresh */
-  #root, body, html {
-    overflow-x: clip;
+  #root {
+    overflow-x: hidden;
     width: 100%;
   }
   
@@ -197,7 +197,6 @@ h1, h2, h3, h4, h5, h6, .hero-title, .hero-title-italic, .section-title, .sectio
   }
   .product-card h3, .product-card a {
     font-size: 13px !important;
-    white-space: normal !important;
   }
   .product-card button {
     padding: 8px !important;

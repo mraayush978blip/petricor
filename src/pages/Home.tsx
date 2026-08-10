@@ -214,18 +214,18 @@ export default function Home() {
                                     style={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', display: 'block' }} 
                                 />
                             </Link>
-                            <div style={{ padding: '15px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                                <Link to={`/product/${product.slug}`} style={{ display: 'block', fontSize: '15px', color: '#333', textDecoration: 'none', fontWeight: '600', marginBottom: '8px', lineHeight: '1.3' }}>
+                            <div style={{ padding: '10px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                                <Link to={`/product/${product.slug}`} title={product.title} style={{ display: 'block', fontSize: '14px', color: '#333', textDecoration: 'none', fontWeight: '600', marginBottom: '4px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                     {product.title}
                                 </Link>
                                 <div style={{ marginTop: 'auto' }}>
-                                    <div style={{ fontSize: '13px', color: '#888', marginBottom: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{product.category}</div>
+                                    <div style={{ fontSize: '11px', color: '#888', marginBottom: '10px', lineHeight: '1.3' }}>{product.category}</div>
                                     <button 
                                         onClick={() => {
                                             setSelectedProduct(product);
                                             setIsModalOpen(true);
                                         }}
-                                        style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#8b6352', color: '#fff', padding: '10px', borderRadius: '4px', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: '500' }}
+                                        style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#8b6352', color: '#fff', padding: '6px 12px', borderRadius: '4px', border: 'none', cursor: 'pointer', fontSize: '12px', fontWeight: '500' }}
                                     >
                                         Enquire Now
                                     </button>
