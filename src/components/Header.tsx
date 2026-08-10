@@ -7,7 +7,7 @@ export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [showCategoriesMenu, setShowCategoriesMenu] = useState(false);
     const [isMobileCategoryOpen, setIsMobileCategoryOpen] = useState(false);
-    const [categories, setCategories] = useState<{id: string, name: string}[]>([]);
+    const [categories, setCategories] = useState<{ id: string, name: string }[]>([]);
     const [isScrolled, setIsScrolled] = useState(false);
 
     const location = useLocation();
@@ -35,9 +35,9 @@ export default function Header() {
             document.body.style.overflow = '';
             document.documentElement.style.overflow = '';
         }
-        return () => { 
+        return () => {
             document.body.style.overflow = '';
-            document.documentElement.style.overflow = ''; 
+            document.documentElement.style.overflow = '';
         };
     }, [isMobileMenuOpen]);
 
@@ -87,42 +87,42 @@ export default function Header() {
             <div style={{ height: isScrolled ? '65px' : '85px', transition: 'height 0.15s ease-out' }} />
             <header style={{ 
                 padding: isScrolled ? '10px 0' : '20px 0',
-                backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.95)' : '#ffffff',
+                backgroundColor: isScrolled ? 'rgba(243, 243, 243, 0.95)' : 'var(--bg-beige)',
                 backdropFilter: isScrolled ? 'blur(10px)' : 'none',
                 position: 'fixed',
                 top: 0,
                 left: 0,
                 right: 0,
                 zIndex: 1000,
-                borderBottom: '1px solid var(--border-color)',
+                borderBottom: '1px solid rgba(0,0,0,0.05)',
                 boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.06)' : 'none',
                 transition: 'all 0.15s ease-out'
             }}>
                 <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0' }}>
-                    
+
                     {/* Logo - Smooth scaling */}
-                    <Link to="/" style={{ display: 'block', width: isScrolled ? '120px' : '140px', transition: 'width 0.15s ease-out' }}>
-                        <img src="/Logo-1-2.png" alt="Petricor" style={{ width: '100%', height: 'auto' }} />
+                    <Link to="/" style={{ display: 'block', width: isScrolled ? '140px' : '170px', transition: 'width 0.15s ease-out' }}>
+                        <img src="/logo1.jpeg" alt="Petricor" style={{ width: '100%', height: 'auto' }} />
                     </Link>
 
                     {/* Desktop Nav (Centered) */}
                     <nav className="desktop-nav" style={{ display: 'none', gap: '40px', alignItems: 'center', margin: '0 auto' }}>
                         <Link to="/" style={getLinkStyle('/')}>Home</Link>
                         <Link to="/products" style={getLinkStyle('/products')}>Products</Link>
-                        
+
                         {/* Categories Dropdown Container */}
-                        <div 
+                        <div
                             style={{ position: 'relative' }}
                             onMouseEnter={() => setShowCategoriesMenu(true)}
                             onMouseLeave={() => setShowCategoriesMenu(false)}
                         >
                             <Link to="/products" style={{ ...getLinkStyle('/products'), display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', border: 'none', background: 'none' }}>
-                                Category 
+                                Category
                                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: showCategoriesMenu ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
                                     <polyline points="6 9 12 15 18 9"></polyline>
                                 </svg>
                             </Link>
-                            
+
                             {/* Dropdown Menu */}
                             {showCategoriesMenu && (
                                 <div style={{
@@ -151,7 +151,7 @@ export default function Header() {
                                         borderRight: '8px solid transparent',
                                         borderBottom: '8px solid var(--primary-brown)'
                                     }}></div>
-                                    
+
                                     {/* Scrollable category list */}
                                     <div className="nav-dropdown-scroll" style={{
                                         maxHeight: '60vh',
@@ -160,13 +160,13 @@ export default function Header() {
                                         borderRadius: '0 0 8px 8px'
                                     }}>
                                         {categories.map(category => (
-                                            <Link 
+                                            <Link
                                                 key={category.id}
                                                 to={`/products?category=${encodeURIComponent(category.name)}`}
-                                                style={{ 
-                                                    display: 'block', 
-                                                    padding: '12px 24px', 
-                                                    color: '#4a4a4a', 
+                                                style={{
+                                                    display: 'block',
+                                                    padding: '12px 24px',
+                                                    color: '#4a4a4a',
                                                     textDecoration: 'none',
                                                     fontSize: '14px',
                                                     transition: 'all 0.2s ease'
@@ -187,7 +187,7 @@ export default function Header() {
                                 </div>
                             )}
                         </div>
-                        
+
                         <Link to="/about-us" style={getLinkStyle('/about-us')}>About Us</Link>
                         <Link to="/contact-us" style={getLinkStyle('/contact-us')}>Contact Us</Link>
                     </nav>
@@ -195,17 +195,17 @@ export default function Header() {
                     {/* Right Side / Mobile Menu Button */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                         <div className="desktop-enquire" style={{ display: 'none', alignItems: 'center', gap: '20px' }}>
-                            <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--primary-brown)', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 10px rgba(121,85,72,0.2)' }}>
+                            <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--primary-brown)', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: 'all 0.2s' }}>
                                 <Search size={18} color="white" />
                             </div>
-                            <Link to="/general-enquiry" style={{ backgroundColor: 'var(--primary-brown)', color: 'white', padding: '12px 30px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '15px', transition: 'all 0.2s ease', boxShadow: '0 4px 10px rgba(121,85,72,0.2)' }}>
+                            <Link to="/general-enquiry" style={{ backgroundColor: 'var(--primary-brown)', color: 'white', padding: '12px 30px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '15px', transition: 'all 0.2s ease' }}>
                                 Enquire Now
                             </Link>
                         </div>
-                        
+
                         {/* Animated Hamburger Menu */}
-                        <button 
-                            className={`mobile-menu-btn hamburger ${isMobileMenuOpen ? 'open' : ''}`} 
+                        <button
+                            className={`mobile-menu-btn hamburger ${isMobileMenuOpen ? 'open' : ''}`}
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             aria-label="Toggle Menu"
                         >
@@ -217,7 +217,8 @@ export default function Header() {
                 </div>
 
                 {/* Basic responsive CSS & animations injected safely */}
-                <style dangerouslySetInnerHTML={{__html: `
+                <style dangerouslySetInnerHTML={{
+                    __html: `
                     @media (min-width: 992px) {
                         .desktop-nav, .desktop-enquire { display: flex !important; }
                         .mobile-menu-btn { display: none !important; }
@@ -326,8 +327,8 @@ export default function Header() {
             </header>
 
             {/* Mobile Nav Overlay (Backdrop) */}
-            <div 
-                className={`mobile-nav-overlay ${isMobileMenuOpen ? 'open' : ''}`} 
+            <div
+                className={`mobile-nav-overlay ${isMobileMenuOpen ? 'open' : ''}`}
                 onClick={() => setIsMobileMenuOpen(false)}
             ></div>
 
@@ -336,12 +337,12 @@ export default function Header() {
                 <div style={{ flex: '1', overflowY: 'auto', padding: '90px 0 20px', display: 'flex', flexDirection: 'column' }}>
                     <Link to="/" style={getMobileLinkStyle('/')}>Home</Link>
                     <Link to="/products" style={getMobileLinkStyle('/products')}>Products</Link>
-                    
+
                     {/* Mobile Category Dropdown */}
                     <div style={{ borderBottom: '1px solid #f0f0f0' }}>
-                        <button 
+                        <button
                             onClick={() => setIsMobileCategoryOpen(!isMobileCategoryOpen)}
-                            style={{ 
+                            style={{
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
@@ -362,21 +363,21 @@ export default function Header() {
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
-                        
-                        <div className="nav-dropdown-scroll" style={{ 
-                            maxHeight: isMobileCategoryOpen ? '50vh' : '0px', 
-                            overflowY: 'auto', 
+
+                        <div className="nav-dropdown-scroll" style={{
+                            maxHeight: isMobileCategoryOpen ? '50vh' : '0px',
+                            overflowY: 'auto',
                             transition: 'max-height 0.3s ease',
                             backgroundColor: '#fdfbf9'
                         }}>
                             {categories.map(category => (
-                                <Link 
+                                <Link
                                     key={category.id}
                                     to={`/products?category=${encodeURIComponent(category.name)}`}
-                                    style={{ 
-                                        display: 'block', 
-                                        padding: '12px 20px 12px 40px', 
-                                        color: '#8b6352', 
+                                    style={{
+                                        display: 'block',
+                                        padding: '12px 20px 12px 40px',
+                                        color: '#8b6352',
                                         textDecoration: 'none',
                                         fontSize: '15px'
                                     }}
@@ -390,17 +391,17 @@ export default function Header() {
                     <Link to="/about-us" style={getMobileLinkStyle('/about-us')}>About Us</Link>
                     <Link to="/contact-us" style={getMobileLinkStyle('/contact-us')}>Contact Us</Link>
                 </div>
-                
+
                 <div style={{ padding: '20px', borderTop: '1px solid #eee', backgroundColor: '#fff' }}>
-                    <Link to="/general-enquiry" style={{ 
+                    <Link to="/general-enquiry" style={{
                         display: 'block',
-                        backgroundColor: '#8b6352', 
-                        color: 'white', 
-                        padding: '14px', 
-                        textAlign: 'center', 
-                        borderRadius: '4px', 
-                        textDecoration: 'none', 
-                        fontWeight: '600', 
+                        backgroundColor: '#8b6352',
+                        color: 'white',
+                        padding: '14px',
+                        textAlign: 'center',
+                        borderRadius: '4px',
+                        textDecoration: 'none',
+                        fontWeight: '600',
                         fontSize: '16px',
                         boxShadow: '0 4px 10px rgba(139, 99, 82, 0.2)'
                     }}>

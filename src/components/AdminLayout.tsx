@@ -41,8 +41,8 @@ const AdminLayout = () => {
     <div className="admin-layout">
       {/* Mobile Backdrop Overlay */}
       {isSidebarOpen && isMobile && (
-        <div 
-          className="admin-sidebar-overlay open" 
+        <div
+          className="admin-sidebar-overlay open"
           onClick={() => setIsSidebarOpen(false)}
         ></div>
       )}
@@ -52,7 +52,7 @@ const AdminLayout = () => {
         <div className="admin-sidebar-header">
           {isSidebarOpen && (
             <Link to="/ad" style={{ display: 'block', width: '130px' }}>
-              <img src="/Logo-1-2.png" alt="Petricor" style={{ width: '100%', height: 'auto' }} />
+              <img src="/logo1.jpeg" alt="Petricor" style={{ width: '100%', height: 'auto' }} />
             </Link>
           )}
           {!isMobile && (
@@ -95,15 +95,15 @@ const AdminLayout = () => {
         <header className="admin-header">
           <div className="admin-header-left">
             {isMobile && (
-              <button 
-                className="admin-mobile-menu-btn" 
+              <button
+                className="admin-mobile-menu-btn"
                 onClick={() => setIsSidebarOpen(true)}
               >
                 <Menu size={24} />
               </button>
             )}
           </div>
-          
+
           <button onClick={handleLogout} className="admin-logout">
             <LogOut size={20} />
             <span>Logout</span>

@@ -6,9 +6,9 @@ import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { clientBotCheck, verifyRecaptchaToken, getFormOpenTime } from '../../lib/botProtection';
 
 // ── Brute-force config ──────────────────────────────────────────────────────
-const MAX_ATTEMPTS   = 5;           // failed tries before lockout
-const LOCKOUT_MS     = 15 * 60 * 1000; // 15 minutes
-const STORAGE_KEY    = '__admin_lock';
+const MAX_ATTEMPTS = 5;           // failed tries before lockout
+const LOCKOUT_MS = 15 * 60 * 1000; // 15 minutes
+const STORAGE_KEY = '__admin_lock';
 
 interface LockState { attempts: number; lockedUntil: number | null; }
 
@@ -39,11 +39,11 @@ function formatLockTime(ms: number): string {
 // ───────────────────────────────────────────────────────────────────────────
 
 const Login = () => {
-  const [email, setEmail]       = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
-  const [error, setError]       = useState<string | null>(null);
-  const [loading, setLoading]   = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const [lockRemaining, setLockRemaining] = useState(() => {
     const s = getLockState();
     return getRemainingLockMs(s.lockedUntil);
@@ -51,7 +51,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const { executeRecaptcha } = useGoogleReCaptcha();
-  const honeypotRef  = useRef('');
+  const honeypotRef = useRef('');
   const formOpenedAt = useRef(getFormOpenTime());
 
   // Tick the lockout countdown
@@ -134,11 +134,11 @@ const Login = () => {
 
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-          <img src="/Logo-1-2.png" alt="Petricor" style={{ height: '40px', width: 'auto' }} />
+          <img src="/logo1.jpeg" alt="Petricor" style={{ height: '40px', width: 'auto' }} />
         </div>
 
         <div style={{ backgroundColor: 'white', padding: '40px', borderRadius: '8px', boxShadow: '0 4px 20px rgba(0,0,0,0.07)', border: '1px solid #eaeaea' }}>
-          
+
           <h2 style={{ textAlign: 'center', fontSize: '22px', fontWeight: '600', color: '#333', marginBottom: '6px' }}>
             Admin Login
           </h2>

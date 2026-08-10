@@ -15,7 +15,7 @@ export default function Footer() {
 
                     {/* Logo Column */}
                     <div className="footer-logo-col">
-                        <img src="/Logo-1-2.png" alt="Petricor" className="footer-logo-img" />
+                        <img src="/logo1.jpeg" alt="Petricor" className="footer-logo-img" />
                         <p style={{ color: 'var(--text-light)', fontSize: '14px', lineHeight: '1.7', margin: 0 }}>
                             Global Root From India | Catering to the World Market.
                         </p>

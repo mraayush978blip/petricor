@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 export default function SplashScreen() {
     return (
-        <motion.div 
+        <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
@@ -26,14 +26,14 @@ export default function SplashScreen() {
                 transition={{ duration: 0.9, ease: "easeOut" }}
                 style={{ textAlign: 'center' }}
             >
-                <img 
-                    src="/Logo-1-2.png" 
-                    alt="Petricor" 
-                    style={{ width: '220px', maxWidth: '70vw', height: 'auto' }} 
+                <img
+                    src="/logo1.jpeg"
+                    alt="Petricor"
+                    style={{ width: '220px', maxWidth: '70vw', height: 'auto' }}
                 />
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
                 style={{
                     width: '40px',
                     height: '2px',

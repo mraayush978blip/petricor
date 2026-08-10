@@ -3,10 +3,10 @@
 :root {
   --primary-brown: #795548;
   --primary-brown-hover: #5d4037;
-  --bg-beige: #f4f3f2;
-  --text-dark: #1a1a1a;
+  --bg-beige: #f3f3f3; /* Exactly matching the warm grey background */
+  --text-dark: #333333;
   --text-light: #777777;
-  --border-color: #eaeaea;
+  --border-color: #e5e5e5;
 }
 
 body, html, * {

@@ -77,7 +77,7 @@ export default function Home() {
                             Farm-origin botanical extracts from Neemuch, India where the herbs actually grow. Every batch traceable to its field, tested by NABL-accredited labs, documented for your import market. No middlemen. No assumptions.
                         </p>
                         <div className="hero-cta-row" style={{ display: 'flex', gap: '15px', marginBottom: '50px' }}>
-                            <Link to="/contact-us" className="hero-btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'var(--primary-brown)', color: '#fff', padding: '12px 24px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '14px', transition: 'background-color 0.2s', boxShadow: '0 4px 10px rgba(121,85,72,0.2)' }}>
+                            <Link to="/contact-us" className="hero-btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'var(--primary-brown)', color: '#fff', padding: '12px 24px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '14px', transition: 'background-color 0.2s' }}>
                                 Explore Product ➔
                             </Link>
                             <Link to="/general-enquiry" className="hero-btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'transparent', border: '1px solid var(--border-color)', color: 'var(--primary-brown)', padding: '12px 24px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '14px', transition: 'all 0.2s' }}>
@@ -103,25 +103,25 @@ export default function Home() {
                         <h4 style={{ fontSize: '14px', color: '#8b9caa', marginBottom: '25px', fontWeight: '600' }}>Compliance Credentials</h4>
                         
                         <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                            <div className="credential-card" style={{ backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '20px' }}>
+                            <div className="credential-card" style={{ backgroundColor: '#ffffff', border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '20px' }}>
                                 <h3 style={{ fontSize: '15px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>✓ IEC - Import Export Code</h3>
                                 <p style={{ fontSize: '12px', color: 'var(--text-light)', margin: '0 0 8px 0' }}>Directorate General of Foreign Trade (DGFT)</p>
                                 <p style={{ fontSize: '12px', color: '#555', margin: 0, lineHeight: '1.5' }}>Registered Indian exporter under DGFT. All international shipments dispatched under valid IEC.</p>
                             </div>
                             
-                            <div className="credential-card" style={{ backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '20px' }}>
+                            <div className="credential-card" style={{ backgroundColor: '#ffffff', border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '20px' }}>
                                 <h3 style={{ fontSize: '15px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>✓ FSSAI - Food Safety Licensed</h3>
                                 <p style={{ fontSize: '12px', color: 'var(--text-light)', margin: '0 0 8px 0' }}>Food Safety &amp; Standards Authority of India</p>
                                 <p style={{ fontSize: '12px', color: '#555', margin: 0, lineHeight: '1.5' }}>FSSAI-licensed facility. Compliant with Indian food safety standards for export of botanical ingredients.</p>
                             </div>
                             
-                            <div className="credential-card" style={{ backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '20px' }}>
+                            <div className="credential-card" style={{ backgroundColor: '#ffffff', border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '20px' }}>
                                 <h3 style={{ fontSize: '15px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>✓ NABL Accredited Lab Testing</h3>
                                 <p style={{ fontSize: '12px', color: 'var(--text-light)', margin: '0 0 8px 0' }}>Every batch independently tested - HPLC quantified</p>
                                 <p style={{ fontSize: '12px', color: '#555', margin: 0, lineHeight: '1.5' }}>Active compound potency, heavy metals, pesticide residues, and microbial panels verified on every lot before dispatch.</p>
                             </div>
                             
-                            <div className="credential-card credential-card--highlight" style={{ backgroundColor: 'rgba(121,85,72,0.05)', border: '1px solid var(--primary-brown)', borderRadius: '6px', padding: '20px' }}>
+                            <div className="credential-card credential-card--highlight" style={{ backgroundColor: '#e9e3e0', border: '1px solid var(--primary-brown)', borderRadius: '6px', padding: '20px' }}>
                                 <h3 style={{ fontSize: '15px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>📄 Complete documentation on every shipment</h3>
                                 <p style={{ fontSize: '12px', color: 'var(--text-light)', margin: 0 }}>CoA - Phytosanitary - Certificate of Origin - MSDS - Allergen Declaration</p>
                             </div>
