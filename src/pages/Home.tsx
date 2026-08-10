@@ -131,12 +131,14 @@ export default function Home() {
             {/* CATEGORIES / PRODUCTS SECTION */}
             <div className="container" style={{ maxWidth: '1200px', margin: '80px auto 0', padding: '0 15px' }}>
                 <div style={{ marginBottom: '30px' }}>
-                    <div style={{ fontSize: '11px', color: '#999', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>
-                        BOTANICAL INGREDIENTS
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: '#8b6352', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '15px' }}>
+                        BOTANICAL INGREDIENTS <span style={{ display: 'inline-block', width: '40px', height: '1px', backgroundColor: '#8b6352' }}></span>
                     </div>
-                    <h2 className="section-title" style={{ fontSize: '36px', color: '#333', margin: 0, fontWeight: 'bold', letterSpacing: '-1px' }}>
-                        35 ingredients. <br />
-                        <span style={{ fontStyle: 'italic', color: '#7c5847', fontWeight: '600' }}>Farm-verified. Export-ready.</span>
+                    <h2 className="section-title" style={{ fontSize: '38px', color: '#1a1a1a', margin: '0 0 5px 0', fontWeight: '600', letterSpacing: '-1px', lineHeight: '1.2' }}>
+                        35 ingredients.
+                    </h2>
+                    <h2 className="section-title-italic" style={{ fontSize: '28px', color: '#4a5b6c', margin: 0, fontWeight: '400', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
+                        Farm-verified. Export-ready.
                     </h2>
                 </div>
                 {/* Horizontal Category Scroll */}
@@ -198,10 +200,10 @@ export default function Home() {
                     scrollbarColor: '#9c7361 #f0f0f0'
                 }}>
                     {displayedProducts.map((product, idx) => (
-                        <div key={idx} className="product-card" style={{ border: '1px solid #eaeaea', borderRadius: '4px', overflow: 'hidden', backgroundColor: '#fff', transition: 'transform 0.2s', width: '260px' }}>
+                        <div key={idx} className="product-card" style={{ display: 'flex', flexDirection: 'column', border: '1px solid #eaeaea', borderRadius: '4px', overflow: 'hidden', backgroundColor: '#fff', transition: 'transform 0.2s', width: '260px', height: '100%' }}>
                             <Link 
                                 to={`/product/${product.slug}`} 
-                                style={{ display: 'block', backgroundColor: '#f9f9f9', padding: '20px' }}
+                                style={{ display: 'block', backgroundColor: '#f9f9f9', padding: '0' }}
                                 onMouseEnter={() => setHoveredProductSlug(product.slug)}
                                 onMouseLeave={() => setHoveredProductSlug(null)}
                             >
@@ -209,10 +211,10 @@ export default function Home() {
                                     src={hoveredProductSlug === product.slug && product.images[1] ? product.images[1] : product.images[0]} 
                                     alt={product.title} 
                                     className="product-img"
-                                    style={{ width: '100%', height: '180px', objectFit: 'contain' }} 
+                                    style={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', display: 'block' }} 
                                 />
                             </Link>
-                            <div style={{ padding: '20px' }}>
+                            <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                                 <Link to={`/product/${product.slug}`} style={{ display: 'block', fontSize: '15px', color: '#333', textDecoration: 'none', fontWeight: '500', marginBottom: '5px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{product.title}</Link>
                                 <div style={{ fontSize: '13px', color: '#888', marginBottom: '15px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{product.category}</div>
                                 <button 
@@ -220,7 +222,7 @@ export default function Home() {
                                         setSelectedProduct(product);
                                         setIsModalOpen(true);
                                     }}
-                                    style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#8b6352', color: '#fff', padding: '10px', borderRadius: '4px', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: '500' }}
+                                    style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#8b6352', color: '#fff', padding: '10px', borderRadius: '4px', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: '500', marginTop: 'auto' }}
                                 >
                                     Enquire Now
                                 </button>
