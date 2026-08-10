@@ -1,5 +1,6 @@
 /* admin.css */
-.admin-layout { display: flex; height: 100vh; background-color: #f9f9f9; font-family: inherit; overflow-x: hidden; width: 100vw; max-width: 100%; user-select: auto !important; -webkit-user-select: auto !important; }
+.admin-layout, .admin-layout * { user-select: auto !important; -webkit-user-select: auto !important; -moz-user-select: auto !important; -ms-user-select: auto !important; }
+.admin-layout { display: flex; height: 100vh; background-color: #f9f9f9; font-family: inherit; overflow-x: hidden; width: 100%; max-width: 100%; }
 .admin-sidebar { background-color: white; border-right: 1px solid #eee; transition: width 0.3s; }
 .admin-sidebar-open { width: 260px; }
 .admin-sidebar-closed { width: 80px; }
