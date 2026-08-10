@@ -146,7 +146,7 @@ export default function Home() {
                     </h2>
                 </div>
                 {/* Horizontal Category Scroll */}
-                <div style={{ overflowX: 'auto', whiteSpace: 'nowrap', paddingBottom: '15px', marginBottom: '30px', msOverflowStyle: 'none', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth' }} className="hide-scrollbar">
+                <div style={{ overflowX: 'auto', whiteSpace: 'nowrap', paddingBottom: '15px', marginBottom: '30px', msOverflowStyle: 'none', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }} className="hide-scrollbar">
                     <style dangerouslySetInnerHTML={{__html: `
                         .hide-scrollbar::-webkit-scrollbar { display: none; }
                     `}} />
@@ -188,8 +188,7 @@ export default function Home() {
                         marginBottom: '80px',
                         overflowX: 'auto',
                         paddingBottom: '20px',
-                        WebkitOverflowScrolling: 'touch',
-                        scrollBehavior: 'smooth'
+                        WebkitOverflowScrolling: 'touch'
                     }}>
                         {[...Array(6)].map((_, i) => <ProductSkeleton key={i} />)}
                     </div>
@@ -205,8 +204,7 @@ export default function Home() {
                     paddingBottom: '20px',
                     scrollbarWidth: 'thin',
                     scrollbarColor: '#9c7361 #f0f0f0',
-                    WebkitOverflowScrolling: 'touch',
-                    scrollBehavior: 'smooth'
+                    WebkitOverflowScrolling: 'touch'
                 }}>
                     {displayedProducts.map((product, idx) => (
                         <div key={idx} className="product-card" style={{ display: 'flex', flexDirection: 'column', border: '1px solid #eaeaea', borderRadius: '4px', overflow: 'hidden', backgroundColor: '#fff', transition: 'transform 0.2s', width: '260px', height: '100%' }}>
