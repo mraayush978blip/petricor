@@ -187,20 +187,18 @@ h1, h2, h3, h4, h5, h6, .hero-title, .hero-title-italic, .section-title, .sectio
     width: 100% !important;
   }
   .product-card a {
-    padding: 10px !important;
+    padding: 0 !important;  /* Never pad the image link wrapper */
   }
   .product-img {
-    height: 120px !important;
+    width: 100% !important;
+    height: auto !important; /* Let aspect-ratio: 1/1 control the height */
   }
-  .product-card > div {
-    padding: 10px !important;
-  }
-  .product-card h3, .product-card a {
+  .product-card h3 {
     font-size: 13px !important;
   }
   .product-card button {
-    padding: 8px !important;
-    font-size: 12px !important;
+    padding: 12px 8px !important;
+    font-size: 13px !important;
   }
   
   /* Containers */

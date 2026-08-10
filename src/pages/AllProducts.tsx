@@ -126,11 +126,11 @@ export default function AllProducts() {
                                     style={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', display: 'block' }} 
                                 />
                             </Link>
-                            <div style={{ padding: '10px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                                <Link to={`/product/${product.slug}`} style={{ display: 'block', fontSize: '14px', color: '#333', textDecoration: 'none', fontWeight: '600', marginBottom: '4px', lineHeight: '1.3' }}>
+                            <div style={{ padding: '10px 12px 12px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                                <Link to={`/product/${product.slug}`} style={{ display: 'block', fontSize: '15px', color: '#222', textDecoration: 'none', fontWeight: '700', marginBottom: '3px', lineHeight: '1.3' }}>
                                     {product.title}
                                 </Link>
-                                <Link to={`/products?category=${encodeURIComponent(product.category)}`} style={{ display: 'block', fontSize: '11px', color: '#888', marginBottom: '10px', lineHeight: '1.3', textDecoration: 'none' }}>
+                                <Link to={`/products?category=${encodeURIComponent(product.category)}`} style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
                                     {product.category}
                                 </Link>
                                 <button 
@@ -138,7 +138,7 @@ export default function AllProducts() {
                                         setSelectedProduct(product);
                                         setIsModalOpen(true);
                                     }}
-                                    style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#8b6352', color: '#fff', padding: '8px 12px', borderRadius: '4px', border: 'none', cursor: 'pointer', fontSize: '12px', fontWeight: '500', marginTop: 'auto' }}
+                                    style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#6b4236', color: '#fff', padding: '12px 8px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: '600', marginTop: '12px' }}
                                 >
                                     Enquire Now
                                 </button>
