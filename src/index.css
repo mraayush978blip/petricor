@@ -255,6 +255,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
+    box-sizing: border-box !important;
   }
   
   /* Product Grids - Exactly 2 products per row */
