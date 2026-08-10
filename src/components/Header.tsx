@@ -113,15 +113,16 @@ export default function Header() {
                         {/* Categories Dropdown Container */}
                         <div
                             style={{ position: 'relative' }}
-                            onMouseEnter={() => setShowCategoriesMenu(true)}
-                            onMouseLeave={() => setShowCategoriesMenu(false)}
                         >
-                            <Link to="/products" style={{ ...getLinkStyle('/products'), display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', border: 'none', background: 'none' }}>
+                            <button 
+                                onClick={() => setShowCategoriesMenu(!showCategoriesMenu)} 
+                                style={{ ...getLinkStyle('/products'), display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', border: 'none', background: 'none' }}
+                            >
                                 Category
                                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: showCategoriesMenu ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
                                     <polyline points="6 9 12 15 18 9"></polyline>
                                 </svg>
-                            </Link>
+                            </button>
 
                             {/* Dropdown Menu */}
                             {showCategoriesMenu && (
@@ -171,6 +172,7 @@ export default function Header() {
                                                     fontSize: '14px',
                                                     transition: 'all 0.2s ease'
                                                 }}
+                                                onClick={() => setShowCategoriesMenu(false)}
                                                 onMouseOver={(e) => {
                                                     e.currentTarget.style.backgroundColor = '#fdfbf9';
                                                     e.currentTarget.style.color = '#8b6352';
