@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import { Search } from 'lucide-react';
 
 export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -54,12 +55,12 @@ export default function Header() {
     };
 
     const getLinkStyle = (path: string) => ({
-        color: '#4a4a4a',
+        color: 'var(--text-dark)',
         textDecoration: 'none',
         fontWeight: isActive(path) ? '600' as const : '500' as const,
         fontSize: '15px',
         paddingBottom: '4px',
-        borderBottom: isActive(path) ? '2px solid #8b6352' : '2px solid transparent',
+        borderBottom: isActive(path) ? '2px solid var(--primary-brown)' : '2px solid transparent',
         transition: 'all 0.2s ease'
     });
 
@@ -68,14 +69,14 @@ export default function Header() {
         return {
             display: 'flex',
             alignItems: 'center',
-            color: active ? '#8b6352' : '#4a4a4a',
+            color: active ? 'var(--primary-brown)' : 'var(--text-dark)',
             textDecoration: 'none',
             fontSize: '18px',
             fontWeight: active ? '600' as const : '500' as const,
-            borderBottom: '1px solid #f0f0f0',
+            borderBottom: '1px solid var(--border-color)',
             padding: '16px 20px',
-            backgroundColor: active ? '#fdfbf9' : 'transparent',
-            borderLeft: active ? '4px solid #8b6352' : '4px solid transparent',
+            backgroundColor: active ? 'rgba(121,85,72,0.05)' : 'transparent',
+            borderLeft: active ? '4px solid var(--primary-brown)' : '4px solid transparent',
             transition: 'all 0.2s ease'
         };
     };
@@ -86,14 +87,14 @@ export default function Header() {
             <div style={{ height: isScrolled ? '65px' : '85px', transition: 'height 0.15s ease-out' }} />
             <header style={{ 
                 padding: isScrolled ? '10px 0' : '20px 0',
-                backgroundColor: isScrolled ? 'rgba(236, 236, 236, 0.95)' : '#ececec',
+                backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.95)' : '#ffffff',
                 backdropFilter: isScrolled ? 'blur(10px)' : 'none',
                 position: 'fixed',
                 top: 0,
                 left: 0,
                 right: 0,
                 zIndex: 1000,
-                borderBottom: isScrolled ? '1px solid #ddd' : '1px solid #e0e0e0',
+                borderBottom: '1px solid var(--border-color)',
                 boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.06)' : 'none',
                 transition: 'all 0.15s ease-out'
             }}>
@@ -135,8 +136,8 @@ export default function Header() {
                                     minWidth: '240px',
                                     zIndex: 1000,
                                     marginTop: '20px',
-                                    border: '1px solid #eee',
-                                    borderTop: '3px solid #8b6352'
+                                    border: '1px solid var(--border-color)',
+                                    borderTop: '3px solid var(--primary-brown)'
                                 }}>
                                     {/* Triangle pointer */}
                                     <div style={{
@@ -148,7 +149,7 @@ export default function Header() {
                                         height: '0',
                                         borderLeft: '8px solid transparent',
                                         borderRight: '8px solid transparent',
-                                        borderBottom: '8px solid #8b6352'
+                                        borderBottom: '8px solid var(--primary-brown)'
                                     }}></div>
                                     
                                     {/* Scrollable category list */}
@@ -193,9 +194,14 @@ export default function Header() {
 
                     {/* Right Side / Mobile Menu Button */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                        <Link to="/general-enquiry" className="desktop-enquire" style={{ backgroundColor: '#8b6352', color: 'white', padding: '10px 28px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '15px', display: 'none', transition: 'background-color 0.2s' }}>
-                            Enquire Now
-                        </Link>
+                        <div className="desktop-enquire" style={{ display: 'none', alignItems: 'center', gap: '20px' }}>
+                            <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--primary-brown)', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 10px rgba(121,85,72,0.2)' }}>
+                                <Search size={18} color="white" />
+                            </div>
+                            <Link to="/general-enquiry" style={{ backgroundColor: 'var(--primary-brown)', color: 'white', padding: '12px 30px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '15px', transition: 'all 0.2s ease', boxShadow: '0 4px 10px rgba(121,85,72,0.2)' }}>
+                                Enquire Now
+                            </Link>
+                        </div>
                         
                         {/* Animated Hamburger Menu */}
                         <button 

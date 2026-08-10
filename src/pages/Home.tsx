@@ -55,45 +55,45 @@ export default function Home() {
     return (
         <div style={{ paddingBottom: '0' }}>
             {/* HERO SECTION */}
-            <div style={{ backgroundColor: '#ececec', borderBottom: '1px solid #dcdcdc', minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center' }}>
-                <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'wrap', padding: '60px 0' }}>
+            <div className="hero-wrapper" style={{ borderBottom: '1px solid #dcdcdc', minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center' }}>
+                <div className="container hero-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'wrap', padding: '60px 0' }}>
                     
                     {/* LEFT COLUMN - TEXT */}
-                    <div className="hero-left" style={{ flex: '1 1 50%', padding: '0 50px 0 0', borderRight: '1px solid #d5d5d5' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#b28b74', fontSize: '11px', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '25px', textTransform: 'uppercase' }}>
-                            <span style={{ display: 'inline-block', width: '24px', height: '1px', backgroundColor: '#b28b74' }}></span>
+                    <div className="hero-left" style={{ flex: '1 1 50%', padding: '0 50px 0 30px', borderRight: '1px solid var(--border-color)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-brown)', fontSize: '11px', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '25px', textTransform: 'uppercase' }}>
+                            <span style={{ display: 'inline-block', width: '24px', height: '1px', backgroundColor: 'var(--primary-brown)' }}></span>
                             GROWN IN NEEMUCH - VERIFIED AT SOURCE
                         </div>
-                        <h1 className="hero-title" style={{ fontSize: '56px', color: '#333', margin: '0 0 5px 0', fontWeight: 'bold', lineHeight: '1.1', letterSpacing: '-1px' }}>
+                        <h1 className="hero-title" style={{ fontSize: '56px', color: 'var(--text-dark)', margin: '0 0 5px 0', fontWeight: 'bold', lineHeight: '1.1', letterSpacing: '-1px' }}>
                             We control
                         </h1>
-                        <h1 className="hero-title" style={{ fontSize: '56px', color: '#333', margin: '0 0 5px 0', fontWeight: 'bold', lineHeight: '1.1', letterSpacing: '-1px' }}>
+                        <h1 className="hero-title" style={{ fontSize: '56px', color: 'var(--text-dark)', margin: '0 0 5px 0', fontWeight: 'bold', lineHeight: '1.1', letterSpacing: '-1px' }}>
                             the source.
                         </h1>
-                        <h1 className="hero-title-italic" style={{ fontSize: '56px', color: '#8b6352', marginBottom: '35px', fontWeight: '500', lineHeight: '1.1', fontStyle: 'italic', letterSpacing: '-1px' }}>
+                        <h1 className="hero-title-italic" style={{ fontSize: '56px', color: 'var(--primary-brown)', marginBottom: '35px', fontWeight: '500', lineHeight: '1.1', fontStyle: 'italic', letterSpacing: '-1px' }}>
                             You get the proof.
                         </h1>
-                        <p style={{ fontSize: '15px', color: '#5a6773', lineHeight: '1.7', marginBottom: '40px', maxWidth: '420px', fontWeight: '500' }}>
+                        <p style={{ fontSize: '15px', color: 'var(--text-light)', lineHeight: '1.7', marginBottom: '40px', maxWidth: '420px', fontWeight: '500' }}>
                             Farm-origin botanical extracts from Neemuch, India where the herbs actually grow. Every batch traceable to its field, tested by NABL-accredited labs, documented for your import market. No middlemen. No assumptions.
                         </p>
                         <div className="hero-cta-row" style={{ display: 'flex', gap: '15px', marginBottom: '50px' }}>
-                            <Link to="/contact-us" className="hero-btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: '#8b6352', color: '#fff', padding: '12px 24px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '14px' }}>
+                            <Link to="/contact-us" className="hero-btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'var(--primary-brown)', color: '#fff', padding: '12px 24px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '14px', transition: 'background-color 0.2s', boxShadow: '0 4px 10px rgba(121,85,72,0.2)' }}>
                                 Explore Product ➔
                             </Link>
-                            <Link to="/general-enquiry" className="hero-btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'transparent', border: '1px solid #dcdcdc', color: '#8b6352', padding: '12px 24px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '14px' }}>
+                            <Link to="/general-enquiry" className="hero-btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'transparent', border: '1px solid var(--border-color)', color: 'var(--primary-brown)', padding: '12px 24px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '14px', transition: 'all 0.2s' }}>
                                 Enquire Now ➔
                             </Link>
                         </div>
                         
-                        <div className="hero-stats" style={{ borderTop: '1px solid #dcdcdc', paddingTop: '30px', display: 'flex' }}>
+                        <div className="hero-stats" style={{ borderTop: '1px solid var(--border-color)', paddingTop: '30px', display: 'flex' }}>
                             <div className="hero-stat-item" style={{ flex: '1', paddingRight: '20px' }}>
-                                <h4 style={{ fontSize: '28px', color: '#222', margin: '0 0 6px 0', fontWeight: '800', letterSpacing: '-0.5px' }}>NABL Accredited</h4>
-                                <p style={{ fontSize: '12px', color: '#8b6352', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>No Brokers - No Traders - Direct from source</p>
+                                <h4 style={{ fontSize: '28px', color: 'var(--text-dark)', margin: '0 0 6px 0', fontWeight: '800', letterSpacing: '-0.5px' }}>NABL Accredited</h4>
+                                <p style={{ fontSize: '12px', color: 'var(--primary-brown)', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>No Brokers - No Traders - Direct from source</p>
                             </div>
-                            <div className="hero-stat-divider" style={{ width: '1px', backgroundColor: '#dcdcdc', margin: '0 20px' }}></div>
+                            <div className="hero-stat-divider" style={{ width: '1px', backgroundColor: 'var(--border-color)', margin: '0 20px' }}></div>
                             <div className="hero-stat-item" style={{ flex: '1' }}>
-                                <h4 style={{ fontSize: '28px', color: '#222', margin: '0 0 6px 0', fontWeight: '800', letterSpacing: '-0.5px' }}>30+</h4>
-                                <p style={{ fontSize: '12px', color: '#8b6352', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Export countries</p>
+                                <h4 style={{ fontSize: '28px', color: 'var(--text-dark)', margin: '0 0 6px 0', fontWeight: '800', letterSpacing: '-0.5px' }}>30+</h4>
+                                <p style={{ fontSize: '12px', color: 'var(--primary-brown)', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Export countries</p>
                             </div>
                         </div>
                     </div>
@@ -103,27 +103,27 @@ export default function Home() {
                         <h4 style={{ fontSize: '14px', color: '#8b9caa', marginBottom: '25px', fontWeight: '600' }}>Compliance Credentials</h4>
                         
                         <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                            <div className="credential-card" style={{ backgroundColor: '#f5f5f5', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '20px' }}>
-                                <h3 style={{ fontSize: '15px', color: '#333', margin: '0 0 4px 0', fontWeight: '700' }}>✓ IEC - Import Export Code</h3>
-                                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 8px 0' }}>Directorate General of Foreign Trade (DGFT)</p>
-                                <p style={{ fontSize: '12px', color: '#999', margin: 0, lineHeight: '1.5' }}>Registered Indian exporter under DGFT. All international shipments dispatched under valid IEC.</p>
+                            <div className="credential-card" style={{ backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '20px' }}>
+                                <h3 style={{ fontSize: '15px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>✓ IEC - Import Export Code</h3>
+                                <p style={{ fontSize: '12px', color: 'var(--text-light)', margin: '0 0 8px 0' }}>Directorate General of Foreign Trade (DGFT)</p>
+                                <p style={{ fontSize: '12px', color: '#555', margin: 0, lineHeight: '1.5' }}>Registered Indian exporter under DGFT. All international shipments dispatched under valid IEC.</p>
                             </div>
                             
-                            <div className="credential-card" style={{ backgroundColor: '#f5f5f5', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '20px' }}>
-                                <h3 style={{ fontSize: '15px', color: '#333', margin: '0 0 4px 0', fontWeight: '700' }}>✓ FSSAI - Food Safety Licensed</h3>
-                                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 8px 0' }}>Food Safety &amp; Standards Authority of India</p>
-                                <p style={{ fontSize: '12px', color: '#999', margin: 0, lineHeight: '1.5' }}>FSSAI-licensed facility. Compliant with Indian food safety standards for export of botanical ingredients.</p>
+                            <div className="credential-card" style={{ backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '20px' }}>
+                                <h3 style={{ fontSize: '15px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>✓ FSSAI - Food Safety Licensed</h3>
+                                <p style={{ fontSize: '12px', color: 'var(--text-light)', margin: '0 0 8px 0' }}>Food Safety &amp; Standards Authority of India</p>
+                                <p style={{ fontSize: '12px', color: '#555', margin: 0, lineHeight: '1.5' }}>FSSAI-licensed facility. Compliant with Indian food safety standards for export of botanical ingredients.</p>
                             </div>
                             
-                            <div className="credential-card" style={{ backgroundColor: '#f5f5f5', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '20px' }}>
-                                <h3 style={{ fontSize: '15px', color: '#333', margin: '0 0 4px 0', fontWeight: '700' }}>✓ NABL Accredited Lab Testing</h3>
-                                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 8px 0' }}>Every batch independently tested - HPLC quantified</p>
-                                <p style={{ fontSize: '12px', color: '#999', margin: 0, lineHeight: '1.5' }}>Active compound potency, heavy metals, pesticide residues, and microbial panels verified on every lot before dispatch.</p>
+                            <div className="credential-card" style={{ backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '20px' }}>
+                                <h3 style={{ fontSize: '15px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>✓ NABL Accredited Lab Testing</h3>
+                                <p style={{ fontSize: '12px', color: 'var(--text-light)', margin: '0 0 8px 0' }}>Every batch independently tested - HPLC quantified</p>
+                                <p style={{ fontSize: '12px', color: '#555', margin: 0, lineHeight: '1.5' }}>Active compound potency, heavy metals, pesticide residues, and microbial panels verified on every lot before dispatch.</p>
                             </div>
                             
-                            <div className="credential-card credential-card--highlight" style={{ backgroundColor: '#e6dfd9', border: '1px solid #b28b74', borderRadius: '6px', padding: '20px' }}>
-                                <h3 style={{ fontSize: '15px', color: '#333', margin: '0 0 4px 0', fontWeight: '700' }}>📄 Complete documentation on every shipment</h3>
-                                <p style={{ fontSize: '12px', color: '#777', margin: 0 }}>CoA - Phytosanitary - Certificate of Origin - MSDS - Allergen Declaration</p>
+                            <div className="credential-card credential-card--highlight" style={{ backgroundColor: 'rgba(121,85,72,0.05)', border: '1px solid var(--primary-brown)', borderRadius: '6px', padding: '20px' }}>
+                                <h3 style={{ fontSize: '15px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>📄 Complete documentation on every shipment</h3>
+                                <p style={{ fontSize: '12px', color: 'var(--text-light)', margin: 0 }}>CoA - Phytosanitary - Certificate of Origin - MSDS - Allergen Declaration</p>
                             </div>
                         </div>
                     </div>
