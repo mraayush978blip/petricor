@@ -132,7 +132,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: var(--primary-brown);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   /* Prevent horizontal scroll issues globally without breaking pull-to-refresh or sticky positioning */
   #root {
     overflow-x: clip;
