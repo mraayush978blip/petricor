@@ -59,7 +59,7 @@ export default function Home() {
                 <div className="container hero-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '60px 0' }}>
                     
                     {/* LEFT COLUMN - TEXT */}
-                    <div className="hero-left" style={{ flex: '1 1 50%', padding: '0 50px 0 30px', borderRight: '1px solid var(--border-color)' }}>
+                    <div className="hero-left" style={{ flex: '1 1 50%', borderRight: '1px solid var(--border-color)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-brown)', fontSize: '11px', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '25px', textTransform: 'uppercase' }}>
                             <span style={{ display: 'inline-block', width: '24px', height: '1px', backgroundColor: 'var(--primary-brown)' }}></span>
                             GROWN IN NEEMUCH - VERIFIED AT SOURCE
@@ -99,7 +99,7 @@ export default function Home() {
                     </div>
                     
                     {/* RIGHT COLUMN - CREDENTIALS */}
-                    <div className="hero-right" style={{ flex: '1 1 50%', padding: '0 30px 0 50px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                    <div className="hero-right" style={{ flex: '1 1 50%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                         <div className="compliance-wrapper">
                             <h4 className="compliance-title" style={{ fontSize: '14px', color: '#8b9caa', marginBottom: '25px', fontWeight: '600' }}>Compliance Credentials</h4>
                             

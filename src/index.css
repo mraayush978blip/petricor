@@ -98,6 +98,17 @@ h1, h2, h3, h4, h5, h6, .hero-title, .hero-title-italic, .section-title, .sectio
   box-sizing: border-box;
 }
 
+.compliance-wrapper {
+  width: 100%;
+}
+
+.hero-left {
+  padding: 0 50px 0 30px;
+}
+.hero-right {
+  padding: 0 30px 0 50px;
+}
+
 @media (max-width: 768px) {
   /* Prevent horizontal scroll issues globally without breaking pull-to-refresh or sticky positioning */
   #root {
@@ -117,21 +128,8 @@ h1, h2, h3, h4, h5, h6, .hero-title, .hero-title-italic, .section-title, .sectio
     width: 100% !important;
     box-sizing: border-box;
   }
-  .compliance-wrapper {
-    max-width: 360px;
-    margin: 0 auto;
-    width: 100%;
-    align-self: center;
-  }
-  .compliance-title {
-    text-align: left !important;
-  }
-  .credential-card {
-    text-align: left !important;
-  }
   .hero-right {
     margin-top: 40px !important;
-    align-items: center !important;
   }
   .hero-title {
     font-size: 40px !important;
