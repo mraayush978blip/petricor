@@ -4,6 +4,7 @@ import { supabase } from '../../lib/supabase';
 import { Upload, Loader } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import imageCompression from 'browser-image-compression';
+import { slugify } from '../../lib/utils';
 
 const ProductForm = () => {
   const { id } = useParams();
@@ -147,7 +148,7 @@ const ProductForm = () => {
 
       const productData = {
         title,
-        slug,
+        slug: slugify(slug), // ensure it's sanitized before saving
         description,
         specification,
         plant_and_origin: plantAndOrigin,
@@ -173,7 +174,9 @@ const ProductForm = () => {
   };
 
   const generateSlug = () => {
-    setSlug(title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''));
+    if (title && !slug) {
+      setSlug(slugify(title));
+    }
   };
 
   return (
@@ -204,6 +207,7 @@ const ProductForm = () => {
               required
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
+              onBlur={(e) => setSlug(slugify(e.target.value))}
               className="admin-form-input"
             />
           </div>
