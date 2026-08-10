@@ -121,7 +121,8 @@ export default function Home() {
                                 <h4 style={{ fontSize: '32px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '500', letterSpacing: '-0.5px' }}>NABL Accredited</h4>
                                 <p style={{ fontSize: '11px', color: '#666', margin: 0, fontWeight: '600', textTransform: 'none', letterSpacing: '0.5px' }}>No Brokers - No Traders - Direct from source</p>
                             </div>
-                            <div className="hero-stat-divider" style={{ width: '1px', backgroundColor: '#eaeaea', margin: '0 30px' }}></d                            <div className="hero-stat-item" style={{ flex: '1' }}>
+                            <div className="hero-stat-divider" style={{ width: '1px', backgroundColor: '#eaeaea', margin: '0 30px' }}></div>
+                            <div className="hero-stat-item" style={{ flex: '1' }}>
                                 <h4 style={{ fontSize: '32px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '500', letterSpacing: '-0.5px' }}>
                                     <AnimatedCounter end={30} suffix="+" />
                                 </h4>
