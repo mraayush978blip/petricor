@@ -251,7 +251,7 @@ h1, h2, h3, h4, h5, h6 {
   .credential-card {
     width: 100% !important;
     height: auto !important;
-    aspect-ratio: 9 / 3 !important;
+    aspect-ratio: auto !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
