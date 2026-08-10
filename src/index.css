@@ -170,18 +170,19 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 26px !important;
   }
 
-  /* Hero CTA Buttons - full-width stacked rectangles */
+  /* Hero CTA Buttons - keep side-by-side */
   .hero-cta-row {
-    flex-direction: column !important;
-    gap: 12px !important;
+    flex-direction: row !important;
+    gap: 10px !important;
     margin-bottom: 25px !important;
   }
   .hero-btn-primary,
   .hero-btn-secondary {
-    width: 100% !important;
+    flex: 1;
     justify-content: center !important;
-    padding: 14px 20px !important;
-    font-size: 15px !important;
+    text-align: center !important;
+    padding: 12px 10px !important;
+    font-size: 13px !important;
     box-sizing: border-box !important;
   }
 
