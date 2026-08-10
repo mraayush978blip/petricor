@@ -173,16 +173,18 @@ h1, h2, h3, h4, h5, h6 {
   /* Hero CTA Buttons - keep side-by-side */
   .hero-cta-row {
     flex-direction: row !important;
-    gap: 10px !important;
+    flex-wrap: wrap !important;
+    gap: 15px !important;
     margin-bottom: 25px !important;
+    justify-content: flex-start !important;
   }
   .hero-btn-primary,
   .hero-btn-secondary {
-    flex: 1;
+    flex: 0 1 auto !important;
     justify-content: center !important;
     text-align: center !important;
-    padding: 12px 10px !important;
-    font-size: 13px !important;
+    padding: 12px 24px !important;
+    font-size: 14px !important;
     box-sizing: border-box !important;
   }
 
