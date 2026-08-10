@@ -112,10 +112,10 @@ export default function AllProducts() {
                 ) : (
                 <div className="all-products-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '30px', marginBottom: '60px' }}>
                     {currentProducts.map((product, idx) => (
-                        <div key={idx} className="product-card" style={{ border: '1px solid #eaeaea', borderRadius: '4px', overflow: 'hidden', backgroundColor: '#fff', transition: 'transform 0.2s', boxShadow: '0 2px 10px rgba(0,0,0,0.02)' }}>
+                        <div key={idx} className="product-card" style={{ display: 'flex', flexDirection: 'column', border: '1px solid #eaeaea', borderRadius: '4px', overflow: 'hidden', backgroundColor: '#fff', transition: 'transform 0.2s', boxShadow: '0 2px 10px rgba(0,0,0,0.02)', height: '100%' }}>
                             <Link 
                                 to={`/product/${product.slug}`} 
-                                style={{ display: 'block', backgroundColor: '#fdfdfd', padding: '20px', borderBottom: '1px solid #f5f5f5' }}
+                                style={{ display: 'block', backgroundColor: '#f9f9f9', padding: '0' }}
                                 onMouseEnter={() => setHoveredProductSlug(product.slug)}
                                 onMouseLeave={() => setHoveredProductSlug(null)}
                             >
@@ -123,21 +123,25 @@ export default function AllProducts() {
                                     src={hoveredProductSlug === product.slug && product.images[1] ? product.images[1] : product.images[0]} 
                                     alt={product.title} 
                                     className="product-img"
-                                    style={{ width: '100%', height: '220px', objectFit: 'contain' }} 
+                                    style={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', display: 'block' }} 
                                 />
                             </Link>
-                            <div style={{ padding: '20px' }}>
-                                <Link to={`/product/${product.slug}`} style={{ display: 'block', fontSize: '16px', color: '#333', textDecoration: 'none', fontWeight: '500', marginBottom: '5px' }}>{product.title}</Link>
-                                <div style={{ fontSize: '13px', color: '#888', marginBottom: '20px' }}>{product.category}</div>
-                                <button 
-                                    onClick={() => {
-                                        setSelectedProduct(product);
-                                        setIsModalOpen(true);
-                                    }}
-                                    style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#7c5847', color: '#fff', padding: '12px', borderRadius: '4px', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: '500' }}
-                                >
-                                    Enquire Now
-                                </button>
+                            <div style={{ padding: '15px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                                <Link to={`/product/${product.slug}`} style={{ display: 'block', fontSize: '15px', color: '#333', textDecoration: 'none', fontWeight: '600', marginBottom: '8px', lineHeight: '1.3' }}>
+                                    {product.title}
+                                </Link>
+                                <div style={{ marginTop: 'auto' }}>
+                                    <div style={{ fontSize: '13px', color: '#888', marginBottom: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{product.category}</div>
+                                    <button 
+                                        onClick={() => {
+                                            setSelectedProduct(product);
+                                            setIsModalOpen(true);
+                                        }}
+                                        style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#8b6352', color: '#fff', padding: '10px', borderRadius: '4px', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: '500' }}
+                                    >
+                                        Enquire Now
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}

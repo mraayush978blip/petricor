@@ -37,9 +37,9 @@ h1, h2, h3, h4, h5, h6, .hero-title, .hero-title-italic, .section-title, .sectio
 }
 
 @media (max-width: 768px) {
-  /* Prevent horizontal scroll issues globally */
-  #root {
-    overflow-x: hidden;
+  /* Prevent horizontal scroll issues globally without breaking pull-to-refresh */
+  #root, body, html {
+    overflow-x: clip;
     width: 100%;
   }
   
