@@ -145,7 +145,7 @@ export default function Home() {
                     </h2>
                 </div>
                 {/* Horizontal Category Scroll */}
-                <div style={{ overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap', paddingBottom: '15px', marginBottom: '30px', msOverflowStyle: 'none', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }} className="hide-scrollbar">
+                <div style={{ overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap', paddingBottom: '15px', marginBottom: '30px', msOverflowStyle: 'none', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }} className="hide-scrollbar">
                     <style dangerouslySetInnerHTML={{__html: `
                         .hide-scrollbar::-webkit-scrollbar { display: none; }
                     `}} />
@@ -168,8 +168,7 @@ export default function Home() {
                                 fontSize: '15px',
                                 fontWeight: activeTab === cat ? '600' : '500',
                                 transition: 'all 0.2s ease',
-                                boxShadow: 'none',
-                                scrollSnapAlign: 'start'
+                                boxShadow: 'none'
                             }}
                         >
                             {cat}
@@ -189,10 +188,9 @@ export default function Home() {
                         overflowX: 'auto',
                         overflowY: 'hidden',
                         paddingBottom: '20px',
-                        WebkitOverflowScrolling: 'touch',
-                        scrollSnapType: 'x mandatory'
+                        WebkitOverflowScrolling: 'touch'
                     }}>
-                        {[...Array(6)].map((_, i) => <div key={i} style={{ scrollSnapAlign: 'start' }}><ProductSkeleton /></div>)}
+                        {[...Array(6)].map((_, i) => <div key={i}><ProductSkeleton /></div>)}
                     </div>
                 ) : (
                 <div className="home-products-grid" style={{ 
@@ -207,11 +205,10 @@ export default function Home() {
                     paddingBottom: '20px',
                     scrollbarWidth: 'thin',
                     scrollbarColor: '#9c7361 #f0f0f0',
-                    WebkitOverflowScrolling: 'touch',
-                    scrollSnapType: 'x mandatory'
+                    WebkitOverflowScrolling: 'touch'
                 }}>
                     {displayedProducts.map((product, idx) => (
-                        <div key={idx} className="product-card" style={{ display: 'flex', flexDirection: 'column', border: '1px solid #eaeaea', borderRadius: '4px', overflow: 'hidden', backgroundColor: '#fff', transition: 'transform 0.2s', width: '260px', height: '100%', scrollSnapAlign: 'start' }}>
+                        <div key={idx} className="product-card" style={{ display: 'flex', flexDirection: 'column', border: '1px solid #eaeaea', borderRadius: '4px', overflow: 'hidden', backgroundColor: '#fff', transition: 'transform 0.2s', width: '260px', height: '100%' }}>
                             <Link 
                                 to={`/product/${product.slug}`} 
                                 style={{ display: 'block', padding: '0' }}
