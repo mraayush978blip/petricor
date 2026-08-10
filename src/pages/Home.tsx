@@ -64,16 +64,16 @@ export default function Home() {
                             <span className="hero-badge-line"></span>
                             GROWN IN NEEMUCH - VERIFIED AT SOURCE
                         </div>
-                        <h1 className="hero-title" style={{ fontSize: '56px', color: 'var(--text-dark)', margin: '0 0 5px 0', fontWeight: 'bold', lineHeight: '1.1', letterSpacing: '-1px' }}>
+                        <h1 className="hero-title" style={{ fontSize: '68px', color: '#2c2c2c', margin: '0 0 5px 0', fontWeight: '700', lineHeight: '1.05', letterSpacing: '-1.5px' }}>
                             We control
                         </h1>
-                        <h1 className="hero-title" style={{ fontSize: '56px', color: 'var(--text-dark)', margin: '0 0 5px 0', fontWeight: 'bold', lineHeight: '1.1', letterSpacing: '-1px' }}>
+                        <h1 className="hero-title" style={{ fontSize: '68px', color: '#2c2c2c', margin: '0 0 5px 0', fontWeight: '700', lineHeight: '1.05', letterSpacing: '-1.5px' }}>
                             the source.
                         </h1>
-                        <h1 className="hero-title-italic" style={{ fontSize: '56px', color: 'var(--primary-brown)', marginBottom: '35px', fontWeight: '500', lineHeight: '1.1', fontStyle: 'italic', letterSpacing: '-1px' }}>
+                        <h1 className="hero-title-italic" style={{ fontSize: '68px', color: 'var(--primary-brown)', marginBottom: '35px', fontWeight: '500', lineHeight: '1.05', fontStyle: 'italic', letterSpacing: '-1.5px' }}>
                             You get the proof.
                         </h1>
-                        <p style={{ fontSize: '15px', color: 'var(--text-light)', lineHeight: '1.7', marginBottom: '40px', maxWidth: '420px', fontWeight: '500' }}>
+                        <p style={{ fontSize: '15px', color: '#555', lineHeight: '1.7', marginBottom: '40px', maxWidth: '520px', fontWeight: '500' }}>
                             Farm-origin botanical extracts from Neemuch, India where the herbs actually grow. Every batch traceable to its field, tested by NABL-accredited labs, documented for your import market. No middlemen. No assumptions.
                         </p>
                         <div className="hero-cta-row" style={{ display: 'flex', gap: '15px', marginBottom: '50px' }}>
@@ -85,15 +85,15 @@ export default function Home() {
                             </Link>
                         </div>
                         
-                        <div className="hero-stats" style={{ borderTop: '1px solid var(--border-color)', paddingTop: '30px', display: 'flex' }}>
+                        <div className="hero-stats" style={{ borderTop: '1px solid #eaeaea', paddingTop: '30px', display: 'flex' }}>
                             <div className="hero-stat-item" style={{ flex: '1', paddingRight: '20px' }}>
-                                <h4 style={{ fontSize: '28px', color: 'var(--text-dark)', margin: '0 0 6px 0', fontWeight: '800', letterSpacing: '-0.5px' }}>NABL Accredited</h4>
-                                <p style={{ fontSize: '12px', color: 'var(--primary-brown)', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>No Brokers - No Traders - Direct from source</p>
+                                <h4 style={{ fontSize: '32px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '500', letterSpacing: '-0.5px' }}>NABL Accredited</h4>
+                                <p style={{ fontSize: '11px', color: '#666', margin: 0, fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>No Brokers - No Traders - Direct from source</p>
                             </div>
-                            <div className="hero-stat-divider" style={{ width: '1px', backgroundColor: 'var(--border-color)', margin: '0 20px' }}></div>
+                            <div className="hero-stat-divider" style={{ width: '1px', backgroundColor: '#eaeaea', margin: '0 30px' }}></div>
                             <div className="hero-stat-item" style={{ flex: '1' }}>
-                                <h4 style={{ fontSize: '28px', color: 'var(--text-dark)', margin: '0 0 6px 0', fontWeight: '800', letterSpacing: '-0.5px' }}>30+</h4>
-                                <p style={{ fontSize: '12px', color: 'var(--primary-brown)', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Export countries</p>
+                                <h4 style={{ fontSize: '32px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '500', letterSpacing: '-0.5px' }}>30+</h4>
+                                <p style={{ fontSize: '11px', color: '#666', margin: 0, fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Export countries</p>
                             </div>
                         </div>
                     </div>
