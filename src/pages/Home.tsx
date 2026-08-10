@@ -53,8 +53,8 @@ export default function Home() {
     return (
         <div style={{ paddingBottom: '0' }}>
             {/* HERO SECTION */}
-            <div style={{ backgroundColor: '#ececec', padding: '60px 0', borderBottom: '1px solid #dcdcdc' }}>
-                <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'wrap' }}>
+            <div style={{ backgroundColor: '#ececec', borderBottom: '1px solid #dcdcdc', minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center' }}>
+                <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'wrap', padding: '60px 0' }}>
                     
                     {/* LEFT COLUMN - TEXT */}
                     <div className="hero-left" style={{ flex: '1 1 50%', padding: '0 50px 0 0', borderRight: '1px solid #d5d5d5' }}>
@@ -98,37 +98,38 @@ export default function Home() {
                     
                     {/* RIGHT COLUMN - CREDENTIALS */}
                     <div className="hero-right" style={{ flex: '1 1 50%', padding: '0 30px 0 50px' }}>
-                        <h4 style={{ fontSize: '12px', color: '#8b6352', marginBottom: '20px', fontWeight: '700', letterSpacing: '2px', textTransform: 'uppercase' }}>Compliance Credentials</h4>
+                        <h4 style={{ fontSize: '14px', color: '#8b9caa', marginBottom: '25px', fontWeight: '600' }}>Compliance Credentials</h4>
                         
-                        <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-                            {[
-                                { icon: '🔖', title: 'IEC — Import Export Code', sub: 'DGFT Registered', desc: 'Registered Indian exporter under DGFT. All international shipments dispatched under valid IEC.' },
-                                { icon: '🛡️', title: 'FSSAI — Food Safety Licensed', sub: 'Food Safety & Standards Authority of India', desc: 'FSSAI-licensed facility compliant with Indian food safety standards for export of botanical ingredients.' },
-                                { icon: '🔬', title: 'NABL Accredited Lab Testing', sub: 'HPLC quantified — every batch', desc: 'Active compound potency, heavy metals, pesticide residues and microbial panels verified on every lot before dispatch.' },
-                                { icon: '📄', title: 'Full Shipment Documentation', sub: 'CoA · Phytosanitary · Origin · MSDS · Allergen', desc: null },
-                            ].map((c, i) => (
-                                <div key={i} className="credential-card" style={{
-                                    display: 'flex',
-                                    gap: '14px',
-                                    padding: '16px 0',
-                                    borderBottom: i < 3 ? '1px solid #e8e2dc' : 'none',
-                                    alignItems: 'flex-start'
-                                }}>
-                                    <div style={{ fontSize: '18px', marginTop: '1px', flexShrink: 0 }}>{c.icon}</div>
-                                    <div>
-                                        <div style={{ fontSize: '13px', color: '#2a1f1a', fontWeight: '700', marginBottom: '2px' }}>{c.title}</div>
-                                        <div style={{ fontSize: '11px', color: '#8b6352', fontWeight: '600', marginBottom: c.desc ? '5px' : '0' }}>{c.sub}</div>
-                                        {c.desc && <div style={{ fontSize: '11px', color: '#888', lineHeight: '1.55' }}>{c.desc}</div>}
-                                    </div>
-                                </div>
-                            ))}
+                        <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            <div className="credential-card" style={{ backgroundColor: '#f5f5f5', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '20px' }}>
+                                <h3 style={{ fontSize: '15px', color: '#333', margin: '0 0 4px 0', fontWeight: '700' }}>✓ IEC - Import Export Code</h3>
+                                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 8px 0' }}>Directorate General of Foreign Trade (DGFT)</p>
+                                <p style={{ fontSize: '12px', color: '#999', margin: 0, lineHeight: '1.5' }}>Registered Indian exporter under DGFT. All international shipments dispatched under valid IEC.</p>
+                            </div>
+                            
+                            <div className="credential-card" style={{ backgroundColor: '#f5f5f5', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '20px' }}>
+                                <h3 style={{ fontSize: '15px', color: '#333', margin: '0 0 4px 0', fontWeight: '700' }}>✓ FSSAI - Food Safety Licensed</h3>
+                                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 8px 0' }}>Food Safety &amp; Standards Authority of India</p>
+                                <p style={{ fontSize: '12px', color: '#999', margin: 0, lineHeight: '1.5' }}>FSSAI-licensed facility. Compliant with Indian food safety standards for export of botanical ingredients.</p>
+                            </div>
+                            
+                            <div className="credential-card" style={{ backgroundColor: '#f5f5f5', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '20px' }}>
+                                <h3 style={{ fontSize: '15px', color: '#333', margin: '0 0 4px 0', fontWeight: '700' }}>✓ NABL Accredited Lab Testing</h3>
+                                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 8px 0' }}>Every batch independently tested - HPLC quantified</p>
+                                <p style={{ fontSize: '12px', color: '#999', margin: 0, lineHeight: '1.5' }}>Active compound potency, heavy metals, pesticide residues, and microbial panels verified on every lot before dispatch.</p>
+                            </div>
+                            
+                            <div className="credential-card credential-card--highlight" style={{ backgroundColor: '#e6dfd9', border: '1px solid #b28b74', borderRadius: '6px', padding: '20px' }}>
+                                <h3 style={{ fontSize: '15px', color: '#333', margin: '0 0 4px 0', fontWeight: '700' }}>📄 Complete documentation on every shipment</h3>
+                                <p style={{ fontSize: '12px', color: '#777', margin: 0 }}>CoA - Phytosanitary - Certificate of Origin - MSDS - Allergen Declaration</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* CATEGORIES / PRODUCTS SECTION */}
-            <div className="container" style={{ maxWidth: '1200px', margin: '80px auto 0', padding: '0 15px' }}>
+            <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '80px auto 0', padding: '0' }}>
                 <div style={{ marginBottom: '30px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: '#8b6352', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '15px' }}>
                         BOTANICAL INGREDIENTS <span style={{ display: 'inline-block', width: '40px', height: '1px', backgroundColor: '#8b6352' }}></span>
@@ -237,104 +238,64 @@ export default function Home() {
             </div>
 
             {/* FORMULATION-READY SETS */}
-            <div style={{ backgroundColor: '#1a120e', padding: '80px 0 0' }}>
-                <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px 50px' }}>
-                    <div style={{ marginBottom: '40px' }}>
-                        <div style={{ fontSize: '11px', color: '#8b6352', fontWeight: '700', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '10px' }}>
+            <div style={{ backgroundColor: '#ececec', padding: '100px 15px' }}>
+                <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto' }}>
+                    <div style={{ marginBottom: '60px' }}>
+                        <div style={{ fontSize: '11px', color: '#b28b74', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>
                             FORMULATION-READY SETS
                         </div>
-                        <h2 style={{ fontSize: '34px', color: '#f5f0eb', margin: 0, fontWeight: '600', letterSpacing: '-0.5px' }}>
+                        <h2 style={{ fontSize: '36px', color: '#333', margin: 0, fontWeight: '500', letterSpacing: '-0.5px' }}>
                             Don't just buy ingredients.
                         </h2>
-                        <h2 style={{ fontSize: '28px', color: '#8b7a6e', margin: '0 0 10px 0', fontWeight: '400', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
+                        <h2 style={{ fontSize: '36px', color: '#7a8693', margin: '0 0 15px 0', fontWeight: '400', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
                             Build product lines.
                         </h2>
-                        <p style={{ fontSize: '13px', color: '#7a6a60', lineHeight: '1.6', maxWidth: '500px' }}>
-                            Pre-validated ingredient combos. Each set ships with matching certifications and combined CoA.
+                        <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6', marginTop: '15px', maxWidth: '600px' }}>
+                            Pre-validated ingredient combinations for common supplement categories. Each set ships with matching certifications and combined CoA documentation.
                         </p>
                     </div>
-                </div>
 
-                {/* Snap-scroll cards container */}
-                <div
-                    className="formulation-snap-scroll"
-                    style={{
-                        display: 'flex',
-                        overflowX: 'auto',
-                        scrollSnapType: 'x mandatory',
-                        WebkitOverflowScrolling: 'touch',
-                        scrollbarWidth: 'none',
-                        gap: '0',
-                        paddingBottom: '0',
-                    }}
-                >
-                    <style dangerouslySetInnerHTML={{__html: `
-                        .formulation-snap-scroll::-webkit-scrollbar { display: none; }
-                        .formulation-snap-card { scroll-snap-align: start; flex-shrink: 0; }
-                    `}} />
-                    {[
-                        { num: '01', accent: '#8b6352', title: 'Adaptogen Stack', desc: 'For brands formulating stress, energy & hormonal balance supplements.', herbs: ['Ashwagandha KSM-66', 'Brahmi 40% Bacosides', 'Shatavari'], tag: 'BESTSELLER' },
-                        { num: '02', accent: '#5a7a6a', title: 'Joint & Mobility Complex', desc: 'Anti-inflammation, arthritis management & sports recovery formulations.', herbs: ['Turmeric 95% Curcumin', 'Boswellia 65% AKBA', 'Ginger 5%'], tag: 'EXPORT READY' },
-                        { num: '03', accent: '#6a7a8a', title: 'Immunity Shield', desc: 'Immune support, natural Vitamin C & antimicrobial combination for nutraceuticals.', herbs: ['Amla 50% Tannins', 'Moringa 20% Protein', 'Giloy Extract'], tag: 'HIGH DEMAND' },
-                        { num: '04', accent: '#7a6a4a', title: 'Metabolic Support', desc: 'Blood sugar regulation, diabetes management & metabolic weight support.', herbs: ['Gymnema 75% GS4', 'Fenugreek 50% Saponins', 'Vijaysar Extract'], tag: 'CLINICAL GRADE' },
-                        { num: '05', accent: '#5a6a5a', title: 'Digestive Wellness', desc: 'Complete gut health, detox & Ayurvedic digestion support stack.', herbs: ['Triphala Blend', 'Ginger 5% Gingerols', 'Psyllium Husk 85%'], tag: 'AYURVEDIC' },
-                        { num: '06', accent: '#7a5a5a', title: "Men's Performance", desc: 'Testosterone support, energy & elite sports nutrition formulations.', herbs: ['Shilajit 60% Fulvic', 'Mucuna 98% L-DOPA', 'Safed Musli 60%'], tag: 'PREMIUM' },
-                    ].map((set, idx) => (
-                        <div
-                            key={idx}
-                            className="formulation-snap-card formulation-card"
-                            style={{
-                                width: '85vw',
-                                maxWidth: '420px',
-                                minHeight: '380px',
-                                background: `linear-gradient(145deg, #2a1a14, #1a120e)`,
-                                borderLeft: `3px solid ${set.accent}`,
-                                padding: '40px 30px 35px',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'space-between',
-                                position: 'relative',
-                                overflow: 'hidden',
-                            }}
-                        >
-                            {/* Background number watermark */}
-                            <div style={{ position: 'absolute', right: '-10px', top: '-10px', fontSize: '120px', fontWeight: '900', color: 'rgba(255,255,255,0.03)', lineHeight: 1, userSelect: 'none' }}>{set.num}</div>
-
-                            <div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
-                                    <span style={{ fontSize: '11px', color: set.accent, fontWeight: '700', letterSpacing: '2px', border: `1px solid ${set.accent}`, padding: '3px 8px', borderRadius: '2px' }}>{set.tag}</span>
-                                    <span style={{ fontSize: '28px', color: '#3a2a22', fontWeight: '900', lineHeight: 1 }}>{set.num}</span>
-                                </div>
-                                <h3 style={{ fontSize: '22px', color: '#f5f0eb', marginBottom: '12px', fontWeight: '700', lineHeight: '1.2' }}>{set.title}</h3>
-                                <p style={{ fontSize: '13px', color: '#8a7a70', lineHeight: '1.65', marginBottom: '28px' }}>{set.desc}</p>
-                            </div>
-
-                            <div>
-                                <div style={{ fontSize: '10px', color: '#5a4a40', fontWeight: '700', letterSpacing: '1.5px', marginBottom: '10px', textTransform: 'uppercase' }}>Key Ingredients</div>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                    {set.herbs.map((h, hi) => (
-                                        <div key={hi} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                            <div style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: set.accent, flexShrink: 0 }}></div>
-                                            <span style={{ fontSize: '12px', color: '#c5b5aa', fontWeight: '500' }}>{h}</span>
-                                        </div>
+                    <div className="formulation-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+                        {[
+                            { emoji: '⚡', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'] },
+                            { emoji: '🦴', title: 'Joint & Mobility Complex', desc: 'Anti-inflammation, arthritis, sports recovery', herbs: ['Turmeric 95%', 'Boswellia AKBA', 'Ginger'] },
+                            { emoji: '🛡️', title: 'Immunity Shield', desc: 'Immune support, Vitamin C, antimicrobial', herbs: ['Amla', 'Moringa', 'Giloy', 'Black Seed'] },
+                            { emoji: '📊', title: 'Metabolic Support', desc: 'Blood sugar, diabetes management, weight', herbs: ['Gymnema', 'Fenugreek', 'Turmeric'] },
+                            { emoji: '🧘', title: 'Digestive Wellness', desc: 'Gut health, detox, digestion', herbs: ['Triphala', 'Ginger', 'Fenugreek'] },
+                            { emoji: '💪', title: "Men's Performance", desc: 'Testosterone, energy, sports nutrition', herbs: ['Ashwagandha', 'Mucuna L-DOPA', 'Fenugreek'] }
+                        ].map((set, idx) => (
+                            <div key={idx}
+                                className="formulation-card"
+                                style={{
+                                    backgroundColor: '#f6f6f6',
+                                    padding: '30px',
+                                    borderRadius: '4px',
+                                    border: '1px solid #e0e0e0',
+                                    transition: 'border-color 0.2s',
+                                    cursor: 'pointer'
+                                }}
+                                onMouseOver={(e) => e.currentTarget.style.borderColor = '#8b6352'}
+                                onMouseOut={(e) => e.currentTarget.style.borderColor = '#e0e0e0'}
+                            >
+                                <div style={{ fontSize: '20px', marginBottom: '15px' }}>{set.emoji}</div>
+                                <h3 style={{ fontSize: '16px', color: '#333', marginBottom: '8px', fontWeight: '600' }}>{set.title}</h3>
+                                <p style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{set.desc}</p>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+                                    {set.herbs.map(h => (
+                                        <span key={h} style={{ color: '#5a6773', fontSize: '11px', fontWeight: '500' }}>
+                                            {h}
+                                        </span>
                                     ))}
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                    {/* End spacer */}
-                    <div style={{ width: '20px', flexShrink: 0 }}></div>
-                </div>
-
-                {/* Scroll hint */}
-                <div style={{ textAlign: 'center', padding: '20px', color: '#3a2a22', fontSize: '12px', letterSpacing: '1px' }}>
-                    ← SCROLL TO EXPLORE →
+                        ))}
+                    </div>
                 </div>
             </div>
 
             {/* BUILT FOR BUSINESS BUYERS */}
             <div style={{ backgroundColor: '#fcfaf7', color: '#333', padding: '80px 15px' }}>
-                <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto' }}>
                     <div className="b2b-header" style={{ marginBottom: '50px' }}>
                         <div style={{ fontSize: '11px', color: '#999', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>
                             BUILT FOR B2B INGREDIENTS

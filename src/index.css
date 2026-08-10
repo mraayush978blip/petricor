@@ -36,6 +36,41 @@ h1, h2, h3, h4, h5, h6, .hero-title, .hero-title-italic, .section-title, .sectio
   opacity: 0 !important;
 }
 
+/* ===== FOOTER - DESKTOP ===== */
+.site-footer {
+  padding: 60px 0 0;
+}
+.footer-main-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60px;
+  margin-bottom: 50px;
+  align-items: flex-start;
+}
+.footer-logo-col {
+  flex: 1 1 200px;
+  max-width: 280px;
+}
+.footer-logo-img {
+  width: 230px;
+  height: auto;
+  margin-bottom: 20px;
+  display: block;
+}
+.footer-col {
+  flex: 1 1 130px;
+}
+.footer-offices-col {
+  flex: 2 1 260px;
+  max-width: 360px;
+}
+.footer-col-heading {
+  color: #222;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+}
+
 @media (max-width: 768px) {
   /* Prevent horizontal scroll issues globally without breaking pull-to-refresh */
   #root {
@@ -105,12 +140,26 @@ h1, h2, h3, h4, h5, h6, .hero-title, .hero-title-italic, .section-title, .sectio
     display: none !important;
   }
   
-  /* Formulation Snap Scroll - mobile: show 1 card at a time, full width */
-  .formulation-snap-scroll .formulation-card {
-    width: 88vw !important;
-    max-width: 88vw !important;
-    min-height: 340px !important;
-    padding: 28px 22px 24px !important;
+  /* Formulation Grid - Horizontal Scroll */
+  .formulation-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    gap: 15px !important;
+    padding-bottom: 10px !important;
+  }
+  .formulation-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .formulation-card {
+    flex: 0 0 65vw !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    padding: 20px !important;
   }
 
   /* B2B Grid */
@@ -179,6 +228,37 @@ h1, h2, h3, h4, h5, h6, .hero-title, .hero-title-italic, .section-title, .sectio
     padding-left: 15px !important;
     padding-right: 15px !important;
     box-sizing: border-box !important;
+  }
+
+  /* ===== FOOTER - MOBILE OVERRIDES ===== */
+  .site-footer {
+    padding: 40px 0 0 !important;
+  }
+  .footer-main-row {
+    flex-direction: column !important;
+    gap: 30px !important;
+    margin-bottom: 30px !important;
+  }
+  .footer-logo-col {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+  }
+  .footer-logo-img {
+    width: 180px !important;
+    margin-bottom: 12px !important;
+  }
+  .footer-col {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    min-width: 100%;
+  }
+  .footer-offices-col {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+  }
+  .footer-col-heading {
+    font-size: 15px !important;
+    margin-bottom: 14px !important;
   }
 }
 

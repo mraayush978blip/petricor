@@ -18,6 +18,48 @@
 
 <body>
   <div id="root"></div>
+  <script>
+    // Track zoom-out steps. Each step of Ctrl+- is ~10% zoom reduction.
+    // MAX_ZOOM_OUT = 1 means the user can zoom out to ~90% but no further.
+    var zoomOutSteps = 0;
+    var MAX_ZOOM_OUT = 1;
+
+    // Ctrl+scroll (trackpad pinch or mouse wheel zoom)
+    document.addEventListener('wheel', function(e) {
+      if (!e.ctrlKey) return;
+      if (e.deltaY > 0) {
+        // Zooming OUT (scroll down with Ctrl)
+        if (zoomOutSteps >= MAX_ZOOM_OUT) {
+          e.preventDefault(); // block — already at 90%
+        } else {
+          zoomOutSteps++;
+          // allow the browser to zoom out
+        }
+      } else {
+        // Zooming IN (scroll up with Ctrl) — always allow
+        if (zoomOutSteps > 0) zoomOutSteps--;
+      }
+    }, { passive: false });
+
+    // Keyboard zoom shortcuts
+    document.addEventListener('keydown', function(e) {
+      if (!e.ctrlKey) return;
+      if (e.key === '-' || e.key === '_') {
+        // Zoom out
+        if (zoomOutSteps >= MAX_ZOOM_OUT) {
+          e.preventDefault(); // block — already at 90%
+        } else {
+          zoomOutSteps++;
+        }
+      } else if (e.key === '+' || e.key === '=') {
+        // Zoom in — always allow
+        if (zoomOutSteps > 0) zoomOutSteps--;
+      } else if (e.key === '0') {
+        // Reset to 100% — allow and reset counter
+        zoomOutSteps = 0;
+      }
+    });
+  </script>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 
