@@ -100,7 +100,7 @@ export default function Home() {
                     
                     {/* RIGHT COLUMN - CREDENTIALS */}
                     <div className="hero-right" style={{ flex: '1 1 50%', padding: '0 30px 0 50px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                        <h4 style={{ fontSize: '14px', color: '#8b9caa', marginBottom: '25px', fontWeight: '600' }}>Compliance Credentials</h4>
+                        <h4 className="compliance-title" style={{ fontSize: '14px', color: '#8b9caa', marginBottom: '25px', fontWeight: '600' }}>Compliance Credentials</h4>
                         
                         <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                             <div className="credential-card" style={{ backgroundColor: '#ffffff', border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '20px' }}>
