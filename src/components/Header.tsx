@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { Search } from 'lucide-react';
 
 export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -102,7 +101,7 @@ export default function Header() {
 
                     {/* Logo - Smooth scaling */}
                     <Link to="/" style={{ display: 'block', width: isScrolled ? '140px' : '170px', transition: 'width 0.15s ease-out' }}>
-                        <img src="/logo1.jpeg" alt="Petricor" style={{ width: '100%', height: 'auto' }} />
+                        <img src="/logo1.webp" alt="Petricor" style={{ width: '100%', height: 'auto' }} />
                     </Link>
 
                     {/* Desktop Nav (Centered) */}

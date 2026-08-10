@@ -56,7 +56,7 @@ export default function Home() {
         <div style={{ paddingBottom: '0' }}>
             {/* HERO SECTION */}
             <div className="hero-wrapper" style={{ borderBottom: '1px solid #dcdcdc', minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center' }}>
-                <div className="container hero-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '60px 0' }}>
+                <div className="container hero-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0' }}>
                     
                     {/* LEFT COLUMN - TEXT */}
                     <div className="hero-left" style={{ flex: '1 1 50%', borderRight: '1px solid var(--border-color)' }}>
