@@ -197,9 +197,6 @@ export default function Header() {
                     {/* Right Side / Mobile Menu Button */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                         <div className="desktop-enquire" style={{ display: 'none', alignItems: 'center', gap: '20px' }}>
-                            <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--primary-brown)', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: 'all 0.2s' }}>
-                                <Search size={18} color="white" />
-                            </div>
                             <Link to="/general-enquiry" style={{ backgroundColor: 'var(--primary-brown)', color: 'white', padding: '12px 30px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '15px', transition: 'all 0.2s ease' }}>
                                 Enquire Now
                             </Link>
