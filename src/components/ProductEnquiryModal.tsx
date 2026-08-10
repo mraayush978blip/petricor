@@ -31,7 +31,23 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
     message: ''
   });
 
-  if (!isOpen || !product) return null;
+  const resetForm = () => {
+    setSuccess(false);
+    setFormData({
+      name: '',
+      company: '',
+      email: '',
+      phone: '',
+      country: '',
+      role: '',
+      message: ''
+    });
+  };
+
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,6 +55,14 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Strict Email Format Validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      alert('Please enter a valid business email address (e.g. name@company.com).');
+      return;
+    }
+
     setLoading(true);
 
     // Layer 1 & 2: Honeypot + Time check
@@ -70,8 +94,8 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
         country: formData.country,
         role: formData.role,
         message: formData.message,
-        product_name: product.title,
-        product_id: product.id
+        product_name: product?.title,
+        product_id: product?.id
       }
     ]);
 
@@ -82,6 +106,8 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
     }
     setLoading(false);
   };
+
+  if (!isOpen || !product) return null;
 
   return (
     <div style={{
@@ -111,7 +137,7 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
       }}>
         
         <button 
-          onClick={onClose}
+          onClick={handleClose}
           style={{ position: 'absolute', top: '15px', right: '15px', background: 'none', border: 'none', cursor: 'pointer', zIndex: 10, color: '#999' }}
         >
           <X size={24} />
@@ -122,7 +148,7 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
             <h2 style={{ fontSize: '30px', color: '#7c5847', marginBottom: '20px' }}>Enquiry Sent!</h2>
             <p style={{ fontSize: '16px', color: '#555', marginBottom: '30px' }}>Thank you for your interest in {product.title}. We will get back to you shortly.</p>
             <button 
-              onClick={onClose}
+              onClick={handleClose}
               style={{ backgroundColor: '#7c5847', color: 'white', padding: '12px 30px', borderRadius: '4px', border: 'none', cursor: 'pointer', fontSize: '16px' }}
             >
               Close

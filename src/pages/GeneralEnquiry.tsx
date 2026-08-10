@@ -78,6 +78,14 @@ export default function GeneralEnquiry() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Email format validation requiring @ and domain dot
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      alert('Please enter a valid business email address containing @ and a valid domain (e.g. name@domain.com)');
+      return;
+    }
+
     setLoading(true);
 
     // Layer 1 & 2: Honeypot + Time check

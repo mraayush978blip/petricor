@@ -82,7 +82,7 @@ export default function ProductDetail() {
             <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', padding: '0' }}>
                 
                 {/* Main Product Section */}
-                <div style={{ 
+                <div className="product-detail-card" style={{ 
                     display: 'flex', 
                     flexWrap: 'wrap', 
                     gap: '60px', 
@@ -90,11 +90,12 @@ export default function ProductDetail() {
                     borderRadius: '24px',
                     padding: '40px',
                     boxShadow: '0 20px 40px rgba(0,0,0,0.04)',
-                    marginBottom: '80px'
+                    marginBottom: '80px',
+                    boxSizing: 'border-box'
                 }}>
                     
                     {/* Left Gallery */}
-                    <div style={{ flex: '1 1 45%', minWidth: '300px' }}>
+                    <div className="product-detail-gallery" style={{ flex: '1 1 45%', minWidth: '300px' }}>
                         <div style={{ 
                             borderRadius: '16px', 
                             overflow: 'hidden', 

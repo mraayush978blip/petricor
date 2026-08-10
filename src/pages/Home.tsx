@@ -4,6 +4,36 @@ import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
 import { ProductSkeleton } from '../components/Skeleton';
 
+function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string }) {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        if (end <= 0) {
+            setCount(end);
+            return;
+        }
+        let start = 0;
+        const duration = 1200; // 1.2s animation
+        const frameTime = 25;
+        const totalSteps = Math.ceil(duration / frameTime);
+        const increment = end / totalSteps;
+        
+        const timer = setInterval(() => {
+            start += increment;
+            if (start >= end) {
+                setCount(end);
+                clearInterval(timer);
+            } else {
+                setCount(Math.floor(start));
+            }
+        }, frameTime);
+
+        return () => clearInterval(timer);
+    }, [end]);
+
+    return <>{count}{suffix}</>;
+}
+
 export default function Home() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -16,7 +46,9 @@ export default function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
-
+    // Interactive Highlights
+    const [activeCredentialIndex, setActiveCredentialIndex] = useState<number | null>(null);
+    const [activeBuyerIndex, setActiveBuyerIndex] = useState<number | null>(null);
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -89,9 +121,10 @@ export default function Home() {
                                 <h4 style={{ fontSize: '32px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '500', letterSpacing: '-0.5px' }}>NABL Accredited</h4>
                                 <p style={{ fontSize: '11px', color: '#666', margin: 0, fontWeight: '600', textTransform: 'none', letterSpacing: '0.5px' }}>No Brokers - No Traders - Direct from source</p>
                             </div>
-                            <div className="hero-stat-divider" style={{ width: '1px', backgroundColor: '#eaeaea', margin: '0 30px' }}></div>
-                            <div className="hero-stat-item" style={{ flex: '1' }}>
-                                <h4 style={{ fontSize: '32px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '500', letterSpacing: '-0.5px' }}>30+</h4>
+                            <div className="hero-stat-divider" style={{ width: '1px', backgroundColor: '#eaeaea', margin: '0 30px' }}></d                            <div className="hero-stat-item" style={{ flex: '1' }}>
+                                <h4 style={{ fontSize: '32px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '500', letterSpacing: '-0.5px' }}>
+                                    <AnimatedCounter end={30} suffix="+" />
+                                </h4>
                                 <p style={{ fontSize: '11px', color: '#666', margin: 0, fontWeight: '600', textTransform: 'none', letterSpacing: '0.5px' }}>Export countries</p>
                             </div>
                         </div>
@@ -100,31 +133,34 @@ export default function Home() {
                     {/* RIGHT COLUMN - CREDENTIALS */}
                     <div className="hero-right" style={{ flex: '1 1 50%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                         <div className="compliance-wrapper credentials-container-bg">
-                            <h4 className="compliance-title" style={{ fontSize: '14px', color: '#8b9caa', marginBottom: '25px', fontWeight: '600', paddingLeft: '5px' }}>Compliance Credentials</h4>
+                            <h4 className="compliance-title" style={{ fontSize: '13px', color: '#777', marginBottom: '18px', fontWeight: '600', paddingLeft: '2px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Compliance Credentials</h4>
                             
-                            <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                                <div className="credential-card textured-card" style={{ border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '25px' }}>
-                                    <h3 style={{ fontSize: '18px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>✓ IEC - Import Export Code</h3>
-                                    <p style={{ fontSize: '16px', color: '#595959', margin: '0 0 8px 0' }}>Directorate General of Foreign Trade (DGFT)</p>
-                                    <p style={{ fontSize: '16px', color: '#595959', margin: 0, lineHeight: '1.5' }}>Registered Indian exporter under DGFT. All international shipments dispatched under valid IEC.</p>
-                                </div>
-                                
-                                <div className="credential-card textured-card" style={{ border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '25px' }}>
-                                    <h3 style={{ fontSize: '18px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>✓ FSSAI - Food Safety Licensed</h3>
-                                    <p style={{ fontSize: '16px', color: '#595959', margin: '0 0 8px 0' }}>Food Safety &amp; Standards Authority of India</p>
-                                    <p style={{ fontSize: '16px', color: '#595959', margin: 0, lineHeight: '1.5' }}>FSSAI-licensed facility. Compliant with Indian food safety standards for export of botanical ingredients.</p>
-                                </div>
-                                
-                                <div className="credential-card textured-card" style={{ border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '25px' }}>
-                                    <h3 style={{ fontSize: '18px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>✓ NABL Accredited Lab Testing</h3>
-                                    <p style={{ fontSize: '16px', color: '#595959', margin: '0 0 8px 0' }}>Every batch independently tested - HPLC quantified</p>
-                                    <p style={{ fontSize: '16px', color: '#595959', margin: 0, lineHeight: '1.5' }}>Active compound potency, heavy metals, pesticide residues, and microbial panels verified on every lot before dispatch.</p>
-                                </div>
-                                
-                                <div className="credential-card textured-card-highlight" style={{ borderRadius: '6px', padding: '25px' }}>
-                                    <h3 style={{ fontSize: '18px', color: 'var(--text-dark)', margin: '0 0 4px 0', fontWeight: '700' }}>📄 Complete documentation on every shipment</h3>
-                                    <p style={{ fontSize: '16px', color: '#595959', margin: 0 }}>CoA - Phytosanitary - Certificate of Origin - MSDS - Allergen Declaration</p>
-                                </div>
+                            <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                {[
+                                    { title: '✓ IEC - Import Export Code', sub: 'Directorate General of Foreign Trade (DGFT)', desc: 'Registered Indian exporter under DGFT. All international shipments dispatched under valid IEC.' },
+                                    { title: '✓ FSSAI - Food Safety Licensed', sub: 'Food Safety & Standards Authority of India', desc: 'FSSAI-licensed facility. Compliant with Indian food safety standards for export of botanical ingredients.' },
+                                    { title: '✓ NABL Accredited Lab Testing', sub: 'Every batch independently tested - HPLC quantified', desc: 'Active compound potency, heavy metals, pesticide residues, and microbial panels verified on every lot before dispatch.' },
+                                    { title: '📄 Complete documentation on every shipment', sub: '', desc: 'CoA - Phytosanitary - Certificate of Origin - MSDS - Allergen Declaration' }
+                                ].map((item, idx) => (
+                                    <div 
+                                        key={idx} 
+                                        onClick={() => setActiveCredentialIndex(idx)}
+                                        className="credential-card"
+                                        style={{ 
+                                            backgroundColor: activeCredentialIndex === idx ? '#fcf8f4' : '#ffffff', 
+                                            border: activeCredentialIndex === idx ? '1.5px solid #7c5847' : '1px solid #e0e0e0', 
+                                            boxShadow: activeCredentialIndex === idx ? '0 4px 14px rgba(124,88,71,0.12)' : '0 2px 6px rgba(0,0,0,0.02)', 
+                                            borderRadius: '8px', 
+                                            padding: '16px 18px',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.2s ease'
+                                        }}
+                                    >
+                                        <h3 style={{ fontSize: '15px', color: activeCredentialIndex === idx ? '#7c5847' : 'var(--text-dark)', margin: '0 0 3px 0', fontWeight: '700' }}>{item.title}</h3>
+                                        {item.sub && <p style={{ fontSize: '13px', color: '#666', margin: '0 0 4px 0', fontWeight: '500' }}>{item.sub}</p>}
+                                        <p style={{ fontSize: '13px', color: '#555', margin: 0, lineHeight: '1.4' }}>{item.desc}</p>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -138,17 +174,14 @@ export default function Home() {
                         BOTANICAL INGREDIENTS <span style={{ display: 'inline-block', width: '40px', height: '1px', backgroundColor: '#8b6352' }}></span>
                     </div>
                     <h2 className="section-title" style={{ fontSize: '38px', color: '#1a1a1a', margin: '0 0 5px 0', fontWeight: '600', letterSpacing: '-1px', lineHeight: '1.2' }}>
-                        35 ingredients.
+                        <AnimatedCounter end={productsData.length > 0 ? productsData.length : 35} suffix="+" /> ingredients.
                     </h2>
                     <h2 className="section-title-italic" style={{ fontSize: '28px', color: '#4a5b6c', margin: 0, fontWeight: '400', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
                         Farm-verified. Export-ready.
                     </h2>
                 </div>
                 {/* Horizontal Category Scroll */}
-                <div style={{ overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap', paddingBottom: '15px', marginBottom: '30px', msOverflowStyle: 'none', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }} className="hide-scrollbar">
-                    <style dangerouslySetInnerHTML={{__html: `
-                        .hide-scrollbar::-webkit-scrollbar { display: none; }
-                    `}} />
+                <div className="category-scroll-container">
                     {categories.map((cat, idx) => (
                         <button 
                             key={idx}
@@ -271,7 +304,7 @@ export default function Home() {
                 </div>
 
                 <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', padding: '0' }}>
-                    <div className="formulation-grid">
+                    <div className="formulation-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', alignItems: 'stretch' }}>
                                     {[
                                         { emoji: '⚡', icon: '🌿', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'], bg: '#f4f7f4', accent: '#4a6b55' },
                                         { emoji: '🦴', icon: '🦴', title: 'Joint & Mobility', desc: 'Anti-inflammation, arthritis, sports recovery', herbs: ['Turmeric 95%', 'Boswellia', 'Ginger'], bg: '#fdf7f2', accent: '#c86b2e' },
@@ -286,47 +319,54 @@ export default function Home() {
                                             borderTop: '4px solid #8b6352',
                                             boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
                                             borderRadius: '12px',
-                                            padding: '30px',
+                                            padding: '25px',
                                             overflow: 'hidden',
-                                            position: 'relative'
+                                            position: 'relative',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            justifyContent: 'space-between',
+                                            height: '100%',
+                                            boxSizing: 'border-box'
                                         }}>
                                             {/* Giant background icon/watermark */}
                                             <div style={{ position: 'absolute', right: '-15px', bottom: '-25px', fontSize: '140px', opacity: 0.04, transform: 'rotate(-15deg)', pointerEvents: 'none' }}>
                                                 {set.icon}
                                             </div>
                                             
-                                            {/* Top bar with icon and title */}
-                                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', marginBottom: '20px', position: 'relative', zIndex: 1 }}>
-                                                <div style={{ 
-                                                    fontSize: '28px', 
-                                                    background: 'linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.6) 100%)', 
-                                                    backdropFilter: 'blur(10px)', 
-                                                    border: '1px solid rgba(255,255,255,0.8)', 
-                                                    width: '64px', height: '64px', 
-                                                    display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                                                    borderRadius: '16px', 
-                                                    color: '#8b6352', 
-                                                    boxShadow: '0 8px 20px rgba(0,0,0,0.04)' 
-                                                }}>
-                                                    {set.emoji}
+                                            <div>
+                                                {/* Top bar with icon and title */}
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '15px', position: 'relative', zIndex: 1 }}>
+                                                    <div style={{ 
+                                                        fontSize: '24px', 
+                                                        background: 'linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.6) 100%)', 
+                                                        backdropFilter: 'blur(10px)', 
+                                                        border: '1px solid rgba(255,255,255,0.8)', 
+                                                        width: '50px', height: '50px', 
+                                                        display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                                                        borderRadius: '14px', 
+                                                        color: '#8b6352', 
+                                                        boxShadow: '0 4px 14px rgba(0,0,0,0.04)' 
+                                                    }}>
+                                                        {set.emoji}
+                                                    </div>
+                                                    <div>
+                                                        <h3 style={{ fontSize: '18px', color: '#111', margin: '0 0 2px', fontWeight: '800', letterSpacing: '-0.3px' }}>{set.title}</h3>
+                                                        <p style={{ fontSize: '12px', color: '#8b6352', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Formulation Set</p>
+                                                    </div>
                                                 </div>
-                                                <div style={{ paddingTop: '8px' }}>
-                                                    <h3 style={{ fontSize: '20px', color: '#111', margin: '0 0 4px', fontWeight: '800', letterSpacing: '-0.3px' }}>{set.title}</h3>
-                                                    <p style={{ fontSize: '13px', color: '#8b6352', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Formulation Set</p>
-                                                </div>
+                                                
+                                                <p style={{ fontSize: '14px', color: '#555', marginBottom: '20px', lineHeight: '1.5', position: 'relative', zIndex: 1, fontWeight: '500' }}>{set.desc}</p>
                                             </div>
                                             
-                                            <p style={{ fontSize: '15px', color: '#555', marginBottom: '25px', lineHeight: '1.6', position: 'relative', zIndex: 1, fontWeight: '500' }}>{set.desc}</p>
-                                            
-                                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', position: 'relative', zIndex: 1 }}>
+                                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', position: 'relative', zIndex: 1, marginTop: 'auto' }}>
                                                 {set.herbs.map(h => (
                                                     <span key={h} style={{ 
                                                         backgroundColor: '#fff', 
                                                         border: `1px solid rgba(0,0,0,0.06)`, 
                                                         color: '#222', 
-                                                        padding: '8px 16px', 
+                                                        padding: '6px 14px', 
                                                         borderRadius: '30px', 
-                                                        fontSize: '13px', 
+                                                        fontSize: '12px', 
                                                         fontWeight: '600', 
                                                         boxShadow: '0 2px 6px rgba(0,0,0,0.02)' 
                                                     }}>
@@ -351,7 +391,7 @@ export default function Home() {
                         <h2 className="section-title-italic" style={{ fontSize: '36px', color: '#777', margin: 0, fontWeight: '400', fontStyle: 'italic', letterSpacing: '-1px' }}>across 30+ countries</h2>
                     </div>
 
-                    <div className="b2b-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+                    <div className="b2b-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', alignItems: 'stretch' }}>
                         {[
                             { icon: '💊', title: 'Supplement Brands', desc: 'Nutraceutical brands needing certified, spec-compliant raw material' },
                             { icon: '🏭', title: 'Contract Manufacturers', desc: 'CMOs and OEM manufacturers sourcing consistent, traceable extracts at scale' },
@@ -360,12 +400,28 @@ export default function Home() {
                             { icon: '🛒', title: 'Importers & Distributors', desc: 'Regional distributors buying certified botanical ingredients for resale into local markets' },
                             { icon: '🍵', title: 'Food & Beverage', desc: 'Functional food, tea, and beverage brands sourcing food-grade standardised herbs' }
                         ].map((buyer, idx) => (
-                            <div key={idx} style={{ display: 'flex', gap: '15px', padding: '20px', backgroundColor: '#fff', border: '1px solid #eaeaea', borderRadius: '4px' }}>
-                                <div style={{ fontSize: '20px', marginTop: '2px' }}>{buyer.icon}</div>
-                                <div>
-                                    <h4 style={{ fontSize: '15px', marginBottom: '5px', fontWeight: 'bold', color: '#333' }}>{buyer.title}</h4>
-                                    <p style={{ fontSize: '13px', color: '#777', lineHeight: '1.5', margin: 0 }}>{buyer.desc}</p>
-                                </div>
+                            <div 
+                                key={idx} 
+                                onClick={() => setActiveBuyerIndex(idx)}
+                                style={{ 
+                                    display: 'flex', 
+                                    flexDirection: 'column', 
+                                    padding: '16px 20px', 
+                                    backgroundColor: activeBuyerIndex === idx ? '#fcf8f4' : '#fff', 
+                                    border: activeBuyerIndex === idx ? '1.5px solid #7c5847' : '1px solid #eaeaea', 
+                                    borderRadius: '8px',
+                                    height: '100%',
+                                    boxSizing: 'border-box',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease',
+                                    boxShadow: activeBuyerIndex === idx ? '0 4px 14px rgba(124,88,71,0.12)' : 'none'
+                                }}
+                            >
+                                <h4 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '15px', marginBottom: '6px', fontWeight: '700', color: activeBuyerIndex === idx ? '#7c5847' : '#333' }}>
+                                    <span style={{ fontSize: '18px' }}>{buyer.icon}</span> 
+                                    <span>{buyer.title}</span>
+                                </h4>
+                                <p style={{ fontSize: '13px', color: '#666', lineHeight: '1.5', margin: 0 }}>{buyer.desc}</p>
                             </div>
                         ))}
                     </div>

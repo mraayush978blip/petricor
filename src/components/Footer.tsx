@@ -56,7 +56,9 @@ export default function Footer() {
                     {/* Contact Info */}
                     <div className="footer-col">
                         <h4 className="footer-col-heading">Contact Info</h4>
-                        <p style={{ color: 'var(--text-light)', fontSize: '14px', margin: '0 0 12px' }}>+91 9589794989</p>
+                        <p style={{ color: 'var(--text-light)', fontSize: '14px', margin: '0 0 12px' }}>
+                            <a href="tel:+919589794989" style={{ color: 'var(--text-light)', textDecoration: 'none' }}>+91 9589794989</a>
+                        </p>
                         <p style={{ margin: 0 }}>
                             <a href="mailto:contact@petricor.co.in" style={{ color: 'var(--text-light)', textDecoration: 'none', fontSize: '14px' }}>contact@petricor.co.in</a>
                         </p>

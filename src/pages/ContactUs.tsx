@@ -25,6 +25,14 @@ export default function ContactUs() {
         setError('');
         setSuccess(false);
 
+        // Email format validation requiring @ and domain dot
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(email.trim())) {
+            setError('Please enter a valid email address containing @ and a valid domain (e.g., name@domain.com)');
+            setLoading(false);
+            return;
+        }
+
         // Layer 1 & 2: Honeypot + Time check
         const botCheck = clientBotCheck(honeypotRef.current, formOpenedAt.current);
         if (botCheck.blocked) {
@@ -64,10 +72,10 @@ export default function ContactUs() {
     };
 
     return (
-        <div className="container" style={{ padding: '60px 15px', maxWidth: '1200px', margin: '0 auto' }}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '50px' }}>
+        <div className="container contact-container" style={{ padding: '60px 15px', maxWidth: '1200px', margin: '0 auto', boxSizing: 'border-box' }}>
+            <div className="contact-flex-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '50px' }}>
                 {/* Left Column - Contact Info */}
-                <div style={{ flex: '1 1 40%', minWidth: '300px' }}>
+                <div className="contact-info-col" style={{ flex: '1 1 40%', minWidth: '300px' }}>
                     <h1 style={{ fontSize: '36px', color: '#7c5847', marginBottom: '20px', fontWeight: '600' }}>
                         Reach Out to Petricor
                     </h1>
@@ -93,7 +101,7 @@ export default function ContactUs() {
                     <div>
                         <h4 style={{ color: '#7c5847', fontSize: '20px', marginBottom: '15px', fontWeight: '600' }}>Contact Info</h4>
                         <p style={{ color: '#666', fontSize: '15px', lineHeight: '1.6', marginBottom: '5px' }}>
-                            <strong>Phone:</strong> +91 9589794989
+                            <strong>Phone:</strong> <a href="tel:+919589794989" style={{ color: '#7c5847', textDecoration: 'none', fontWeight: '600' }}>+91 9589794989</a>
                         </p>
                         <p style={{ color: '#666', fontSize: '15px', lineHeight: '1.6' }}>
                             <strong>Email:</strong> <a href="mailto:contact@petricor.co.in" style={{ color: '#7c5847', textDecoration: 'none' }}>contact@petricor.co.in</a>
@@ -102,7 +110,7 @@ export default function ContactUs() {
                 </div>
 
                 {/* Right Column - Contact Form */}
-                <div style={{ flex: '1 1 50%', minWidth: '300px', backgroundColor: '#f9f9f9', padding: '40px', borderRadius: '5px' }}>
+                <div className="contact-form-col" style={{ flex: '1 1 50%', minWidth: '300px', backgroundColor: '#f9f9f9', padding: '40px', borderRadius: '8px', boxSizing: 'border-box' }}>
                     <h2 style={{ fontSize: '28px', color: '#333', marginBottom: '10px', fontWeight: '600' }}>
                         Get in Touch
                     </h2>
