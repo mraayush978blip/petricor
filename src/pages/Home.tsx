@@ -99,8 +99,8 @@ export default function Home() {
                     
                     {/* RIGHT COLUMN - CREDENTIALS */}
                     <div className="hero-right" style={{ flex: '1 1 50%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                        <div className="compliance-wrapper">
-                            <h4 className="compliance-title" style={{ fontSize: '14px', color: '#8b9caa', marginBottom: '25px', fontWeight: '600' }}>Compliance Credentials</h4>
+                        <div className="compliance-wrapper credentials-container-bg">
+                            <h4 className="compliance-title" style={{ fontSize: '14px', color: '#8b9caa', marginBottom: '25px', fontWeight: '600', paddingLeft: '5px' }}>Compliance Credentials</h4>
                             
                             <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                                 <div className="credential-card textured-card" style={{ border: '1px solid transparent', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', borderRadius: '6px', padding: '25px' }}>
