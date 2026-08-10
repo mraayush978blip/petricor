@@ -232,7 +232,7 @@ export default function Home() {
                                     }}
                                     style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#6b4236', color: '#fff', padding: '12px 8px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: '600', marginTop: '12px' }}
                                 >
-                                    Request Quote
+                                    Enquiry
                                 </button>
                             </div>
                         </div>
