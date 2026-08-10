@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
@@ -17,45 +17,7 @@ export default function Home() {
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
     const [hoveredProductSlug, setHoveredProductSlug] = useState<string | null>(null);
 
-    const stickyWrapperRef = useRef<HTMLDivElement>(null);
-    const trackRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            if (!stickyWrapperRef.current || !trackRef.current) return;
-            
-            // Only apply horizontal scroll on mobile
-            if (window.innerWidth > 768) {
-                trackRef.current.style.transform = 'none';
-                return;
-            }
-
-            const wrapper = stickyWrapperRef.current;
-            const track = trackRef.current;
-            
-            const rect = wrapper.getBoundingClientRect();
-            // Total scrollable distance
-            const maxScroll = wrapper.offsetHeight - window.innerHeight;
-            
-            // Progress from 0 to 1
-            let progress = -rect.top / maxScroll;
-            progress = Math.max(0, Math.min(1, progress));
-            
-            // The maximum distance to translate the track
-            // Full track width minus the window width, plus right padding space
-            const maxTranslate = track.scrollWidth - window.innerWidth + 30; 
-            
-            track.style.transform = `translateX(${-progress * maxTranslate}px)`;
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        window.addEventListener('resize', handleScroll, { passive: true });
-        
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleScroll);
-        };
-    }, []);
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -280,27 +242,24 @@ export default function Home() {
             </div>
 
             {/* FORMULATION-READY SETS */}
-            <div className="formulation-section-wrapper" style={{ backgroundColor: '#fdfbf9' }}>
-                <div className="formulation-sticky-wrapper" ref={stickyWrapperRef}>
-                    <div className="formulation-sticky-content">
-                        <div className="container formulation-header-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', padding: '100px 0 60px' }}>
-                            <div style={{ fontSize: '12px', color: '#8b6352', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '15px' }}>
-                                FORMULATION-READY SETS
-                            </div>
-                            <h2 style={{ fontSize: '38px', color: '#222', margin: 0, fontWeight: '700', letterSpacing: '-0.5px' }}>
-                                Don't just buy ingredients.
-                            </h2>
-                            <h2 style={{ fontSize: '36px', color: '#b28b74', margin: '5px 0 20px 0', fontWeight: '500', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
-                                Build product lines.
-                            </h2>
-                            <p style={{ fontSize: '15px', color: '#666', lineHeight: '1.6', marginTop: '15px', maxWidth: '600px' }}>
-                                Pre-validated ingredient combinations for common supplement categories. Each set ships with matching certifications and combined CoA documentation.
-                            </p>
-                        </div>
+            <div className="formulation-section-wrapper" style={{ backgroundColor: '#fdfbf9', padding: '100px 0 60px' }}>
+                <div className="container formulation-header-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', marginBottom: '40px' }}>
+                    <div style={{ fontSize: '12px', color: '#8b6352', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '15px' }}>
+                        FORMULATION-READY SETS
+                    </div>
+                    <h2 style={{ fontSize: '38px', color: '#222', margin: 0, fontWeight: '700', letterSpacing: '-0.5px' }}>
+                        Don't just buy ingredients.
+                    </h2>
+                    <h2 style={{ fontSize: '36px', color: '#b28b74', margin: '5px 0 20px 0', fontWeight: '500', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
+                        Build product lines.
+                    </h2>
+                    <p style={{ fontSize: '15px', color: '#666', lineHeight: '1.6', marginTop: '15px', maxWidth: '600px' }}>
+                        Pre-validated ingredient combinations for common supplement categories. Each set ships with matching certifications and combined CoA documentation.
+                    </p>
+                </div>
 
-                        <div className="formulation-track-wrapper">
-                            <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', padding: '0' }}>
-                                <div className="formulation-grid" ref={trackRef}>
+                <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', padding: '0' }}>
+                    <div className="formulation-grid">
                                     {[
                                         { emoji: '⚡', icon: '🌿', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'], bg: '#f4f7f4', accent: '#4a6b55' },
                                         { emoji: '🦴', icon: '🦴', title: 'Joint & Mobility', desc: 'Anti-inflammation, arthritis, sports recovery', herbs: ['Turmeric 95%', 'Boswellia', 'Ginger'], bg: '#fdf7f2', accent: '#c86b2e' },
@@ -368,9 +327,6 @@ export default function Home() {
                                     ))}
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             {/* BUILT FOR BUSINESS BUYERS */}
@@ -406,8 +362,32 @@ export default function Home() {
             </div>
 
             {/* MAP SECTION */}
-            <div className="container" style={{ maxWidth: '100%', margin: '80px auto 0', padding: '0', textAlign: 'center', display: 'flex' }}>
-                <img src="/images/Map-scaled.jpeg" alt="Global Export Map" style={{ width: '100%', maxWidth: '1400px', height: 'auto', margin: '0 auto', display: 'block' }} />
+            <div className="container" style={{ maxWidth: '100%', margin: '80px auto 0', padding: '0', textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
+                <div style={{ position: 'relative', width: '100%', maxWidth: '1400px' }}>
+                    <img src="/images/Map-scaled.jpeg" alt="Global Export Map" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    
+                    {/* Blinking Dots at root ends */}
+                    {[
+                        { top: '22.5%', left: '28.5%' }, // Canada West
+                        { top: '38.0%', left: '28.5%' }, // USA West
+                        { top: '47.0%', left: '31.5%' }, // Central America
+                        { top: '33.0%', left: '36.0%' }, // USA East
+                        { top: '62.5%', left: '38.5%' }, // South America West
+                        { top: '57.5%', left: '43.5%' }, // South America East
+                        { top: '26.0%', left: '46.5%' }, // UK
+                        { top: '23.0%', left: '55.5%' }, // Eastern Europe
+                        { top: '52.0%', left: '53.5%' }, // West Africa
+                        { top: '59.5%', left: '60.5%' }, // South Africa
+                        { top: '36.5%', left: '78.5%' }, // Japan
+                        { top: '54.0%', left: '72.0%' }, // Indonesia
+                        { top: '63.5%', left: '79.5%' }, // Australia
+                    ].map((pos, idx) => (
+                        <div key={idx} style={{ position: 'absolute', top: pos.top, left: pos.left, transform: 'translate(-50%, -50%)' }}>
+                            {/* Expanding ring only */}
+                            <div className="map-dot-ring" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '1.5px solid #8b6352', borderRadius: '50%', animation: 'pulse-ring 2s infinite', animationDelay: `${idx * 0.15}s`, zIndex: 1 }}></div>
+                        </div>
+                    ))}
+                </div>
             </div>
             
             <ProductEnquiryModal 

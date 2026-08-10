@@ -46,22 +46,6 @@ export default function ProductDetail() {
                     category: p.categories?.name || 'Uncategorized',
                     images: [p.primary_image_url, p.hover_image_url].filter(Boolean)
                 }));
-
-                if (related.length < 4) {
-                    const { data: moreData } = await supabase
-                        .from('products')
-                        .select(`*, categories(name)`)
-                        .neq('id', prodData.id)
-                        .limit(4 - related.length);
-                        
-                    if (moreData) {
-                        related = [...related, ...moreData.map(p => ({
-                            ...p,
-                            category: p.categories?.name || 'Uncategorized',
-                            images: [p.primary_image_url, p.hover_image_url].filter(Boolean)
-                        }))];
-                    }
-                }
                 
                 setRelatedProducts(related);
             } else {

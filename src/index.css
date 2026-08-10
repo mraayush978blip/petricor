@@ -71,6 +71,19 @@ h1, h2, h3, h4, h5, h6, .hero-title, .hero-title-italic, .section-title, .sectio
   margin: 0 0 20px 0;
 }
 
+/* Formulation Sets - Desktop Grid */
+.formulation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+.formulation-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
 @media (max-width: 768px) {
   /* Prevent horizontal scroll issues globally without breaking pull-to-refresh or sticky positioning */
   #root {
@@ -321,5 +334,18 @@ h1, h2, h3, h4, h5, h6, .hero-title, .hero-title-italic, .section-title, .sectio
     flex: 0 0 auto !important;
     width: auto !important;
     font-size: '12px' !important;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    width: 8px;
+    height: 8px;
+    opacity: 1;
+  }
+  100% {
+    width: 45px;
+    height: 45px;
+    opacity: 0;
   }
 }
