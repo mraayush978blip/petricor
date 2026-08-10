@@ -60,8 +60,8 @@ export default function Home() {
                     
                     {/* LEFT COLUMN - TEXT */}
                     <div className="hero-left" style={{ flex: '1 1 50%', borderRight: '1px solid var(--border-color)' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-brown)', fontSize: '11px', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '25px', textTransform: 'uppercase' }}>
-                            <span style={{ display: 'inline-block', width: '24px', height: '1px', backgroundColor: 'var(--primary-brown)' }}></span>
+                        <div className="hero-badge-container">
+                            <span className="hero-badge-line"></span>
                             GROWN IN NEEMUCH - VERIFIED AT SOURCE
                         </div>
                         <h1 className="hero-title" style={{ fontSize: '56px', color: 'var(--text-dark)', margin: '0 0 5px 0', fontWeight: 'bold', lineHeight: '1.1', letterSpacing: '-1px' }}>
