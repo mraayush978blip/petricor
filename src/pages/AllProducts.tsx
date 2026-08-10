@@ -127,21 +127,21 @@ export default function AllProducts() {
                                 />
                             </Link>
                             <div style={{ padding: '10px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                                <Link to={`/product/${product.slug}`} title={product.title} style={{ display: 'block', fontSize: '14px', color: '#333', textDecoration: 'none', fontWeight: '600', marginBottom: '4px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <Link to={`/product/${product.slug}`} style={{ display: 'block', fontSize: '14px', color: '#333', textDecoration: 'none', fontWeight: '600', marginBottom: '4px', lineHeight: '1.3' }}>
                                     {product.title}
                                 </Link>
-                                <div style={{ marginTop: 'auto' }}>
-                                    <div style={{ fontSize: '11px', color: '#888', marginBottom: '10px', lineHeight: '1.3' }}>{product.category}</div>
-                                    <button 
-                                        onClick={() => {
-                                            setSelectedProduct(product);
-                                            setIsModalOpen(true);
-                                        }}
-                                        style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#8b6352', color: '#fff', padding: '6px 12px', borderRadius: '4px', border: 'none', cursor: 'pointer', fontSize: '12px', fontWeight: '500' }}
-                                    >
-                                        Enquire Now
-                                    </button>
-                                </div>
+                                <Link to={`/products?category=${encodeURIComponent(product.category)}`} style={{ display: 'block', fontSize: '11px', color: '#888', marginBottom: '10px', lineHeight: '1.3', textDecoration: 'none' }}>
+                                    {product.category}
+                                </Link>
+                                <button 
+                                    onClick={() => {
+                                        setSelectedProduct(product);
+                                        setIsModalOpen(true);
+                                    }}
+                                    style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#8b6352', color: '#fff', padding: '8px 12px', borderRadius: '4px', border: 'none', cursor: 'pointer', fontSize: '12px', fontWeight: '500', marginTop: 'auto' }}
+                                >
+                                    Enquire Now
+                                </button>
                             </div>
                         </div>
                     ))}

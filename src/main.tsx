@@ -16,4 +16,10 @@ if ('serviceWorker' in navigator) {
       registration.unregister();
     }
   });
+  // Clear any existing PWA caches to forcefully vanish old versions
+  caches.keys().then((keyList) => {
+    return Promise.all(keyList.map((key) => {
+      return caches.delete(key);
+    }));
+  });
 }
