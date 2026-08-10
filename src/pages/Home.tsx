@@ -162,13 +162,14 @@ export default function Home() {
                                 padding: '12px 24px', 
                                 margin: '0 10px 0 0',
                                 cursor: 'pointer', 
-                                border: '1px solid #eaeaea', 
-                                background: activeTab === cat ? '#9c7361' : '#fff', 
-                                color: activeTab === cat ? '#fff' : '#555', 
+                                border: activeTab === cat ? '1px solid var(--primary-brown)' : '1px solid #dcdcdc', 
+                                background: activeTab === cat ? 'var(--primary-brown)' : '#e8e8e8', 
+                                color: activeTab === cat ? '#fff' : '#334155', 
                                 borderRadius: '4px',
-                                fontSize: '14px',
+                                fontSize: '15px',
+                                fontWeight: activeTab === cat ? '600' : '500',
                                 transition: 'all 0.2s ease',
-                                boxShadow: activeTab === cat ? '0 4px 10px rgba(156,115,97,0.3)' : 'none'
+                                boxShadow: 'none'
                             }}
                         >
                             {cat}
