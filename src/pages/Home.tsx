@@ -15,7 +15,6 @@ export default function Home() {
     
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
-    const [hoveredProductSlug, setHoveredProductSlug] = useState<string | null>(null);
 
 
 
@@ -213,16 +212,22 @@ export default function Home() {
                         <div key={idx} className="product-card" style={{ display: 'flex', flexDirection: 'column', border: '1px solid #eaeaea', borderRadius: '4px', overflow: 'hidden', backgroundColor: '#fff', transition: 'transform 0.2s', width: '260px', height: '100%', scrollSnapAlign: 'start' }}>
                             <Link 
                                 to={`/product/${product.slug}`} 
-                                style={{ display: 'block', backgroundColor: '#f9f9f9', padding: '0' }}
-                                onMouseEnter={() => setHoveredProductSlug(product.slug)}
-                                onMouseLeave={() => setHoveredProductSlug(null)}
+                                style={{ display: 'block', padding: '0' }}
                             >
-                                <img 
-                                    src={hoveredProductSlug === product.slug && product.images && product.images[1] ? product.images[1] : (product.images ? product.images[0] : '')} 
-                                    alt={product.title || product.name} 
-                                    className="product-img"
-                                    style={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', display: 'block' }} 
-                                />
+                                <div className="product-image-wrapper">
+                                    <img 
+                                        src={product.images ? product.images[0] : ''} 
+                                        alt={product.title || product.name} 
+                                        className="product-img-primary"
+                                    />
+                                    {product.images && product.images[1] && (
+                                        <img 
+                                            src={product.images[1]} 
+                                            alt={product.title || product.name} 
+                                            className="product-img-secondary"
+                                        />
+                                    )}
+                                </div>
                             </Link>
                             <div style={{ padding: '10px 12px 12px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                                 <Link to={`/product/${product.slug}`} style={{ display: 'block', fontSize: '15px', color: '#222', textDecoration: 'none', fontWeight: '700', marginBottom: '3px', lineHeight: '1.3' }}>

@@ -443,3 +443,28 @@ h1, h2, h3, h4, h5, h6 {
   .desktop-only { display: none !important; }
   .mobile-only { display: block !important; }
 }
+
+/* Product Image Hover Swap - Pure CSS, Disabled on touch devices */
+.product-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #f9f9f9;
+}
+.product-img-primary, .product-img-secondary {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+.product-img-secondary {
+  opacity: 0;
+}
+@media (hover: hover) {
+  .product-image-wrapper:hover .product-img-secondary {
+    opacity: 1;
+  }
+}
