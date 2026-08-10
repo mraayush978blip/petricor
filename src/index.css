@@ -120,6 +120,9 @@ h1, h2, h3, h4, h5, h6, .hero-title, .hero-title-italic, .section-title, .sectio
   .compliance-title {
     text-align: center !important;
   }
+  .credential-card {
+    text-align: center !important;
+  }
   .hero-right {
     margin-top: 40px !important;
   }
