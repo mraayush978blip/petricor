@@ -22,6 +22,14 @@ body {
   user-select: none; /* Standard */
 }
 
+/* Re-enable selection for forms so inputs remain fully interactive */
+input, textarea, select {
+  -webkit-user-select: auto !important;
+  -moz-user-select: auto !important;
+  -ms-user-select: auto !important;
+  user-select: auto !important;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
