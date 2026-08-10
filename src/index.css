@@ -143,9 +143,13 @@ h1, h2, h3, h4, h5, h6 {
   .hero-container {
     flex-direction: column !important;
   }
+  .hero-left {
+    padding-top: 50px !important;
+  }
   .hero-left, .hero-right {
     flex: 1 1 100% !important;
-    padding: 0 15px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
     border-right: none !important;
     min-width: 0 !important;
     width: 100% !important;
