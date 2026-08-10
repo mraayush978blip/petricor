@@ -56,7 +56,7 @@ export default function Home() {
         <div style={{ paddingBottom: '0' }}>
             {/* HERO SECTION */}
             <div className="hero-wrapper" style={{ borderBottom: '1px solid #dcdcdc', minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center' }}>
-                <div className="container hero-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'wrap', padding: '60px 0' }}>
+                <div className="container hero-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '60px 0' }}>
                     
                     {/* LEFT COLUMN - TEXT */}
                     <div className="hero-left" style={{ flex: '1 1 50%', padding: '0 50px 0 30px', borderRight: '1px solid var(--border-color)' }}>
@@ -99,7 +99,7 @@ export default function Home() {
                     </div>
                     
                     {/* RIGHT COLUMN - CREDENTIALS */}
-                    <div className="hero-right" style={{ flex: '1 1 50%', padding: '0 30px 0 50px' }}>
+                    <div className="hero-right" style={{ flex: '1 1 50%', padding: '0 30px 0 50px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                         <h4 style={{ fontSize: '14px', color: '#8b9caa', marginBottom: '25px', fontWeight: '600' }}>Compliance Credentials</h4>
                         
                         <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -272,7 +272,6 @@ export default function Home() {
                                             backgroundColor: set.bg, 
                                             border: `1px solid rgba(0,0,0,0.04)`,
                                             borderTop: '4px solid #8b6352',
-                                            backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='rgba(0,0,0,0.04)'/%3E%3C/svg%3E"), linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%)`,
                                             boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
                                             borderRadius: '12px',
                                             padding: '30px',
