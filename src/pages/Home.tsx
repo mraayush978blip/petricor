@@ -145,7 +145,7 @@ export default function Home() {
                     </h2>
                 </div>
                 {/* Horizontal Category Scroll */}
-                <div style={{ overflowX: 'auto', whiteSpace: 'nowrap', paddingBottom: '15px', marginBottom: '30px', msOverflowStyle: 'none', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }} className="hide-scrollbar">
+                <div style={{ overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap', paddingBottom: '15px', marginBottom: '30px', msOverflowStyle: 'none', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }} className="hide-scrollbar">
                     <style dangerouslySetInnerHTML={{__html: `
                         .hide-scrollbar::-webkit-scrollbar { display: none; }
                     `}} />
@@ -187,6 +187,7 @@ export default function Home() {
                         gap: '20px', 
                         marginBottom: '80px',
                         overflowX: 'auto',
+                        overflowY: 'hidden',
                         paddingBottom: '20px',
                         WebkitOverflowScrolling: 'touch',
                         scrollSnapType: 'x mandatory'
@@ -202,6 +203,7 @@ export default function Home() {
                     gap: '20px', 
                     marginBottom: '80px',
                     overflowX: 'auto',
+                    overflowY: 'hidden',
                     paddingBottom: '20px',
                     scrollbarWidth: 'thin',
                     scrollbarColor: '#9c7361 #f0f0f0',
