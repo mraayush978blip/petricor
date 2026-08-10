@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
@@ -16,6 +16,46 @@ export default function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
     const [hoveredProductSlug, setHoveredProductSlug] = useState<string | null>(null);
+
+    const stickyWrapperRef = useRef<HTMLDivElement>(null);
+    const trackRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (!stickyWrapperRef.current || !trackRef.current) return;
+            
+            // Only apply horizontal scroll on mobile
+            if (window.innerWidth > 768) {
+                trackRef.current.style.transform = 'none';
+                return;
+            }
+
+            const wrapper = stickyWrapperRef.current;
+            const track = trackRef.current;
+            
+            const rect = wrapper.getBoundingClientRect();
+            // Total scrollable distance
+            const maxScroll = wrapper.offsetHeight - window.innerHeight;
+            
+            // Progress from 0 to 1
+            let progress = -rect.top / maxScroll;
+            progress = Math.max(0, Math.min(1, progress));
+            
+            // The maximum distance to translate the track
+            // Full track width minus the window width, plus right padding space
+            const maxTranslate = track.scrollWidth - window.innerWidth + 30; 
+            
+            track.style.transform = `translateX(${-progress * maxTranslate}px)`;
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('resize', handleScroll, { passive: true });
+        
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleScroll);
+        };
+    }, []);
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -85,13 +125,13 @@ export default function Home() {
                         
                         <div className="hero-stats" style={{ borderTop: '1px solid #dcdcdc', paddingTop: '30px', display: 'flex' }}>
                             <div className="hero-stat-item" style={{ flex: '1', paddingRight: '20px' }}>
-                                <h4 style={{ fontSize: '22px', color: '#333', margin: '0 0 8px 0', fontWeight: '500' }}>NABL Accredited</h4>
-                                <p style={{ fontSize: '11px', color: '#666', margin: 0, fontWeight: '500' }}>No Brokers - No Traders - Direct from source</p>
+                                <h4 style={{ fontSize: '28px', color: '#222', margin: '0 0 6px 0', fontWeight: '800', letterSpacing: '-0.5px' }}>NABL Accredited</h4>
+                                <p style={{ fontSize: '12px', color: '#8b6352', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>No Brokers - No Traders - Direct from source</p>
                             </div>
                             <div className="hero-stat-divider" style={{ width: '1px', backgroundColor: '#dcdcdc', margin: '0 20px' }}></div>
                             <div className="hero-stat-item" style={{ flex: '1' }}>
-                                <h4 style={{ fontSize: '22px', color: '#333', margin: '0 0 8px 0', fontWeight: '500' }}>30+</h4>
-                                <p style={{ fontSize: '11px', color: '#666', margin: 0, fontWeight: '500' }}>Export countries</p>
+                                <h4 style={{ fontSize: '28px', color: '#222', margin: '0 0 6px 0', fontWeight: '800', letterSpacing: '-0.5px' }}>30+</h4>
+                                <p style={{ fontSize: '12px', color: '#8b6352', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Export countries</p>
                             </div>
                         </div>
                     </div>
@@ -208,27 +248,29 @@ export default function Home() {
                                 onMouseLeave={() => setHoveredProductSlug(null)}
                             >
                                 <img 
-                                    src={hoveredProductSlug === product.slug && product.images[1] ? product.images[1] : product.images[0]} 
-                                    alt={product.title} 
+                                    src={hoveredProductSlug === product.slug && product.images && product.images[1] ? product.images[1] : (product.images ? product.images[0] : '')} 
+                                    alt={product.title || product.name} 
                                     className="product-img"
                                     style={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', display: 'block' }} 
                                 />
                             </Link>
                             <div style={{ padding: '10px 12px 12px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                                 <Link to={`/product/${product.slug}`} style={{ display: 'block', fontSize: '15px', color: '#222', textDecoration: 'none', fontWeight: '700', marginBottom: '3px', lineHeight: '1.3' }}>
-                                    {product.title}
+                                    {product.title || product.name}
                                 </Link>
-                                <Link to={`/products?category=${encodeURIComponent(product.category)}`} style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
+                                <Link to={`/?category=${encodeURIComponent(product.category)}`} style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
                                     {product.category}
                                 </Link>
                                 <button 
-                                    onClick={() => {
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
                                         setSelectedProduct(product);
                                         setIsModalOpen(true);
                                     }}
                                     style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#6b4236', color: '#fff', padding: '12px 8px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: '600', marginTop: '12px' }}
                                 >
-                                    Enquire Now
+                                    Request Quote
                                 </button>
                             </div>
                         </div>
@@ -238,57 +280,95 @@ export default function Home() {
             </div>
 
             {/* FORMULATION-READY SETS */}
-            <div style={{ backgroundColor: '#ececec', padding: '100px 15px' }}>
-                <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto' }}>
-                    <div style={{ marginBottom: '60px' }}>
-                        <div style={{ fontSize: '11px', color: '#b28b74', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>
-                            FORMULATION-READY SETS
+            <div className="formulation-section-wrapper" style={{ backgroundColor: '#fdfbf9' }}>
+                <div className="formulation-sticky-wrapper" ref={stickyWrapperRef}>
+                    <div className="formulation-sticky-content">
+                        <div className="container formulation-header-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', padding: '100px 0 60px' }}>
+                            <div style={{ fontSize: '12px', color: '#8b6352', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '15px' }}>
+                                FORMULATION-READY SETS
+                            </div>
+                            <h2 style={{ fontSize: '38px', color: '#222', margin: 0, fontWeight: '700', letterSpacing: '-0.5px' }}>
+                                Don't just buy ingredients.
+                            </h2>
+                            <h2 style={{ fontSize: '36px', color: '#b28b74', margin: '5px 0 20px 0', fontWeight: '500', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
+                                Build product lines.
+                            </h2>
+                            <p style={{ fontSize: '15px', color: '#666', lineHeight: '1.6', marginTop: '15px', maxWidth: '600px' }}>
+                                Pre-validated ingredient combinations for common supplement categories. Each set ships with matching certifications and combined CoA documentation.
+                            </p>
                         </div>
-                        <h2 style={{ fontSize: '36px', color: '#333', margin: 0, fontWeight: '500', letterSpacing: '-0.5px' }}>
-                            Don't just buy ingredients.
-                        </h2>
-                        <h2 style={{ fontSize: '36px', color: '#7a8693', margin: '0 0 15px 0', fontWeight: '400', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
-                            Build product lines.
-                        </h2>
-                        <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6', marginTop: '15px', maxWidth: '600px' }}>
-                            Pre-validated ingredient combinations for common supplement categories. Each set ships with matching certifications and combined CoA documentation.
-                        </p>
-                    </div>
 
-                    <div className="formulation-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
-                        {[
-                            { emoji: '⚡', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'] },
-                            { emoji: '🦴', title: 'Joint & Mobility Complex', desc: 'Anti-inflammation, arthritis, sports recovery', herbs: ['Turmeric 95%', 'Boswellia AKBA', 'Ginger'] },
-                            { emoji: '🛡️', title: 'Immunity Shield', desc: 'Immune support, Vitamin C, antimicrobial', herbs: ['Amla', 'Moringa', 'Giloy', 'Black Seed'] },
-                            { emoji: '📊', title: 'Metabolic Support', desc: 'Blood sugar, diabetes management, weight', herbs: ['Gymnema', 'Fenugreek', 'Turmeric'] },
-                            { emoji: '🧘', title: 'Digestive Wellness', desc: 'Gut health, detox, digestion', herbs: ['Triphala', 'Ginger', 'Fenugreek'] },
-                            { emoji: '💪', title: "Men's Performance", desc: 'Testosterone, energy, sports nutrition', herbs: ['Ashwagandha', 'Mucuna L-DOPA', 'Fenugreek'] }
-                        ].map((set, idx) => (
-                            <div key={idx}
-                                className="formulation-card"
-                                style={{
-                                    backgroundColor: '#f6f6f6',
-                                    padding: '30px',
-                                    borderRadius: '4px',
-                                    border: '1px solid #e0e0e0',
-                                    transition: 'border-color 0.2s',
-                                    cursor: 'pointer'
-                                }}
-                                onMouseOver={(e) => e.currentTarget.style.borderColor = '#8b6352'}
-                                onMouseOut={(e) => e.currentTarget.style.borderColor = '#e0e0e0'}
-                            >
-                                <div style={{ fontSize: '20px', marginBottom: '15px' }}>{set.emoji}</div>
-                                <h3 style={{ fontSize: '16px', color: '#333', marginBottom: '8px', fontWeight: '600' }}>{set.title}</h3>
-                                <p style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{set.desc}</p>
-                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-                                    {set.herbs.map(h => (
-                                        <span key={h} style={{ color: '#5a6773', fontSize: '11px', fontWeight: '500' }}>
-                                            {h}
-                                        </span>
+                        <div className="formulation-track-wrapper">
+                            <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', padding: '0' }}>
+                                <div className="formulation-grid" ref={trackRef}>
+                                    {[
+                                        { emoji: '⚡', icon: '🌿', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'], bg: '#f4f7f4', accent: '#4a6b55' },
+                                        { emoji: '🦴', icon: '🦴', title: 'Joint & Mobility', desc: 'Anti-inflammation, arthritis, sports recovery', herbs: ['Turmeric 95%', 'Boswellia', 'Ginger'], bg: '#fdf7f2', accent: '#c86b2e' },
+                                        { emoji: '🛡️', icon: '🛡️', title: 'Immunity Shield', desc: 'Immune support, Vitamin C, antimicrobial', herbs: ['Amla', 'Moringa', 'Giloy', 'Black Seed'], bg: '#fef5f6', accent: '#b94e5b' },
+                                        { emoji: '📊', icon: '🩸', title: 'Metabolic Support', desc: 'Blood sugar, diabetes management, weight', herbs: ['Gymnema', 'Fenugreek', 'Turmeric'], bg: '#f4f5f8', accent: '#4b5f83' },
+                                        { emoji: '🧘', icon: '💧', title: 'Digestive Wellness', desc: 'Gut health, detox, digestion', herbs: ['Triphala', 'Ginger', 'Fenugreek'], bg: '#fdf9f1', accent: '#b08d43' },
+                                        { emoji: '💪', icon: '💪', title: "Men's Performance", desc: 'Testosterone, energy, sports nutrition', herbs: ['Ashwagandha', 'Mucuna', 'Fenugreek'], bg: '#f5f4f6', accent: '#5c526b' }
+                                    ].map((set, idx) => (
+                                        <div key={idx} className="formulation-card" style={{ 
+                                            backgroundColor: set.bg, 
+                                            border: `1px solid rgba(0,0,0,0.04)`,
+                                            borderTop: '4px solid #8b6352',
+                                            backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='rgba(0,0,0,0.04)'/%3E%3C/svg%3E"), linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%)`,
+                                            boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
+                                            borderRadius: '12px',
+                                            padding: '30px',
+                                            overflow: 'hidden',
+                                            position: 'relative'
+                                        }}>
+                                            {/* Giant background icon/watermark */}
+                                            <div style={{ position: 'absolute', right: '-15px', bottom: '-25px', fontSize: '140px', opacity: 0.04, transform: 'rotate(-15deg)', pointerEvents: 'none' }}>
+                                                {set.icon}
+                                            </div>
+                                            
+                                            {/* Top bar with icon and title */}
+                                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', marginBottom: '20px', position: 'relative', zIndex: 1 }}>
+                                                <div style={{ 
+                                                    fontSize: '28px', 
+                                                    background: 'linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.6) 100%)', 
+                                                    backdropFilter: 'blur(10px)', 
+                                                    border: '1px solid rgba(255,255,255,0.8)', 
+                                                    width: '64px', height: '64px', 
+                                                    display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                                                    borderRadius: '16px', 
+                                                    color: '#8b6352', 
+                                                    boxShadow: '0 8px 20px rgba(0,0,0,0.04)' 
+                                                }}>
+                                                    {set.emoji}
+                                                </div>
+                                                <div style={{ paddingTop: '8px' }}>
+                                                    <h3 style={{ fontSize: '20px', color: '#111', margin: '0 0 4px', fontWeight: '800', letterSpacing: '-0.3px' }}>{set.title}</h3>
+                                                    <p style={{ fontSize: '13px', color: '#8b6352', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Formulation Set</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <p style={{ fontSize: '15px', color: '#555', marginBottom: '25px', lineHeight: '1.6', position: 'relative', zIndex: 1, fontWeight: '500' }}>{set.desc}</p>
+                                            
+                                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', position: 'relative', zIndex: 1 }}>
+                                                {set.herbs.map(h => (
+                                                    <span key={h} style={{ 
+                                                        backgroundColor: '#fff', 
+                                                        border: `1px solid rgba(0,0,0,0.06)`, 
+                                                        color: '#222', 
+                                                        padding: '8px 16px', 
+                                                        borderRadius: '30px', 
+                                                        fontSize: '13px', 
+                                                        fontWeight: '600', 
+                                                        boxShadow: '0 2px 6px rgba(0,0,0,0.02)' 
+                                                    }}>
+                                                        {h}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
                                     ))}
                                 </div>
                             </div>
-                        ))}
+                        </div>
                     </div>
                 </div>
             </div>

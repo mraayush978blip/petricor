@@ -72,9 +72,9 @@ h1, h2, h3, h4, h5, h6, .hero-title, .hero-title-italic, .section-title, .sectio
 }
 
 @media (max-width: 768px) {
-  /* Prevent horizontal scroll issues globally without breaking pull-to-refresh */
+  /* Prevent horizontal scroll issues globally without breaking pull-to-refresh or sticky positioning */
   #root {
-    overflow-x: hidden;
+    overflow-x: clip;
     width: 100%;
   }
   

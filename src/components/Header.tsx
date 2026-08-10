@@ -59,7 +59,7 @@ export default function Header() {
         fontWeight: isActive(path) ? '600' as const : '500' as const,
         fontSize: '15px',
         paddingBottom: '4px',
-        borderBottom: isActive(path) ? '2px solid #7c5847' : '2px solid transparent',
+        borderBottom: isActive(path) ? '2px solid #8b6352' : '2px solid transparent',
         transition: 'all 0.2s ease'
     });
 
@@ -68,14 +68,14 @@ export default function Header() {
         return {
             display: 'flex',
             alignItems: 'center',
-            color: active ? '#7c5847' : '#4a4a4a',
+            color: active ? '#8b6352' : '#4a4a4a',
             textDecoration: 'none',
             fontSize: '18px',
             fontWeight: active ? '600' as const : '500' as const,
             borderBottom: '1px solid #f0f0f0',
             padding: '16px 20px',
-            backgroundColor: active ? '#fcf9f8' : 'transparent',
-            borderLeft: active ? '4px solid #7c5847' : '4px solid transparent',
+            backgroundColor: active ? '#fdfbf9' : 'transparent',
+            borderLeft: active ? '4px solid #8b6352' : '4px solid transparent',
             transition: 'all 0.2s ease'
         };
     };
@@ -130,51 +130,59 @@ export default function Header() {
                                     left: '50%',
                                     transform: 'translateX(-50%)',
                                     backgroundColor: '#fff',
-                                    boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
+                                    boxShadow: '0 10px 40px rgba(0,0,0,0.12)',
                                     borderRadius: '8px',
-                                    padding: '10px 0',
-                                    minWidth: '220px',
+                                    minWidth: '240px',
                                     zIndex: 1000,
                                     marginTop: '20px',
-                                    border: '1px solid #eee'
+                                    border: '1px solid #eee',
+                                    borderTop: '3px solid #8b6352'
                                 }}>
                                     {/* Triangle pointer */}
                                     <div style={{
                                         position: 'absolute',
-                                        top: '-8px',
+                                        top: '-11px',
                                         left: '50%',
                                         transform: 'translateX(-50%)',
                                         width: '0',
                                         height: '0',
                                         borderLeft: '8px solid transparent',
                                         borderRight: '8px solid transparent',
-                                        borderBottom: '8px solid #fff'
+                                        borderBottom: '8px solid #8b6352'
                                     }}></div>
                                     
-                                    {categories.map(category => (
-                                        <Link 
-                                            key={category.id}
-                                            to={`/products?category=${encodeURIComponent(category.name)}`}
-                                            style={{ 
-                                                display: 'block', 
-                                                padding: '10px 24px', 
-                                                color: '#4a4a4a', 
-                                                textDecoration: 'none',
-                                                fontSize: '14px',
-                                                transition: 'all 0.2s ease'
-                                            }}
-                                            onMouseOver={(e) => {
-                                                e.currentTarget.style.backgroundColor = '#fdf9f7';
-                                                e.currentTarget.style.color = '#7c5847';
-                                            }}
-                                            onMouseOut={(e) => {
-                                                e.currentTarget.style.backgroundColor = 'transparent';
-                                                e.currentTarget.style.color = '#4a4a4a';
-                                            }}
-                                        >
-                                            {category.name}
-                                        </Link>
-                                    ))}
+                                    {/* Scrollable category list */}
+                                    <div className="nav-dropdown-scroll" style={{
+                                        maxHeight: '60vh',
+                                        overflowY: 'auto',
+                                        padding: '10px 0',
+                                        borderRadius: '0 0 8px 8px'
+                                    }}>
+                                        {categories.map(category => (
+                                            <Link 
+                                                key={category.id}
+                                                to={`/products?category=${encodeURIComponent(category.name)}`}
+                                                style={{ 
+                                                    display: 'block', 
+                                                    padding: '12px 24px', 
+                                                    color: '#4a4a4a', 
+                                                    textDecoration: 'none',
+                                                    fontSize: '14px',
+                                                    transition: 'all 0.2s ease'
+                                                }}
+                                                onMouseOver={(e) => {
+                                                    e.currentTarget.style.backgroundColor = '#fdfbf9';
+                                                    e.currentTarget.style.color = '#8b6352';
+                                                }}
+                                                onMouseOut={(e) => {
+                                                    e.currentTarget.style.backgroundColor = 'transparent';
+                                                    e.currentTarget.style.color = '#4a4a4a';
+                                                }}
+                                            >
+                                                {category.name}
+                                            </Link>
+                                        ))}
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -185,7 +193,7 @@ export default function Header() {
 
                     {/* Right Side / Mobile Menu Button */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                        <Link to="/general-enquiry" className="desktop-enquire" style={{ backgroundColor: '#7c5847', color: 'white', padding: '10px 28px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '15px', display: 'none', transition: 'background-color 0.2s' }}>
+                        <Link to="/general-enquiry" className="desktop-enquire" style={{ backgroundColor: '#8b6352', color: 'white', padding: '10px 28px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '15px', display: 'none', transition: 'background-color 0.2s' }}>
                             Enquire Now
                         </Link>
                         
@@ -292,6 +300,22 @@ export default function Header() {
                         pointer-events: auto;
                         backdrop-filter: blur(3px);
                     }
+
+                    /* Custom scrollbar for nav dropdowns */
+                    .nav-dropdown-scroll::-webkit-scrollbar {
+                        width: 5px;
+                    }
+                    .nav-dropdown-scroll::-webkit-scrollbar-track {
+                        background: transparent;
+                        border-radius: 4px;
+                    }
+                    .nav-dropdown-scroll::-webkit-scrollbar-thumb {
+                        background: #dcdcdc;
+                        border-radius: 4px;
+                    }
+                    .nav-dropdown-scroll::-webkit-scrollbar-thumb:hover {
+                        background: #b28b74;
+                    }
                 `}} />
             </header>
 
@@ -333,11 +357,11 @@ export default function Header() {
                             </svg>
                         </button>
                         
-                        <div style={{ 
-                            maxHeight: isMobileCategoryOpen ? '500px' : '0px', 
-                            overflow: 'hidden', 
-                            transition: 'all 0.3s ease',
-                            backgroundColor: '#fcf9f8'
+                        <div className="nav-dropdown-scroll" style={{ 
+                            maxHeight: isMobileCategoryOpen ? '50vh' : '0px', 
+                            overflowY: 'auto', 
+                            transition: 'max-height 0.3s ease',
+                            backgroundColor: '#fdfbf9'
                         }}>
                             {categories.map(category => (
                                 <Link 
@@ -346,7 +370,7 @@ export default function Header() {
                                     style={{ 
                                         display: 'block', 
                                         padding: '12px 20px 12px 40px', 
-                                        color: '#7c5847', 
+                                        color: '#8b6352', 
                                         textDecoration: 'none',
                                         fontSize: '15px'
                                     }}
@@ -364,7 +388,7 @@ export default function Header() {
                 <div style={{ padding: '20px', borderTop: '1px solid #eee', backgroundColor: '#fff' }}>
                     <Link to="/general-enquiry" style={{ 
                         display: 'block',
-                        backgroundColor: '#7c5847', 
+                        backgroundColor: '#8b6352', 
                         color: 'white', 
                         padding: '14px', 
                         textAlign: 'center', 
@@ -372,7 +396,7 @@ export default function Header() {
                         textDecoration: 'none', 
                         fontWeight: '600', 
                         fontSize: '16px',
-                        boxShadow: '0 4px 10px rgba(124, 88, 71, 0.2)'
+                        boxShadow: '0 4px 10px rgba(139, 99, 82, 0.2)'
                     }}>
                         Enquire Now
                     </Link>
