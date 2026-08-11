@@ -97,7 +97,7 @@ export default function Home() {
     return (
         <div style={{ paddingBottom: '0' }}>
             {/* HERO SECTION */}
-            <div className="hero-wrapper" style={{ borderBottom: 'none', padding: '40px 0 20px 0', minHeight: 'auto' }}>
+            <div className="hero-wrapper" style={{ borderBottom: 'none' }}>
                 <div className="container hero-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0' }}>
                     
                     {/* LEFT COLUMN - TEXT */}

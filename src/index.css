@@ -549,6 +549,17 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 3px !important;
 }
 
+/* Desktop/Laptop Hero Landing View (Fills screen so 35+ ingredients stays below the fold) */
+@media (min-width: 1025px) {
+  .hero-wrapper {
+    min-height: calc(100vh - 80px) !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 20px 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+
 /* Desktop/Laptop Grid Layouts: Fluid minmax(0, 1fr) for perfect scaling in Desktop Site mode */
 @media (min-width: 769px) {
   .formulation-grid {
