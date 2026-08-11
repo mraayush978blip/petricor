@@ -4,12 +4,27 @@ import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
 import { ProductSkeleton } from '../components/Skeleton';
 import ExportMap from '../components/ExportMap';
-import { useInView } from 'framer-motion';
 
 function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string }) {
     const [count, setCount] = useState(0);
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true });
+    const [isInView, setIsInView] = useState(false);
+    const ref = useRef<HTMLSpanElement>(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsInView(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0 }
+        );
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+        return () => observer.disconnect();
+    }, []);
 
     useEffect(() => {
         if (!isInView) return;
