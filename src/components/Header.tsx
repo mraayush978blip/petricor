@@ -102,12 +102,12 @@ export default function Header() {
                 pointerEvents: isMobileMenuOpen ? 'none' : 'auto',
                 transition: 'background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, opacity 0.22s ease'
             }}>
-                <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div className="container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     
                     {/* Logo - Fixed height for 100% smooth scroll without layout shifts */}
                     <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
                         <img 
-                            src="/logo1.webp" 
+                            src="/logo.svg" 
                             alt="Petricor" 
                             className="header-logo-img"
                         />
@@ -347,7 +347,7 @@ export default function Header() {
                 <div style={{ padding: '22px 20px 18px 20px', borderBottom: '1px solid #eae4dc', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                         <img 
-                            src="/logo1.webp" 
+                            src="/logo.svg" 
                             alt="Petricor Logo" 
                             style={{ height: '36px', width: 'auto', objectFit: 'contain' }}
                         />

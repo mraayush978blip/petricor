@@ -142,13 +142,13 @@ export default function Home() {
                             <span className="hero-badge-line"></span>
                             GROWN IN NEEMUCH - VERIFIED AT SOURCE
                         </div>
-                        <h1 className="hero-title" style={{ fontSize: '68px', color: '#2c2c2c', margin: '0 0 5px 0', fontWeight: '700', lineHeight: '1.05', letterSpacing: '-1.5px' }}>
+                        <h1 className="hero-title" style={{ fontSize: 'clamp(38px, 3vw, 68px)', color: '#2c2c2c', margin: '0 0 5px 0', fontWeight: '700', lineHeight: '1.05', letterSpacing: '-1.5px' }}>
                             We control
                         </h1>
-                        <h1 className="hero-title" style={{ fontSize: '68px', color: '#2c2c2c', margin: '0 0 5px 0', fontWeight: '700', lineHeight: '1.05', letterSpacing: '-1.5px' }}>
+                        <h1 className="hero-title" style={{ fontSize: 'clamp(38px, 3vw, 68px)', color: '#2c2c2c', margin: '0 0 5px 0', fontWeight: '700', lineHeight: '1.05', letterSpacing: '-1.5px' }}>
                             the source.
                         </h1>
-                        <h1 className="hero-title-italic" style={{ fontSize: '68px', color: 'var(--primary-brown)', marginBottom: '20px', fontWeight: '500', lineHeight: '1.05', fontStyle: 'italic', letterSpacing: '-1.5px' }}>
+                        <h1 className="hero-title-italic" style={{ fontSize: 'clamp(38px, 3vw, 68px)', color: 'var(--primary-brown)', marginBottom: '20px', fontWeight: '500', lineHeight: '1.05', fontStyle: 'italic', letterSpacing: '-1.5px' }}>
                             You get the proof.
                         </h1>
                         <p style={{ fontSize: '16px', color: '#595959', lineHeight: '25.6px', marginBottom: '24px', maxWidth: '100%', fontWeight: '500' }}>
