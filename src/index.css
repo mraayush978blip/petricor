@@ -76,8 +76,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ===== HEADER LOGO ===== */
 .header-logo-img {
-  width: 230px;
-  height: auto;
+  height: 46px; /* Slightly larger than original 40px, but fits laptop headers perfectly */
+  width: auto;
   display: block;
 }
 
