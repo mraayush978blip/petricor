@@ -886,3 +886,21 @@ h1, h2, h3, h4, h5, h6 {
     zoom: 0.80;
   }
 }
+
+
+@media (max-width: 1024px) {
+  .home-products-grid-standard {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+@media (max-width: 768px) {
+  .home-products-grid-standard {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 480px) {
+  .home-products-grid-standard {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+}
