@@ -47,7 +47,7 @@ export default function ExportMap() {
             {/* CLEAN MAP IMAGE CONTAINER */}
             <div style={{ position: 'relative', width: '100%', maxWidth: '1050px', margin: '0 auto', backgroundColor: '#fff' }}>
                 <img
-                    src="/images/Map-scaled.jpeg"
+                    src="/images/map.png"
                     alt="Global Export Map"
                     style={{ width: '100%', height: 'auto', display: 'block' }}
                 />
