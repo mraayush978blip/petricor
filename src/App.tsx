@@ -93,6 +93,30 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Desktop Auto-Scaler: Scales the entire UI perfectly on large monitors
+  // Since we removed Lenis, this works flawlessly without sticky scrolling.
+  useEffect(() => {
+    const handleResize = () => {
+      // Only scale up on screens larger than standard 1440px laptops.
+      // Phone/Tablet UI remains completely untouched.
+      if (window.innerWidth > 1440) {
+        const scaleFactor = window.innerWidth / 1440;
+        // Limit max zoom to prevent insanity on ultra-ultrawides
+        const zoomLevel = Math.min(scaleFactor, 2.5);
+        document.documentElement.style.zoom = `${zoomLevel}`;
+        document.documentElement.style.setProperty('--app-zoom', `${zoomLevel}`);
+      } else {
+        document.documentElement.style.zoom = '1';
+        document.documentElement.style.setProperty('--app-zoom', '1');
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <GoogleReCaptchaProvider
       reCaptchaKey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''}

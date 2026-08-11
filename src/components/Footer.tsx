@@ -37,7 +37,7 @@ export default function Footer() {
                         <h4 className="footer-col-heading">Our Offices</h4>
                         <div style={{ marginBottom: '22px' }}>
                             <div style={{ color: 'var(--text-dark)', fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>Corporate Office</div>
-                            <div style={{ color: 'var(--text-light)', fontSize: '13px', lineHeight: '1.8' }}>
+                            <div style={{ color: '#4a4a4a', fontSize: '13px', lineHeight: '1.8', fontWeight: '500' }}>
                                 Unit No 602 &amp; 600B, Building No 6,<br />
                                 Ground Floor, Solitaire Corporate Park,<br />
                                 Andheri Kurla Road, Andheri East,<br />
@@ -46,7 +46,7 @@ export default function Footer() {
                         </div>
                         <div>
                             <div style={{ color: 'var(--text-dark)', fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>Head Office</div>
-                            <div style={{ color: 'var(--text-light)', fontSize: '13px', lineHeight: '1.8' }}>
+                            <div style={{ color: '#4a4a4a', fontSize: '13px', lineHeight: '1.8', fontWeight: '500' }}>
                                 20, Shastri Nagar, Neemuch - 458441,<br />
                                 Madhya Pradesh, India
                             </div>
@@ -56,11 +56,11 @@ export default function Footer() {
                     {/* Contact Info */}
                     <div className="footer-col">
                         <h4 className="footer-col-heading">Contact Info</h4>
-                        <p style={{ color: 'var(--text-light)', fontSize: '14px', margin: '0 0 12px' }}>
-                            <a href="tel:+919589794989" style={{ color: 'var(--text-light)', textDecoration: 'none' }}>+91 9589794989</a>
+                        <p style={{ margin: '0 0 12px' }}>
+                            <a href="tel:+919589794989" style={{ color: '#4a4a4a', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>+91 9589794989</a>
                         </p>
                         <p style={{ margin: 0 }}>
-                            <a href="mailto:contact@petricor.co.in" style={{ color: 'var(--text-light)', textDecoration: 'none', fontSize: '14px' }}>contact@petricor.co.in</a>
+                            <a href="mailto:contact@petricor.co.in" style={{ color: '#4a4a4a', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>contact@petricor.co.in</a>
                         </p>
                     </div>
                 </div>

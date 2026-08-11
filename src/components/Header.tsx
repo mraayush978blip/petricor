@@ -109,7 +109,7 @@ export default function Header() {
                         <img 
                             src="/logo1.webp" 
                             alt="Petricor" 
-                            style={{ height: '40px', width: 'auto', display: 'block' }}
+                            className="header-logo-img"
                         />
                     </Link>
 

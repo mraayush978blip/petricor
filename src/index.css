@@ -74,6 +74,20 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0 !important;
 }
 
+/* ===== HEADER LOGO ===== */
+.header-logo-img {
+  width: 230px;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .header-logo-img {
+    height: 40px;
+    width: auto;
+  }
+}
+
 /* ===== FOOTER - DESKTOP ===== */
 .site-footer {
   padding: 60px 0 0;
@@ -559,7 +573,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Desktop/Laptop Hero Landing View (Fills screen so 35+ ingredients stays below the fold) */
 @media (min-width: 1025px) {
   .hero-wrapper {
-    min-height: calc(100vh - 80px) !important;
+    min-height: calc((100vh / var(--app-zoom, 1)) - 80px) !important;
     display: flex !important;
     align-items: center !important;
     padding: 20px 0 !important;
