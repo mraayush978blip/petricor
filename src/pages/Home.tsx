@@ -36,7 +36,7 @@ function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string })
         return () => clearInterval(timer);
     }, [end, isInView]);
 
-    return <span ref={ref}>{count}{suffix}</span>;
+    return <span ref={ref} style={{ display: 'inline-block', minWidth: '1.2em' }}>{count}{suffix}</span>;
 }
 
 export default function Home() {
