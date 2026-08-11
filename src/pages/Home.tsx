@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
 import { ProductSkeleton } from '../components/Skeleton';
+import ExportMap from '../components/ExportMap';
 
 function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string }) {
     const [count, setCount] = useState(0);
@@ -49,6 +50,16 @@ export default function Home() {
     // Interactive Highlights
     const [activeCredentialIndex, setActiveCredentialIndex] = useState<number | null>(null);
     const [activeBuyerIndex, setActiveBuyerIndex] = useState<number | null>(null);
+
+    // Un-highlight cards when user scrolls (optimized to prevent scroll freeze/re-renders)
+    useEffect(() => {
+        const handleScroll = () => {
+            setActiveCredentialIndex(prev => (prev !== null ? null : prev));
+            setActiveBuyerIndex(prev => (prev !== null ? null : prev));
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -108,7 +119,7 @@ export default function Home() {
                             Farm-origin botanical extracts from Neemuch, India where the herbs actually grow. Every batch traceable to its field, tested by NABL-accredited labs, documented for your import market. No middlemen. No assumptions.
                         </p>
                         <div className="hero-cta-row" style={{ display: 'flex', gap: '15px', marginBottom: '50px' }}>
-                            <Link to="/contact-us" className="hero-btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'var(--primary-brown)', color: '#fff', padding: '12px 24px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '14px', transition: 'background-color 0.2s' }}>
+                            <Link to="/products" className="hero-btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'var(--primary-brown)', color: '#fff', padding: '12px 24px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '14px', transition: 'background-color 0.2s' }}>
                                 Explore Product ➔
                             </Link>
                             <Link to="/general-enquiry" className="hero-btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'transparent', border: '1px solid var(--border-color)', color: 'var(--primary-brown)', padding: '12px 24px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '14px', transition: 'all 0.2s' }}>
@@ -116,17 +127,17 @@ export default function Home() {
                             </Link>
                         </div>
                         
-                        <div className="hero-stats" style={{ borderTop: '1px solid #eaeaea', paddingTop: '30px', display: 'flex' }}>
+                        <div className="hero-stats" style={{ borderTop: '1px solid #eaeaea', paddingTop: '30px', display: 'flex', alignItems: 'flex-start' }}>
                             <div className="hero-stat-item" style={{ flex: '1', paddingRight: '20px' }}>
-                                <h4 style={{ fontSize: '32px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '500', letterSpacing: '-0.5px' }}>NABL Accredited</h4>
-                                <p style={{ fontSize: '11px', color: '#666', margin: 0, fontWeight: '600', textTransform: 'none', letterSpacing: '0.5px' }}>No Brokers - No Traders - Direct from source</p>
+                                <h4 style={{ fontFamily: "'Manrope', sans-serif", fontSize: '30px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '700', lineHeight: '1' }}>NABL Accredited</h4>
+                                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '12px', color: '#7A7A7A', margin: 0, fontWeight: '600', lineHeight: '1', letterSpacing: '0.4px' }}>No Brokers · No Traders · Direct from source</p>
                             </div>
                             <div className="hero-stat-divider" style={{ width: '1px', backgroundColor: '#eaeaea', margin: '0 30px' }}></div>
                             <div className="hero-stat-item" style={{ flex: '1' }}>
-                                <h4 style={{ fontSize: '32px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '500', letterSpacing: '-0.5px' }}>
+                                <h4 style={{ fontFamily: "'Manrope', sans-serif", fontSize: '30px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '700', lineHeight: '1' }}>
                                     <AnimatedCounter end={30} suffix="+" />
                                 </h4>
-                                <p style={{ fontSize: '11px', color: '#666', margin: 0, fontWeight: '600', textTransform: 'none', letterSpacing: '0.5px' }}>Export countries</p>
+                                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '12px', color: '#7A7A7A', margin: 0, fontWeight: '600', lineHeight: '1', letterSpacing: '0.4px' }}>Export countries</p>
                             </div>
                         </div>
                     </div>
@@ -136,7 +147,7 @@ export default function Home() {
                         <div className="compliance-wrapper credentials-container-bg">
                             <h4 className="compliance-title" style={{ fontSize: '13px', color: '#777', marginBottom: '18px', fontWeight: '600', paddingLeft: '2px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Compliance Credentials</h4>
                             
-                            <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <div className="credentials-list" onMouseLeave={() => setActiveCredentialIndex(null)} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                 {[
                                     { title: '✓ IEC - Import Export Code', sub: 'Directorate General of Foreign Trade (DGFT)', desc: 'Registered Indian exporter under DGFT. All international shipments dispatched under valid IEC.' },
                                     { title: '✓ FSSAI - Food Safety Licensed', sub: 'Food Safety & Standards Authority of India', desc: 'FSSAI-licensed facility. Compliant with Indian food safety standards for export of botanical ingredients.' },
@@ -145,6 +156,7 @@ export default function Home() {
                                 ].map((item, idx) => (
                                     <div 
                                         key={idx} 
+                                        onMouseEnter={() => setActiveCredentialIndex(idx)}
                                         onClick={() => setActiveCredentialIndex(idx)}
                                         className="credential-card"
                                         style={{ 
@@ -393,7 +405,7 @@ export default function Home() {
                         <h2 className="section-title-italic" style={{ fontSize: '36px', color: '#777', margin: 0, fontWeight: '400', fontStyle: 'italic', letterSpacing: '-1px' }}>across 30+ countries</h2>
                     </div>
 
-                    <div className="b2b-grid">
+                    <div className="b2b-grid" onMouseLeave={() => setActiveBuyerIndex(null)}>
                         {[
                             { icon: '💊', title: 'Supplement Brands', desc: 'Nutraceutical brands needing certified, spec-compliant raw material' },
                             { icon: '🏭', title: 'Contract Manufacturers', desc: 'CMOs and OEM manufacturers sourcing consistent, traceable extracts at scale' },
@@ -404,6 +416,7 @@ export default function Home() {
                         ].map((buyer, idx) => (
                             <div 
                                 key={idx} 
+                                onMouseEnter={() => setActiveBuyerIndex(idx)}
                                 onClick={() => setActiveBuyerIndex(idx)}
                                 style={{ 
                                     display: 'flex', 
@@ -431,32 +444,8 @@ export default function Home() {
             </div>
 
             {/* MAP SECTION */}
-            <div className="container" style={{ maxWidth: '100%', margin: '80px auto 0', padding: '0', textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
-                <div style={{ position: 'relative', width: '100%', maxWidth: '1400px' }}>
-                    <img src="/images/Map-scaled.jpeg" alt="Global Export Map" style={{ width: '100%', height: 'auto', display: 'block' }} />
-                    
-                    {/* Blinking Dots at root ends */}
-                    {[
-                        { top: '22.5%', left: '28.5%' }, // Canada West
-                        { top: '38.0%', left: '28.5%' }, // USA West
-                        { top: '47.0%', left: '31.5%' }, // Central America
-                        { top: '33.0%', left: '36.0%' }, // USA East
-                        { top: '62.5%', left: '38.5%' }, // South America West
-                        { top: '57.5%', left: '43.5%' }, // South America East
-                        { top: '26.0%', left: '46.5%' }, // UK
-                        { top: '23.0%', left: '55.5%' }, // Eastern Europe
-                        { top: '52.0%', left: '53.5%' }, // West Africa
-                        { top: '59.5%', left: '60.5%' }, // South Africa
-                        { top: '36.5%', left: '78.5%' }, // Japan
-                        { top: '54.0%', left: '72.0%' }, // Indonesia
-                        { top: '63.5%', left: '79.5%' }, // Australia
-                    ].map((pos, idx) => (
-                        <div key={idx} style={{ position: 'absolute', top: pos.top, left: pos.left, transform: 'translate(-50%, -50%)' }}>
-                            {/* Expanding ring only */}
-                            <div className="map-dot-ring" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '1.5px solid #8b6352', borderRadius: '50%', animation: 'pulse-ring 2s infinite', animationDelay: `${idx * 0.15}s`, zIndex: 1 }}></div>
-                        </div>
-                    ))}
-                </div>
+            <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '80px auto 0', padding: '0' }}>
+                <ExportMap />
             </div>
             
             <ProductEnquiryModal 

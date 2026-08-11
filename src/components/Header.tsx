@@ -11,10 +11,11 @@ export default function Header() {
 
     const location = useLocation();
 
-    // Handle scroll transition with smooth threshold
+    // Handle scroll transition with smooth threshold (optimized against scroll re-render lag)
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 40);
+            const scrolled = window.scrollY > 40;
+            setIsScrolled(prev => (prev !== scrolled ? scrolled : prev));
         };
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
