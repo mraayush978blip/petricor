@@ -586,7 +586,7 @@ h1, h2, h3, h4, h5, h6 {
   .formulation-grid {
     display: grid !important;
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 25px !important;
+    gap: 15px !important;
     align-items: stretch !important;
   }
   .formulation-card {

@@ -93,16 +93,14 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Desktop Auto-Scaler: Scales the entire UI perfectly on large monitors
-  // Since we removed Lenis, this works flawlessly without sticky scrolling.
+  // 4K & Ultrawide Auto-Scaler
+  // Only kicks in on massive monitors (>1920px) so the site doesn't look tiny.
+  // Completely ignores standard laptops (1366px - 1920px).
   useEffect(() => {
     const handleResize = () => {
-      // Only scale up on screens larger than standard 1440px laptops.
-      // Phone/Tablet UI remains completely untouched.
-      if (window.innerWidth > 1440) {
-        const scaleFactor = window.innerWidth / 1440;
-        // Limit max zoom to prevent insanity on ultra-ultrawides
-        const zoomLevel = Math.min(scaleFactor, 2.5);
+      if (window.innerWidth > 1920) {
+        const scaleFactor = window.innerWidth / 1920;
+        const zoomLevel = Math.min(scaleFactor, 2.0); // max 2x zoom
         document.documentElement.style.zoom = `${zoomLevel}`;
         document.documentElement.style.setProperty('--app-zoom', `${zoomLevel}`);
       } else {
@@ -112,7 +110,7 @@ function App() {
     };
 
     window.addEventListener('resize', handleResize);
-    handleResize(); // Initial check
+    handleResize(); 
     
     return () => window.removeEventListener('resize', handleResize);
   }, []);

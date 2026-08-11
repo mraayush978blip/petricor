@@ -87,9 +87,9 @@ export default function Header() {
             <div style={{ height: '76px' }} />
             <header style={{ 
                 padding: '18px 0',
-                backgroundColor: isScrolled ? 'rgba(248, 246, 243, 0.95)' : 'var(--bg-beige)',
-                backdropFilter: isScrolled ? 'blur(12px)' : 'none',
-                WebkitBackdropFilter: isScrolled ? 'blur(12px)' : 'none',
+                backgroundColor: isScrolled ? 'rgba(248, 246, 243, 0.98)' : 'var(--bg-beige)',
+                backdropFilter: 'none',
+                WebkitBackdropFilter: 'none',
                 boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.06)' : 'none',
                 borderBottom: isScrolled ? '1px solid rgba(121,85,72,0.08)' : '1px solid transparent',
                 position: 'fixed',
@@ -100,9 +100,9 @@ export default function Header() {
                 zIndex: 1000,
                 opacity: isMobileMenuOpen ? 0 : 1,
                 pointerEvents: isMobileMenuOpen ? 'none' : 'auto',
-                transition: 'background-color 0.25s cubic-bezier(0.2, 0, 0, 1), backdrop-filter 0.25s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.25s cubic-bezier(0.2, 0, 0, 1), border-color 0.25s cubic-bezier(0.2, 0, 0, 1), opacity 0.22s ease'
+                transition: 'background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, opacity 0.22s ease'
             }}>
-                <div className="container" style={{ maxWidth: '100%', width: '95%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     
                     {/* Logo - Fixed height for 100% smooth scroll without layout shifts */}
                     <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
