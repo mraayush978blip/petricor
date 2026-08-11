@@ -7,7 +7,7 @@ import ExportMap from '../components/ExportMap';
 
 const APP_START_TIME = Date.now();
 
-function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string }) {
+function AnimatedCounter({ end, suffix = '', delayOnLoad = false }: { end: number; suffix?: string, delayOnLoad?: boolean }) {
     const [count, setCount] = useState(0);
     const [isInView, setIsInView] = useState(false);
     const ref = useRef<HTMLSpanElement>(null);
@@ -58,15 +58,19 @@ function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string })
             }
         };
 
-        // If the app just started, wait for the 2.2s splash screen to finish before animating
-        const timeSinceStart = Date.now() - APP_START_TIME;
-        const splashDuration = 2200;
-        const remainingSplashTime = Math.max(0, splashDuration - timeSinceStart);
-        
         // Add 800ms base delay + whatever is left of the splash screen
+        let finalDelay = 50; // default standard delay
+        
+        if (delayOnLoad) {
+            const timeSinceStart = Date.now() - APP_START_TIME;
+            const splashDuration = 2200;
+            const remainingSplashTime = Math.max(0, splashDuration - timeSinceStart);
+            finalDelay = remainingSplashTime + 800;
+        }
+
         const startDelay = setTimeout(() => {
             reqId = requestAnimationFrame(animate);
-        }, remainingSplashTime + 800);
+        }, finalDelay);
 
         return () => {
             clearTimeout(startDelay);
@@ -177,7 +181,7 @@ export default function Home() {
                             <div className="hero-stat-divider" style={{ width: '1px', backgroundColor: '#eaeaea', margin: '0 30px' }}></div>
                             <div className="hero-stat-item" style={{ flex: '1' }}>
                                 <h4 style={{ fontFamily: "'Manrope', sans-serif", fontSize: '30px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '700', lineHeight: '1' }}>
-                                    <AnimatedCounter end={30} suffix="+" />
+                                    <AnimatedCounter end={30} suffix="+" delayOnLoad={true} />
                                 </h4>
                                 <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '12px', color: '#7A7A7A', margin: 0, fontWeight: '600', lineHeight: '1', letterSpacing: '0.4px' }}>Export countries</p>
                             </div>
