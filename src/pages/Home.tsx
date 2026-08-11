@@ -5,6 +5,8 @@ import ProductEnquiryModal from '../components/ProductEnquiryModal';
 import { ProductSkeleton } from '../components/Skeleton';
 import ExportMap from '../components/ExportMap';
 
+const APP_START_TIME = Date.now();
+
 function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string }) {
     const [count, setCount] = useState(0);
     const [isInView, setIsInView] = useState(false);
@@ -15,7 +17,9 @@ function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string })
             ([entry]) => {
                 if (entry.isIntersecting) {
                     setIsInView(true);
-                    observer.disconnect();
+                } else {
+                    setIsInView(false);
+                    setCount(0); // Reset so it counts again when scrolled back
                 }
             },
             { threshold: 0 }
@@ -32,23 +36,42 @@ function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string })
             setCount(end);
             return;
         }
-        let start = 0;
-        const duration = 1200; // 1.2s animation
-        const frameTime = 25;
-        const totalSteps = Math.ceil(duration / frameTime);
-        const increment = end / totalSteps;
-        
-        const timer = setInterval(() => {
-            start += increment;
-            if (start >= end) {
-                setCount(end);
-                clearInterval(timer);
-            } else {
-                setCount(Math.floor(start));
-            }
-        }, frameTime);
 
-        return () => clearInterval(timer);
+        let startTime: number | null = null;
+        const duration = 1500; // 1.5s animation
+        let reqId: number;
+
+        const animate = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const progress = timestamp - startTime;
+            const percentage = Math.min(progress / duration, 1);
+            
+            // Ease-out quad function for smooth deceleration
+            const easeOut = percentage * (2 - percentage);
+            
+            setCount(Math.floor(easeOut * end));
+
+            if (progress < duration) {
+                reqId = requestAnimationFrame(animate);
+            } else {
+                setCount(end);
+            }
+        };
+
+        // If the app just started, wait for the 2.2s splash screen to finish before animating
+        const timeSinceStart = Date.now() - APP_START_TIME;
+        const splashDuration = 2200;
+        const remainingSplashTime = Math.max(0, splashDuration - timeSinceStart);
+        
+        // Add 800ms base delay + whatever is left of the splash screen
+        const startDelay = setTimeout(() => {
+            reqId = requestAnimationFrame(animate);
+        }, remainingSplashTime + 800);
+
+        return () => {
+            clearTimeout(startDelay);
+            if (reqId) cancelAnimationFrame(reqId);
+        };
     }, [end, isInView]);
 
     return <span ref={ref} style={{ display: 'inline-block', minWidth: '1.2em' }}>{count}{suffix}</span>;
