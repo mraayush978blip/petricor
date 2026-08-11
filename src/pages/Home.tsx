@@ -134,7 +134,7 @@ export default function Home() {
         <div style={{ paddingBottom: '0' }}>
             {/* HERO SECTION */}
             <div className="hero-wrapper" style={{ borderBottom: 'none' }}>
-                <div className="container hero-container" style={{ maxWidth: '1550px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0' }}>
+                <div className="container hero-container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0' }}>
                     
                     {/* LEFT COLUMN - TEXT */}
                     <div className="hero-left" style={{ flex: '1 1 50%', borderRight: '1px solid var(--border-color)' }}>
@@ -216,12 +216,12 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="container" style={{ maxWidth: '1550px', width: '95%', margin: '80px auto 0', padding: '0' }}>
+            <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '80px auto 0', padding: '0' }}>
                 <div style={{ marginBottom: '30px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: '#8b6352', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '15px' }}>
                         BOTANICAL INGREDIENTS <span style={{ display: 'inline-block', width: '40px', height: '1px', backgroundColor: '#8b6352' }}></span>
                     </div>
-                    <h2 className="section-title" style={{ fontSize: '38px', color: '#1a1a1a', margin: '0 0 5px 0', fontWeight: '600', letterSpacing: '-1px', lineHeight: '1.2' }}>
+                    <h2 className="section-title" style={{ fontSize: 'clamp(28px, 3.5vw, 38px)', color: '#1a1a1a', margin: '0 0 5px 0', fontWeight: '600', letterSpacing: '-1px', lineHeight: '1.2' }}>
                         <AnimatedCounter end={productsData.length > 0 ? productsData.length : 35} suffix="+" /> ingredients.
                     </h2>
                     <h2 className="section-title-italic" style={{ fontSize: '28px', color: '#4a5b6c', margin: 0, fontWeight: '400', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
@@ -337,14 +337,14 @@ export default function Home() {
 
             {/* FORMULATION-READY SETS */}
             <div className="formulation-section-wrapper" style={{ backgroundColor: '#fdfbf9', padding: '60px 0 40px' }}>
-                <div className="container formulation-header-container" style={{ maxWidth: '1550px', width: '95%', margin: '0 auto', marginBottom: '25px' }}>
+                <div className="container formulation-header-container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', marginBottom: '25px' }}>
                     <div style={{ fontSize: '12px', color: '#8b6352', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '15px' }}>
                         FORMULATION-READY SETS
                     </div>
-                    <h2 style={{ fontSize: '38px', color: '#222', margin: 0, fontWeight: '700', letterSpacing: '-0.5px' }}>
+                    <h2 style={{ fontSize: 'clamp(28px, 3.5vw, 38px)', color: '#222', margin: 0, fontWeight: '700', letterSpacing: '-0.5px' }}>
                         Don't just buy ingredients.
                     </h2>
-                    <h2 style={{ fontSize: '36px', color: '#b28b74', margin: '5px 0 20px 0', fontWeight: '500', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
+                    <h2 style={{ fontSize: 'clamp(26px, 3.2vw, 36px)', color: '#b28b74', margin: '5px 0 20px 0', fontWeight: '500', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
                         Build product lines.
                     </h2>
                     <p style={{ fontSize: '15px', color: '#666', lineHeight: '1.6', marginTop: '15px', maxWidth: '600px' }}>
@@ -352,7 +352,7 @@ export default function Home() {
                     </p>
                 </div>
 
-                <div className="container" style={{ maxWidth: '1550px', width: '95%', margin: '0 auto', padding: '0' }}>
+                <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', padding: '0' }}>
                     <div className="formulation-grid">
                                     {[
                                         { emoji: '⚡', icon: '🌿', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'], bg: '#f4f7f4', accent: '#4a6b55' },
@@ -431,13 +431,13 @@ export default function Home() {
 
             {/* BUILT FOR BUSINESS BUYERS */}
             <div style={{ backgroundColor: '#fcfaf7', color: '#333', padding: '80px 15px' }}>
-                <div className="container" style={{ maxWidth: '1550px', width: '95%', margin: '0 auto' }}>
+                <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto' }}>
                     <div className="b2b-header" style={{ marginBottom: '50px' }}>
                         <div style={{ fontSize: '11px', color: '#999', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>
                             BUILT FOR B2B INGREDIENTS
                         </div>
-                        <h2 className="section-title" style={{ fontSize: '36px', margin: '0 0 5px 0', fontWeight: 'bold', letterSpacing: '-1px' }}>Trusted by brands & formulators</h2>
-                        <h2 className="section-title-italic" style={{ fontSize: '36px', color: '#777', margin: 0, fontWeight: '400', fontStyle: 'italic', letterSpacing: '-1px' }}>across <AnimatedCounter end={30} suffix="+" /> countries</h2>
+                        <h2 className="section-title" style={{ fontSize: 'clamp(26px, 3.2vw, 36px)', margin: '0 0 5px 0', fontWeight: 'bold', letterSpacing: '-1px' }}>Trusted by brands & formulators</h2>
+                        <h2 className="section-title-italic" style={{ fontSize: 'clamp(26px, 3.2vw, 36px)', color: '#777', margin: 0, fontWeight: '400', fontStyle: 'italic', letterSpacing: '-1px' }}>across <AnimatedCounter end={30} suffix="+" /> countries</h2>
                     </div>
 
                     <div className="b2b-grid" onMouseLeave={() => setActiveBuyerIndex(null)}>
@@ -480,7 +480,7 @@ export default function Home() {
 
             {/* MAP SECTION */}
             <div style={{ backgroundColor: '#fff', padding: '60px 0 80px 0' }}>
-                <div className="container" style={{ maxWidth: '1550px', width: '95%', margin: '0 auto', padding: '0' }}>
+                <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', padding: '0' }}>
                     <ExportMap />
                 </div>
             </div>

@@ -41,7 +41,7 @@ export default {
       const supabase = createClient(supabaseUrl, supabaseKey);
 
       const { data: settings, error: settingsError } = await supabase.from('settings').select('admin_email').limit(1).single();
-      
+
       console.log('Fetched settings data:', settings);
       if (settingsError) {
         console.error('Error fetching settings:', settingsError);
