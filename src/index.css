@@ -17,6 +17,10 @@ body, html, * {
   font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--bg-beige);
   color: var(--text-dark);
@@ -341,6 +345,9 @@ h1, h2, h3, h4, h5, h6 {
   /* Containers */
   .container {
     width: 100% !important;
+    max-width: 1800px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
     padding-left: 15px !important;
     padding-right: 15px !important;
     box-sizing: border-box !important;
@@ -620,7 +627,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Laptop/Desktop Hover Highlight Effects */
 @media (hover: hover) and (min-width: 769px) {
   .credential-card:hover {
-    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   }
 
   .formulation-card:hover {
@@ -629,13 +636,12 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 14px 35px rgba(124, 88, 71, 0.15) !important;
   }
 
-  .b2b-grid > div:hover {
-    transform: translateY(-3px);
+  .b2b-grid > div {
+    min-height: 140px;
   }
 
   .product-card:hover {
     border-color: #7c5847 !important;
-    transform: translateY(-4px);
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08) !important;
   }
 }
@@ -839,8 +845,8 @@ h1, h2, h3, h4, h5, h6 {
 /* Scroll Reveal Animations */
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s cubic-bezier(0.2, 0, 0, 1), transform 0.5s cubic-bezier(0.2, 0, 0, 1);
+  transform: translateY(15px);
+  transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1), transform 0.3s cubic-bezier(0.2, 0, 0, 1);
   will-change: opacity, transform;
 }
 
@@ -854,18 +860,4 @@ h1, h2, h3, h4, h5, h6 {
 .delay-200 { transition-delay: 0.2s; }
 .delay-300 { transition-delay: 0.3s; }
 .delay-400 { transition-delay: 0.4s; }
-
-/* Scale up UI on ultra-wide screens */
-@media (min-width: 1600px) {
-  body { zoom: 1.1; }
-}
-@media (min-width: 1920px) {
-  body { zoom: 1.25; }
-}
-@media (min-width: 2560px) {
-  body { zoom: 1.5; }
-}
-@media (min-width: 3840px) {
-  body { zoom: 2; }
-}
 

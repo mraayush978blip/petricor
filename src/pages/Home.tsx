@@ -1,14 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
 import { ProductSkeleton } from '../components/Skeleton';
 import ExportMap from '../components/ExportMap';
+import { useInView } from 'framer-motion';
 
 function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string }) {
     const [count, setCount] = useState(0);
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, margin: "-50px" });
 
     useEffect(() => {
+        if (!isInView) return;
         if (end <= 0) {
             setCount(end);
             return;
@@ -30,9 +34,9 @@ function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string })
         }, frameTime);
 
         return () => clearInterval(timer);
-    }, [end]);
+    }, [end, isInView]);
 
-    return <>{count}{suffix}</>;
+    return <span ref={ref}>{count}{suffix}</span>;
 }
 
 export default function Home() {
@@ -180,7 +184,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="container reveal-on-scroll" style={{ maxWidth: '100%', width: '95%', margin: '80px auto 0', padding: '0' }}>
+            <div className="container" style={{ maxWidth: '100%', width: '95%', margin: '80px auto 0', padding: '0' }}>
                 <div style={{ marginBottom: '30px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: '#8b6352', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '15px' }}>
                         BOTANICAL INGREDIENTS <span style={{ display: 'inline-block', width: '40px', height: '1px', backgroundColor: '#8b6352' }}></span>
@@ -301,7 +305,7 @@ export default function Home() {
 
             {/* FORMULATION-READY SETS */}
             <div className="formulation-section-wrapper" style={{ backgroundColor: '#fdfbf9', padding: '100px 0 60px' }}>
-                <div className="container formulation-header-container reveal-on-scroll" style={{ maxWidth: '100%', width: '95%', margin: '0 auto', marginBottom: '40px' }}>
+                <div className="container formulation-header-container" style={{ maxWidth: '100%', width: '95%', margin: '0 auto', marginBottom: '40px' }}>
                     <div style={{ fontSize: '12px', color: '#8b6352', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '15px' }}>
                         FORMULATION-READY SETS
                     </div>
@@ -316,7 +320,7 @@ export default function Home() {
                     </p>
                 </div>
 
-                <div className="container reveal-on-scroll delay-100" style={{ maxWidth: '100%', width: '95%', margin: '0 auto', padding: '0' }}>
+                <div className="container" style={{ maxWidth: '100%', width: '95%', margin: '0 auto', padding: '0' }}>
                     <div className="formulation-grid">
                                     {[
                                         { emoji: '⚡', icon: '🌿', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'], bg: '#f4f7f4', accent: '#4a6b55' },
@@ -395,7 +399,7 @@ export default function Home() {
 
             {/* BUILT FOR BUSINESS BUYERS */}
             <div style={{ backgroundColor: '#fcfaf7', color: '#333', padding: '80px 15px' }}>
-                <div className="container reveal-on-scroll" style={{ maxWidth: '100%', width: '95%', margin: '0 auto' }}>
+                <div className="container" style={{ maxWidth: '100%', width: '95%', margin: '0 auto' }}>
                     <div className="b2b-header" style={{ marginBottom: '50px' }}>
                         <div style={{ fontSize: '11px', color: '#999', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>
                             BUILT FOR B2B INGREDIENTS
@@ -443,7 +447,7 @@ export default function Home() {
             </div>
 
             {/* MAP SECTION */}
-            <div className="container reveal-on-scroll" style={{ maxWidth: '100%', width: '95%', margin: '80px auto 0', padding: '0' }}>
+            <div className="container" style={{ maxWidth: '100%', width: '95%', margin: '80px auto 0', padding: '0' }}>
                 <ExportMap />
             </div>
             

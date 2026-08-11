@@ -1,6 +1,10 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Lenis from '@studio-freight/lenis';
+
+// Prevent browser from restoring scroll position on reload
+if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
 import { AnimatePresence, motion } from 'framer-motion';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import Layout from './components/Layout';
@@ -29,8 +33,8 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => {
     <motion.div
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -15 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
     >
       {children}
     </motion.div>
@@ -40,49 +44,11 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => {
 function AppRoutes() {
   const location = useLocation();
   
-  // Initialize Lenis for smooth scrolling
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-    });
-
-    let rafId: number;
-
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-
-    rafId = requestAnimationFrame(raf);
-
     // Scroll to top on route change
     window.scrollTo(0, 0);
 
-    // Intersection Observer for scroll animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    // Need a slight delay to ensure DOM is ready after route change
-    setTimeout(() => {
-      document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
-    }, 100);
-
-    return () => {
-      lenis.destroy();
-      cancelAnimationFrame(rafId);
-      observer.disconnect();
-    };
+    return () => {};
   }, [location.pathname]);
 
   return (
