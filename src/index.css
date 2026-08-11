@@ -676,13 +676,22 @@ h1, h2, h3, h4, h5, h6 {
     border-top: none !important;
   }
 
-  /* Exact Mobile Product Card Specs (Matching Old Site) */
+  /* Mobile & Tablet Specs for Homepage Product Grid (2-Row Horizontal Scroll) */
   .home-products-grid {
+    display: grid !important;
+    grid-template-rows: repeat(2, 1fr) !important;
+    grid-auto-flow: column !important;
     grid-auto-columns: 160px !important;
     gap: 15px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    touch-action: pan-x pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 15px !important;
+    margin-bottom: 40px !important;
   }
 
-  .product-card {
+  .home-products-grid .product-card {
     width: 160px !important;
     min-width: 160px !important;
     max-width: 160px !important;
@@ -691,16 +700,17 @@ h1, h2, h3, h4, h5, h6 {
     height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
+    box-sizing: border-box !important;
   }
 
-  .product-image-wrapper {
+  .home-products-grid .product-image-wrapper {
     width: 160px !important;
     height: 160px !important;
     aspect-ratio: 1 / 1 !important;
     flex-shrink: 0 !important;
   }
 
-  .product-card-content {
+  .home-products-grid .product-card-content {
     width: 160px !important;
     min-height: 125px !important;
     height: auto !important;
@@ -711,6 +721,31 @@ h1, h2, h3, h4, h5, h6 {
     box-sizing: border-box !important;
     color: #595959 !important;
     flex-grow: 1 !important;
+  }
+}
+
+/* All Products Page Grid (/products) - Mobile 2 Columns */
+@media (max-width: 768px) {
+  .all-products-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-rows: auto !important;
+    grid-auto-flow: row !important;
+    gap: 12px !important;
+    margin-bottom: 40px !important;
+  }
+
+  .all-products-grid .product-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .all-products-grid .product-card img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
   }
 
   .product-card-title {
