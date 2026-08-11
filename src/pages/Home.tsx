@@ -134,7 +134,7 @@ export default function Home() {
         <div style={{ paddingBottom: '0' }}>
             {/* HERO SECTION */}
             <div className="hero-wrapper" style={{ borderBottom: 'none' }}>
-                <div className="container hero-container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0' }}>
+                <div className="container hero-container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0' }}>
                     
                     {/* LEFT COLUMN - TEXT */}
                     <div className="hero-left" style={{ flex: '1 1 50%', borderRight: '1px solid var(--border-color)' }}>
@@ -151,10 +151,10 @@ export default function Home() {
                         <h1 className="hero-title-italic" style={{ fontSize: 'clamp(38px, 3vw, 68px)', color: 'var(--primary-brown)', marginBottom: '20px', fontWeight: '500', lineHeight: '1.05', fontStyle: 'italic', letterSpacing: '-1.5px' }}>
                             You get the proof.
                         </h1>
-                        <p style={{ fontSize: '16px', color: '#595959', lineHeight: '25.6px', marginBottom: '24px', maxWidth: '100%', fontWeight: '500' }}>
+                        <p style={{ fontSize: 'clamp(14px, 1.2vw, 16px)', color: '#595959', lineHeight: '1.5', marginBottom: 'clamp(15px, 2vh, 24px)', maxWidth: '100%', fontWeight: '500' }}>
                             Farm-origin botanical extracts from Neemuch, India where the herbs actually grow. Every batch traceable to its field, tested by NABL-accredited labs, documented for your import market. No middlemen. No assumptions.
                         </p>
-                        <div className="hero-cta-row" style={{ display: 'flex', gap: '15px', marginBottom: '30px' }}>
+                        <div className="hero-cta-row" style={{ display: 'flex', gap: '15px', marginBottom: 'clamp(20px, 3vh, 30px)' }}>
                             <Link to="/products" className="hero-btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'var(--primary-brown)', color: '#fff', padding: '12px 24px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '14px', transition: 'background-color 0.2s' }}>
                                 Explore Product ➔
                             </Link>
@@ -165,12 +165,12 @@ export default function Home() {
                         
                         <div className="hero-stats" style={{ borderTop: '1px solid #eaeaea', paddingTop: '20px', display: 'flex', alignItems: 'flex-start' }}>
                             <div className="hero-stat-item" style={{ flex: '1', paddingRight: '20px' }}>
-                                <h4 style={{ fontFamily: "'Manrope', sans-serif", fontSize: '30px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '700', lineHeight: '1' }}>NABL Accredited</h4>
+                                <h4 style={{ fontFamily: "'Manrope', sans-serif", fontSize: 'clamp(22px, 2vw, 30px)', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '700', lineHeight: '1' }}>NABL Accredited</h4>
                                 <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '12px', color: '#7A7A7A', margin: 0, fontWeight: '600', lineHeight: '1', letterSpacing: '0.4px' }}>No Brokers · No Traders · Direct from source</p>
                             </div>
                             <div className="hero-stat-divider" style={{ width: '1px', backgroundColor: '#eaeaea', margin: '0 30px' }}></div>
                             <div className="hero-stat-item" style={{ flex: '1' }}>
-                                <h4 style={{ fontFamily: "'Manrope', sans-serif", fontSize: '30px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '700', lineHeight: '1' }}>
+                                <h4 style={{ fontFamily: "'Manrope', sans-serif", fontSize: 'clamp(22px, 2vw, 30px)', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '700', lineHeight: '1' }}>
                                     <AnimatedCounter end={30} suffix="+" delayOnLoad={true} />
                                 </h4>
                                 <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '12px', color: '#7A7A7A', margin: 0, fontWeight: '600', lineHeight: '1', letterSpacing: '0.4px' }}>Export countries</p>
@@ -181,7 +181,7 @@ export default function Home() {
                     {/* RIGHT COLUMN - CREDENTIALS */}
                     <div className="hero-right" style={{ flex: '1 1 50%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                         <div className="compliance-wrapper credentials-container-bg">
-                            <h4 className="compliance-title" style={{ fontSize: '13px', color: '#777', marginBottom: '18px', fontWeight: '600', paddingLeft: '2px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Compliance Credentials</h4>
+                            <h4 className="compliance-title" style={{ fontSize: 'clamp(11px, 1vw, 13px)', color: '#777', marginBottom: 'clamp(10px, 1.5vh, 18px)', fontWeight: '600', paddingLeft: '2px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Compliance Credentials</h4>
                             
                             <div className="credentials-list" onMouseLeave={() => setActiveCredentialIndex(null)} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                 {[
@@ -216,7 +216,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '80px auto 0', padding: '0' }}>
+            <div className="container" style={{ maxWidth: '1280px', width: '95%', margin: '80px auto 0', padding: '0' }}>
                 <div style={{ marginBottom: '30px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: '#8b6352', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '15px' }}>
                         BOTANICAL INGREDIENTS <span style={{ display: 'inline-block', width: '40px', height: '1px', backgroundColor: '#8b6352' }}></span>
@@ -337,7 +337,7 @@ export default function Home() {
 
             {/* FORMULATION-READY SETS */}
             <div className="formulation-section-wrapper" style={{ backgroundColor: '#fdfbf9', padding: '60px 0 40px' }}>
-                <div className="container formulation-header-container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', marginBottom: '25px' }}>
+                <div className="container formulation-header-container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto', marginBottom: '25px' }}>
                     <div style={{ fontSize: '12px', color: '#8b6352', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '15px' }}>
                         FORMULATION-READY SETS
                     </div>
@@ -352,7 +352,7 @@ export default function Home() {
                     </p>
                 </div>
 
-                <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', padding: '0' }}>
+                <div className="container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto', padding: '0' }}>
                     <div className="formulation-grid">
                                     {[
                                         { emoji: '⚡', icon: '🌿', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'], bg: '#f4f7f4', accent: '#4a6b55' },
@@ -431,7 +431,7 @@ export default function Home() {
 
             {/* BUILT FOR BUSINESS BUYERS */}
             <div style={{ backgroundColor: '#fcfaf7', color: '#333', padding: '80px 15px' }}>
-                <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto' }}>
+                <div className="container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto' }}>
                     <div className="b2b-header" style={{ marginBottom: '50px' }}>
                         <div style={{ fontSize: '11px', color: '#999', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>
                             BUILT FOR B2B INGREDIENTS
@@ -480,7 +480,7 @@ export default function Home() {
 
             {/* MAP SECTION */}
             <div style={{ backgroundColor: '#fff', padding: '60px 0 80px 0' }}>
-                <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', padding: '0' }}>
+                <div className="container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto', padding: '0' }}>
                     <ExportMap />
                 </div>
             </div>
