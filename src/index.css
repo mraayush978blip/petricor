@@ -573,10 +573,8 @@ h1, h2, h3, h4, h5, h6 {
 /* Desktop/Laptop Hero Landing View (Fills screen so 35+ ingredients stays below the fold) */
 @media (min-width: 1025px) {
   .hero-wrapper {
-    min-height: calc((100vh / var(--app-zoom, 1)) - 80px) !important;
     display: flex !important;
-    align-items: center !important;
-    padding: 20px 0 !important;
+    padding: 30px 0 60px 0 !important;
     box-sizing: border-box !important;
   }
 }

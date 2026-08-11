@@ -87,11 +87,11 @@ export default function Header() {
             <div style={{ height: '76px' }} />
             <header style={{ 
                 padding: '18px 0',
-                backgroundColor: isScrolled ? 'rgba(248, 246, 243, 0.98)' : 'var(--bg-beige)',
+                backgroundColor: isScrolled ? '#ffffff' : '#ffffff',
                 backdropFilter: 'none',
                 WebkitBackdropFilter: 'none',
-                boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.06)' : 'none',
-                borderBottom: isScrolled ? '1px solid rgba(121,85,72,0.08)' : '1px solid transparent',
+                boxShadow: isScrolled ? '0 4px 25px rgba(0,0,0,0.08)' : '0 1px 10px rgba(0,0,0,0.03)',
+                borderBottom: isScrolled ? '1px solid rgba(0,0,0,0.05)' : '1px solid rgba(0,0,0,0.03)',
                 position: 'fixed',
                 top: 0,
                 left: 0,
