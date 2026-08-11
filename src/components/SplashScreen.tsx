@@ -27,7 +27,7 @@ export default function SplashScreen() {
                 style={{ textAlign: 'center' }}
             >
                 <img
-                    src="/logo.svg"
+                    src="/logo.png"
                     alt="Petricor"
                     style={{ width: '220px', maxWidth: '70vw', height: 'auto' }}
                 />
