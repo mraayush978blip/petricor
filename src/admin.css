@@ -219,6 +219,21 @@
   .admin-screen-content {
     padding: 20px 15px;
   }
+  .admin-popup-header {
+    padding: 12px 15px;
+  }
+  .admin-menu-popup-btn span {
+    display: none;
+  }
+  .logout-text {
+    display: none;
+  }
+  .admin-menu-popup-btn {
+    padding: 8px; /* Square button on mobile */
+  }
+  .admin-logout-btn {
+    padding: 8px; /* Square button on mobile */
+  }
 }
 
 /* Form & Input Touchpad Responsiveness */
