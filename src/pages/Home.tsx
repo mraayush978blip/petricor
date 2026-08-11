@@ -97,7 +97,7 @@ export default function Home() {
     return (
         <div style={{ paddingBottom: '0' }}>
             {/* HERO SECTION */}
-            <div className="hero-wrapper" style={{ borderBottom: 'none', minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center' }}>
+            <div className="hero-wrapper" style={{ borderBottom: 'none', padding: '40px 0 20px 0', minHeight: 'auto' }}>
                 <div className="container hero-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0' }}>
                     
                     {/* LEFT COLUMN - TEXT */}
@@ -112,13 +112,13 @@ export default function Home() {
                         <h1 className="hero-title" style={{ fontSize: '68px', color: '#2c2c2c', margin: '0 0 5px 0', fontWeight: '700', lineHeight: '1.05', letterSpacing: '-1.5px' }}>
                             the source.
                         </h1>
-                        <h1 className="hero-title-italic" style={{ fontSize: '68px', color: 'var(--primary-brown)', marginBottom: '35px', fontWeight: '500', lineHeight: '1.05', fontStyle: 'italic', letterSpacing: '-1.5px' }}>
+                        <h1 className="hero-title-italic" style={{ fontSize: '68px', color: 'var(--primary-brown)', marginBottom: '20px', fontWeight: '500', lineHeight: '1.05', fontStyle: 'italic', letterSpacing: '-1.5px' }}>
                             You get the proof.
                         </h1>
-                        <p style={{ fontSize: '16px', color: '#595959', lineHeight: '25.6px', marginBottom: '40px', maxWidth: '100%', fontWeight: '500' }}>
+                        <p style={{ fontSize: '16px', color: '#595959', lineHeight: '25.6px', marginBottom: '24px', maxWidth: '100%', fontWeight: '500' }}>
                             Farm-origin botanical extracts from Neemuch, India where the herbs actually grow. Every batch traceable to its field, tested by NABL-accredited labs, documented for your import market. No middlemen. No assumptions.
                         </p>
-                        <div className="hero-cta-row" style={{ display: 'flex', gap: '15px', marginBottom: '50px' }}>
+                        <div className="hero-cta-row" style={{ display: 'flex', gap: '15px', marginBottom: '30px' }}>
                             <Link to="/products" className="hero-btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'var(--primary-brown)', color: '#fff', padding: '12px 24px', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', fontSize: '14px', transition: 'background-color 0.2s' }}>
                                 Explore Product ➔
                             </Link>
@@ -127,7 +127,7 @@ export default function Home() {
                             </Link>
                         </div>
                         
-                        <div className="hero-stats" style={{ borderTop: '1px solid #eaeaea', paddingTop: '30px', display: 'flex', alignItems: 'flex-start' }}>
+                        <div className="hero-stats" style={{ borderTop: '1px solid #eaeaea', paddingTop: '20px', display: 'flex', alignItems: 'flex-start' }}>
                             <div className="hero-stat-item" style={{ flex: '1', paddingRight: '20px' }}>
                                 <h4 style={{ fontFamily: "'Manrope', sans-serif", fontSize: '30px', color: '#2c2c2c', margin: '0 0 6px 0', fontWeight: '700', lineHeight: '1' }}>NABL Accredited</h4>
                                 <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '12px', color: '#7A7A7A', margin: 0, fontWeight: '600', lineHeight: '1', letterSpacing: '0.4px' }}>No Brokers · No Traders · Direct from source</p>

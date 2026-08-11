@@ -160,7 +160,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column !important;
   }
   .hero-left {
-    padding-top: 50px !important;
+    padding-top: 20px !important;
   }
   .hero-left, .hero-right {
     flex: 1 1 100% !important;
@@ -172,7 +172,7 @@ h1, h2, h3, h4, h5, h6 {
     box-sizing: border-box;
   }
   .hero-right {
-    margin-top: 40px !important;
+    margin-top: 25px !important;
   }
   .credentials-container-bg {
     padding: 20px !important;
