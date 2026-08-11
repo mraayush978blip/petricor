@@ -17,9 +17,7 @@ function AnimatedCounter({ end, suffix = '', delayOnLoad = false }: { end: numbe
             ([entry]) => {
                 if (entry.isIntersecting) {
                     setIsInView(true);
-                } else {
-                    setIsInView(false);
-                    setCount(0); // Reset so it counts again when scrolled back
+                    observer.disconnect(); // Only trigger once
                 }
             },
             { threshold: 0 }
