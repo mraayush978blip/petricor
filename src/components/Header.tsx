@@ -85,7 +85,7 @@ export default function Header() {
         <>
             {/* Fixed height spacer to prevent page layout jumps during header resize */}
             <div style={{ height: '76px' }} />
-            <header style={{ 
+            <header style={{
                 padding: '18px 0',
                 backgroundColor: isScrolled ? '#ffffff' : '#ffffff',
                 backdropFilter: 'none',
@@ -103,12 +103,12 @@ export default function Header() {
                 transition: 'background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, opacity 0.22s ease'
             }}>
                 <div className="container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    
+
                     {/* Logo - Fixed height for 100% smooth scroll without layout shifts */}
                     <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-                        <img 
-                            src="/logo.png" 
-                            alt="Petricor" 
+                        <img
+                            src="/logo1.jpeg"
+                            alt="Petricor"
                             className="header-logo-img"
                         />
                     </Link>
@@ -117,14 +117,14 @@ export default function Header() {
                     <nav className="desktop-nav" style={{ display: 'none', alignItems: 'center', gap: '35px' }}>
                         <Link to="/" style={getLinkStyle('/')}>Home</Link>
                         <Link to="/products" style={getLinkStyle('/products')}>Products</Link>
-                        
+
                         {/* Desktop Category Dropdown */}
-                        <div 
+                        <div
                             style={{ position: 'relative' }}
                             onMouseEnter={() => setShowCategoriesMenu(true)}
                             onMouseLeave={() => setShowCategoriesMenu(false)}
                         >
-                            <button 
+                            <button
                                 style={{
                                     ...getLinkStyle('/products?category='),
                                     background: 'none',
@@ -138,7 +138,7 @@ export default function Header() {
                             >
                                 Category
                                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: showCategoriesMenu ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
-                                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </button>
 
@@ -346,24 +346,24 @@ export default function Header() {
                 {/* Header branding & close button inside drawer */}
                 <div style={{ padding: '22px 20px 18px 20px', borderBottom: '1px solid #eae4dc', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                        <img 
-                            src="/logo.png" 
-                            alt="Petricor Logo" 
+                        <img
+                            src="/logo1.jpeg"
+                            alt="Petricor Logo"
                             style={{ height: '36px', width: 'auto', objectFit: 'contain' }}
                         />
-                        <div style={{ 
-                            display: 'inline-flex', 
-                            alignItems: 'center', 
-                            gap: '5px', 
-                            backgroundColor: '#f2eae2', 
-                            color: '#795548', 
-                            padding: '3px 10px', 
-                            borderRadius: '20px', 
-                            fontSize: '9.5px', 
-                            fontWeight: '700', 
-                            letterSpacing: '0.6px', 
-                            marginTop: '8px', 
-                            textTransform: 'uppercase' 
+                        <div style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                            backgroundColor: '#f2eae2',
+                            color: '#795548',
+                            padding: '3px 10px',
+                            borderRadius: '20px',
+                            fontSize: '9.5px',
+                            fontWeight: '700',
+                            letterSpacing: '0.6px',
+                            marginTop: '8px',
+                            textTransform: 'uppercase'
                         }}>
                             <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#795548' }}></span>
                             Grown in Neemuch • Export Verified
@@ -399,7 +399,7 @@ export default function Header() {
 
                 {/* Drawer Menu Items */}
                 <div style={{ flex: '1', overflowY: 'auto', padding: '20px 20px', display: 'flex', flexDirection: 'column' }}>
-                    
+
                     <Link to="/" style={getMobileLinkStyle('/')}>
                         <span>Home</span>
                         <span style={{ fontSize: '14px', color: '#795548' }}>→</span>

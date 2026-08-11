@@ -574,7 +574,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (min-width: 1025px) {
   .hero-wrapper {
     display: flex !important;
-    padding: 30px 0 60px 0 !important;
+    padding: 10px 0 40px 0 !important;
     box-sizing: border-box !important;
   }
 }
@@ -873,3 +873,16 @@ h1, h2, h3, h4, h5, h6 {
 .delay-300 { transition-delay: 0.3s; }
 .delay-400 { transition-delay: 0.4s; }
 
+
+
+/* Auto-scale Hero for small laptops to perfectly fit above the fold */
+@media (max-height: 850px) and (max-width: 1500px) {
+  .hero-container {
+    zoom: 0.88;
+  }
+}
+@media (max-height: 720px) {
+  .hero-container {
+    zoom: 0.80;
+  }
+}
