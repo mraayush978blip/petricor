@@ -102,7 +102,7 @@ export default function Header() {
                 pointerEvents: isMobileMenuOpen ? 'none' : 'auto',
                 transition: 'background-color 0.25s cubic-bezier(0.2, 0, 0, 1), backdrop-filter 0.25s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.25s cubic-bezier(0.2, 0, 0, 1), border-color 0.25s cubic-bezier(0.2, 0, 0, 1), opacity 0.22s ease'
             }}>
-                <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div className="container" style={{ maxWidth: '100%', width: '95%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     
                     {/* Logo - Fixed height for 100% smooth scroll without layout shifts */}
                     <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>

@@ -98,7 +98,7 @@ export default function Home() {
         <div style={{ paddingBottom: '0' }}>
             {/* HERO SECTION */}
             <div className="hero-wrapper" style={{ borderBottom: 'none' }}>
-                <div className="container hero-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0' }}>
+                <div className="container hero-container" style={{ maxWidth: '100%', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0' }}>
                     
                     {/* LEFT COLUMN - TEXT */}
                     <div className="hero-left" style={{ flex: '1 1 50%', borderRight: '1px solid var(--border-color)' }}>
@@ -180,8 +180,7 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* CATEGORIES / PRODUCTS SECTION */}
-            <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '80px auto 0', padding: '0' }}>
+            <div className="container reveal-on-scroll" style={{ maxWidth: '100%', width: '95%', margin: '80px auto 0', padding: '0' }}>
                 <div style={{ marginBottom: '30px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: '#8b6352', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '15px' }}>
                         BOTANICAL INGREDIENTS <span style={{ display: 'inline-block', width: '40px', height: '1px', backgroundColor: '#8b6352' }}></span>
@@ -302,7 +301,7 @@ export default function Home() {
 
             {/* FORMULATION-READY SETS */}
             <div className="formulation-section-wrapper" style={{ backgroundColor: '#fdfbf9', padding: '100px 0 60px' }}>
-                <div className="container formulation-header-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', marginBottom: '40px' }}>
+                <div className="container formulation-header-container reveal-on-scroll" style={{ maxWidth: '100%', width: '95%', margin: '0 auto', marginBottom: '40px' }}>
                     <div style={{ fontSize: '12px', color: '#8b6352', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '15px' }}>
                         FORMULATION-READY SETS
                     </div>
@@ -317,7 +316,7 @@ export default function Home() {
                     </p>
                 </div>
 
-                <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', padding: '0' }}>
+                <div className="container reveal-on-scroll delay-100" style={{ maxWidth: '100%', width: '95%', margin: '0 auto', padding: '0' }}>
                     <div className="formulation-grid">
                                     {[
                                         { emoji: '⚡', icon: '🌿', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'], bg: '#f4f7f4', accent: '#4a6b55' },
@@ -396,13 +395,13 @@ export default function Home() {
 
             {/* BUILT FOR BUSINESS BUYERS */}
             <div style={{ backgroundColor: '#fcfaf7', color: '#333', padding: '80px 15px' }}>
-                <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto' }}>
+                <div className="container reveal-on-scroll" style={{ maxWidth: '100%', width: '95%', margin: '0 auto' }}>
                     <div className="b2b-header" style={{ marginBottom: '50px' }}>
                         <div style={{ fontSize: '11px', color: '#999', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>
                             BUILT FOR B2B INGREDIENTS
                         </div>
                         <h2 className="section-title" style={{ fontSize: '36px', margin: '0 0 5px 0', fontWeight: 'bold', letterSpacing: '-1px' }}>Trusted by brands & formulators</h2>
-                        <h2 className="section-title-italic" style={{ fontSize: '36px', color: '#777', margin: 0, fontWeight: '400', fontStyle: 'italic', letterSpacing: '-1px' }}>across 30+ countries</h2>
+                        <h2 className="section-title-italic" style={{ fontSize: '36px', color: '#777', margin: 0, fontWeight: '400', fontStyle: 'italic', letterSpacing: '-1px' }}>across <AnimatedCounter end={30} suffix="+" /> countries</h2>
                     </div>
 
                     <div className="b2b-grid" onMouseLeave={() => setActiveBuyerIndex(null)}>
@@ -423,12 +422,12 @@ export default function Home() {
                                     flexDirection: 'column', 
                                     padding: '16px 20px', 
                                     backgroundColor: activeBuyerIndex === idx ? '#fcf8f4' : '#fff', 
-                                    border: activeBuyerIndex === idx ? '1.5px solid #7c5847' : '1px solid #eaeaea', 
+                                    border: `1.5px solid ${activeBuyerIndex === idx ? '#7c5847' : '#eaeaea'}`, 
                                     borderRadius: '8px',
                                     height: '100%',
                                     boxSizing: 'border-box',
                                     cursor: 'pointer',
-                                    transition: 'all 0.2s ease',
+                                    transition: 'all 0.15s ease',
                                     boxShadow: activeBuyerIndex === idx ? '0 4px 14px rgba(124,88,71,0.12)' : 'none'
                                 }}
                             >
@@ -444,7 +443,7 @@ export default function Home() {
             </div>
 
             {/* MAP SECTION */}
-            <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '80px auto 0', padding: '0' }}>
+            <div className="container reveal-on-scroll" style={{ maxWidth: '100%', width: '95%', margin: '80px auto 0', padding: '0' }}>
                 <ExportMap />
             </div>
             

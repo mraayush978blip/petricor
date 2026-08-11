@@ -8,7 +8,7 @@ export default function Footer() {
 
     return (
         <footer style={{ backgroundColor: 'var(--bg-beige)', position: 'relative', borderTop: '1px solid var(--border-color)' }} className="site-footer">
-            <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', padding: '0' }}>
+            <div className="container" style={{ maxWidth: '100%', width: '95%', margin: '0 auto', padding: '0' }}>
 
                 {/* Main footer row: Logo + 3 columns */}
                 <div className="footer-grid footer-main-row">

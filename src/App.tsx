@@ -64,9 +64,24 @@ function AppRoutes() {
     // Scroll to top on route change
     window.scrollTo(0, 0);
 
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    // Need a slight delay to ensure DOM is ready after route change
+    setTimeout(() => {
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+    }, 100);
+
     return () => {
       lenis.destroy();
       cancelAnimationFrame(rafId);
+      observer.disconnect();
     };
   }, [location.pathname]);
 

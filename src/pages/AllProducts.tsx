@@ -104,7 +104,7 @@ export default function AllProducts() {
                 </select>
             </div>
 
-            <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '60px auto 0', padding: '0' }}>
+            <div className="container" style={{ maxWidth: '100%', width: '95%', margin: '60px auto 0', padding: '0' }}>
                 {loading ? (
                     <div className="all-products-grid">
                         {[...Array(8)].map((_, i) => <ProductSkeleton key={i} />)}

@@ -79,7 +79,7 @@ export default function ProductDetail() {
 
     return (
         <div style={{ backgroundColor: '#fdfbf9', minHeight: '100vh', padding: '60px 0' }}>
-            <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', padding: '0' }}>
+            <div className="container" style={{ maxWidth: '100%', width: '95%', margin: '0 auto', padding: '0' }}>
                 
                 {/* Main Product Section */}
                 <div className="product-detail-card" style={{ 
