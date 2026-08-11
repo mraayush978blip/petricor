@@ -88,15 +88,53 @@ export default {
                 <td style="padding: 10px; border: 1px solid #ddd;">${enquiry.company}</td>
               </tr>
               ` : ''}
-              ${enquiry.product_id ? `
+              ${enquiry.country ? `
               <tr>
-                <td style="padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; font-weight: bold;">Product Enquiry</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">True</td>
+                <td style="padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; font-weight: bold;">Country</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">${enquiry.country}</td>
+              </tr>
+              ` : ''}
+              ${enquiry.role ? `
+              <tr>
+                <td style="padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; font-weight: bold;">Role / User Type</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">${enquiry.role}</td>
+              </tr>
+              ` : ''}
+              ${enquiry.type ? `
+              <tr>
+                <td style="padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; font-weight: bold;">Enquiry Type</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">${enquiry.type.toUpperCase()}</td>
+              </tr>
+              ` : ''}
+              ${enquiry.product_name ? `
+              <tr>
+                <td style="padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; font-weight: bold;">Product Name</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">${enquiry.product_name}</td>
+              </tr>
+              ` : ''}
+              ${enquiry.ingredients && enquiry.ingredients.length > 0 ? `
+              <tr>
+                <td style="padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; font-weight: bold;">Ingredients</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                  ${enquiry.ingredients.map((ing: any) => `${ing.herb} (${ing.qty || 'Standard'})`).join('<br/>')}
+                </td>
+              </tr>
+              ` : ''}
+              ${enquiry.end_application && enquiry.end_application.length > 0 ? `
+              <tr>
+                <td style="padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; font-weight: bold;">Applications</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">${enquiry.end_application.join(', ')}</td>
+              </tr>
+              ` : ''}
+              ${enquiry.documents_needed && enquiry.documents_needed.length > 0 ? `
+              <tr>
+                <td style="padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; font-weight: bold;">Documents Needed</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">${enquiry.documents_needed.join(', ')}</td>
               </tr>
               ` : ''}
               <tr>
                 <td style="padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; font-weight: bold;">Message</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">${enquiry.message.replace(/\n/g, '<br/>')}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">${(enquiry.message || '').replace(/\n/g, '<br/>')}</td>
               </tr>
             </table>
             

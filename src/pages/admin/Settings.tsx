@@ -100,7 +100,7 @@ export default function Settings() {
             const finalImageCount = Math.max(fileCount, dbImageCount);
             const finalBytes = bytes > 0 ? bytes : (finalImageCount * 350 * 1024);
             const mb = (finalBytes / (1024 * 1024)).toFixed(2);
-            const percent = Math.min(100, Math.max(1, Math.round((parseFloat(mb) / 500) * 100)));
+            const percent = Math.min(100, Math.max(1, Math.round((parseFloat(mb) / 1024) * 100)));
 
             setStorageMetrics({
                 imageCount: finalImageCount,
@@ -290,14 +290,14 @@ export default function Settings() {
                                 <span>Supabase Storage Bucket</span>
                             </div>
                             <span style={{ fontSize: '11px', color: '#38a169', backgroundColor: '#e6ffed', padding: '2px 8px', borderRadius: '10px', fontWeight: '700' }}>
-                                Free Tier (500MB)
+                                Free Tier (1 GB)
                             </span>
                         </div>
 
                         <div style={{ marginBottom: '12px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#555', marginBottom: '6px' }}>
                                 <span>Used: <strong>{storageMetrics.totalSizeMB} MB</strong></span>
-                                <span>Limit: <strong>500 MB</strong></span>
+                                <span>Limit: <strong>1 GB</strong></span>
                             </div>
                             
                             <div style={{ height: '10px', backgroundColor: '#e5dec', borderRadius: '5px', overflow: 'hidden' }}>

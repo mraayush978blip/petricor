@@ -19,6 +19,7 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
   // Bot protection
   const honeypotRef = useRef('');
   const formOpenedAt = useRef(getFormOpenTime());
+  const isSubmittingRef = useRef(false);
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const [formData, setFormData] = useState({
@@ -55,11 +56,14 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmittingRef.current) return;
+    isSubmittingRef.current = true;
 
     // Strict Email Format Validation
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(formData.email.trim())) {
       alert('Please enter a valid business email address (e.g. name@company.com).');
+      isSubmittingRef.current = false;
       return;
     }
 
@@ -67,6 +71,7 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
 
     if (!formData.phone || !formData.phone.trim()) {
       alert('Please enter your phone number.');
+      isSubmittingRef.current = false;
       setLoading(false);
       return;
     }
@@ -74,6 +79,7 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
     // Layer 1 & 2: Honeypot + Time check
     const botCheck = clientBotCheck(honeypotRef.current, formOpenedAt.current);
     if (botCheck.blocked) {
+      isSubmittingRef.current = false;
       setLoading(false);
       setSuccess(true); // fake success
       return;
@@ -85,6 +91,7 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
       const isHuman = await verifyRecaptchaToken(token);
       if (!isHuman) {
         alert('Verification failed. Please try again.');
+        isSubmittingRef.current = false;
         setLoading(false);
         return;
       }
@@ -110,6 +117,7 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
     } else {
       setSuccess(true);
     }
+    isSubmittingRef.current = false;
     setLoading(false);
   };
 

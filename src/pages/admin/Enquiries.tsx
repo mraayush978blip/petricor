@@ -23,11 +23,13 @@ interface Enquiry {
 
 const EnquiryRow = ({ 
   enquiry, 
+  activeTab,
   onUpdate, 
   onDelete, 
   onClick 
 }: { 
   enquiry: Enquiry; 
+  activeTab: string;
   onUpdate: () => void; 
   onDelete: (id: string) => void; 
   onClick: () => void 
@@ -129,58 +131,58 @@ const EnquiryRow = ({
       </td>
 
       {/* Company & Country Details */}
-      <td style={{ verticalAlign: 'top', padding: '16px 20px', fontSize: '13px', color: '#555' }}>
-        {enquiry.company ? (
-          <div style={{ fontWeight: '600', color: '#333' }}>{enquiry.company}</div>
-        ) : (
-          <span style={{ color: '#aaa', fontStyle: 'italic' }}>Individual</span>
-        )}
-        {enquiry.role && <div style={{ fontSize: '12px', color: '#777' }}>Role: {enquiry.role}</div>}
-        {enquiry.country && (
-          <div style={{ fontSize: '12px', color: '#555', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <MapPin size={12} color="#7c5847" /> {enquiry.country}
-          </div>
-        )}
-      </td>
+      {activeTab !== 'contact' && (
+        <td style={{ verticalAlign: 'top', padding: '16px 20px', fontSize: '13px', color: '#555' }}>
+          {enquiry.company ? (
+            <div style={{ fontWeight: '600', color: '#333' }}>{enquiry.company}</div>
+          ) : (
+            <span style={{ color: '#aaa', fontStyle: 'italic' }}>Individual</span>
+          )}
+          {enquiry.role && <div style={{ fontSize: '12px', color: '#777' }}>Role: {enquiry.role}</div>}
+          {enquiry.country && (
+            <div style={{ fontSize: '12px', color: '#555', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <MapPin size={12} color="#7c5847" /> {enquiry.country}
+            </div>
+          )}
+        </td>
+      )}
 
       {/* Specific Requirements / Product */}
-      <td style={{ verticalAlign: 'top', padding: '16px 20px', fontSize: '13px', maxWidth: '280px' }}>
-        {enquiry.type === 'product' && (
-          <span style={{ display: 'inline-block', backgroundColor: '#f3ece6', color: '#7c5847', padding: '4px 10px', borderRadius: '6px', fontSize: '12.5px', fontWeight: '700' }}>
-            🌿 {enquiry.product_name}
-          </span>
-        )}
+      {(activeTab === 'product' || activeTab === 'general') && (
+        <td style={{ verticalAlign: 'top', padding: '16px 20px', fontSize: '13px', maxWidth: '280px' }}>
+          {activeTab === 'product' && (
+            <span style={{ display: 'inline-block', backgroundColor: '#f3ece6', color: '#7c5847', padding: '4px 10px', borderRadius: '6px', fontSize: '12.5px', fontWeight: '700' }}>
+              🌿 {enquiry.product_name}
+            </span>
+          )}
 
-        {enquiry.type === 'general' && (
-          <div>
-            {enquiry.ingredients && enquiry.ingredients.length > 0 && (
-              <div style={{ marginBottom: '6px' }}>
-                <span style={{ fontWeight: '700', color: '#7c5847', fontSize: '10px', letterSpacing: '0.5px' }}>INGREDIENTS:</span>
-                <div style={{ color: '#444', fontSize: '12.5px' }}>
-                  {enquiry.ingredients.map(ing => `${ing.herb} (${ing.qty || 'Standard'})`).join(', ')}
+          {activeTab === 'general' && (
+            <div>
+              {enquiry.ingredients && enquiry.ingredients.length > 0 && (
+                <div style={{ marginBottom: '6px' }}>
+                  <span style={{ fontWeight: '700', color: '#7c5847', fontSize: '10px', letterSpacing: '0.5px' }}>INGREDIENTS:</span>
+                  <div style={{ color: '#444', fontSize: '12.5px' }}>
+                    {enquiry.ingredients.map(ing => `${ing.herb} (${ing.qty || 'Standard'})`).join(', ')}
+                  </div>
                 </div>
-              </div>
-            )}
-            {enquiry.end_application && enquiry.end_application.length > 0 && (
-              <div style={{ marginBottom: '4px' }}>
-                <span style={{ fontWeight: '700', color: '#888', fontSize: '10px', letterSpacing: '0.5px' }}>USE:</span>
-                <span style={{ color: '#555', fontSize: '12px', marginLeft: '4px' }}>{enquiry.end_application.join(', ')}</span>
-              </div>
-            )}
-            {enquiry.documents_needed && enquiry.documents_needed.length > 0 && (
-              <div>
-                <span style={{ fontSize: '11px', backgroundColor: '#f0ece7', color: '#666', padding: '2px 6px', borderRadius: '4px', fontWeight: '600' }}>
-                  📄 Docs: {enquiry.documents_needed.join(', ')}
-                </span>
-              </div>
-            )}
-          </div>
-        )}
-
-        {enquiry.type === 'contact' && (
-          <span style={{ color: '#777', fontSize: '12px', fontStyle: 'italic' }}>Direct Contact Inquiry</span>
-        )}
-      </td>
+              )}
+              {enquiry.end_application && enquiry.end_application.length > 0 && (
+                <div style={{ marginBottom: '4px' }}>
+                  <span style={{ fontWeight: '700', color: '#888', fontSize: '10px', letterSpacing: '0.5px' }}>USE:</span>
+                  <span style={{ color: '#555', fontSize: '12px', marginLeft: '4px' }}>{enquiry.end_application.join(', ')}</span>
+                </div>
+              )}
+              {enquiry.documents_needed && enquiry.documents_needed.length > 0 && (
+                <div>
+                  <span style={{ fontSize: '11px', backgroundColor: '#f0ece7', color: '#666', padding: '2px 6px', borderRadius: '4px', fontWeight: '600' }}>
+                    📄 Docs: {enquiry.documents_needed.join(', ')}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+        </td>
+      )}
 
       {/* Message / Comment */}
       <td style={{ verticalAlign: 'top', padding: '16px 20px' }}>
@@ -637,6 +639,7 @@ const Enquiries = () => {
                 <EnquiryRow 
                   key={enquiry.id} 
                   enquiry={enquiry} 
+                  activeTab={activeTab}
                   onUpdate={fetchEnquiries} 
                   onDelete={handleDeleteEnquiry}
                   onClick={() => setSelectedEnquiry(enquiry)} 

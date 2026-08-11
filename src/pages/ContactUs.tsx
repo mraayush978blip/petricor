@@ -17,10 +17,13 @@ export default function ContactUs() {
     // Bot protection
     const honeypotRef = useRef('');
     const formOpenedAt = useRef(getFormOpenTime());
+    const isSubmittingRef = useRef(false);
     const { executeRecaptcha } = useGoogleReCaptcha();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (isSubmittingRef.current) return;
+        isSubmittingRef.current = true;
         setLoading(true);
         setError('');
         setSuccess(false);
@@ -29,12 +32,14 @@ export default function ContactUs() {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailRegex.test(email.trim())) {
             setError('Please enter a valid email address containing @ and a valid domain (e.g., name@domain.com)');
+            isSubmittingRef.current = false;
             setLoading(false);
             return;
         }
 
         if (!phone || !phone.trim()) {
             setError('Please enter a valid phone number.');
+            isSubmittingRef.current = false;
             setLoading(false);
             return;
         }
@@ -43,6 +48,7 @@ export default function ContactUs() {
         const botCheck = clientBotCheck(honeypotRef.current, formOpenedAt.current);
         if (botCheck.blocked) {
             // Silently drop — don't tell bots they were caught
+            isSubmittingRef.current = false;
             setLoading(false);
             setSuccess(true); // fake success to fool bots
             return;
@@ -54,6 +60,7 @@ export default function ContactUs() {
             const isHuman = await verifyRecaptchaToken(token);
             if (!isHuman) {
                 setError('Verification failed. Please try again.');
+                isSubmittingRef.current = false;
                 setLoading(false);
                 return;
             }
@@ -78,6 +85,7 @@ export default function ContactUs() {
             setPhone('');
             setMessage('');
         }
+        isSubmittingRef.current = false;
         setLoading(false);
     };
 

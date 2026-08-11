@@ -89,7 +89,7 @@ const Dashboard = () => {
       const finalCount = Math.max(fileCount, totalDbImageCount);
       const finalBytes = totalBytes > 0 ? totalBytes : (finalCount * 350 * 1024);
       const sizeMB = (finalBytes / (1024 * 1024)).toFixed(2);
-      const freeTierLimitMB = 500;
+      const freeTierLimitMB = 1024;
       const usedPercent = Math.min(100, Math.max(1, Math.round((parseFloat(sizeMB) / freeTierLimitMB) * 100)));
 
       setStorageInfo({
@@ -167,14 +167,14 @@ const Dashboard = () => {
                 </div>
               </div>
               <span style={{ fontSize: '11px', backgroundColor: '#e6ffed', color: '#38a169', padding: '3px 8px', borderRadius: '12px', fontWeight: '700' }}>
-                Free Tier (500 MB)
+                Free Tier (1 GB)
               </span>
             </div>
 
             <div style={{ marginBottom: '12px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', fontWeight: '600', color: '#444', marginBottom: '6px' }}>
                 <span>{storageInfo.totalSizeMB} MB Used</span>
-                <span>500.00 MB Quota</span>
+                <span>1 GB Quota</span>
               </div>
 
               {/* Quota Progress Bar */}
@@ -209,6 +209,9 @@ const Dashboard = () => {
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: '#38a169', fontWeight: '700' }}>
+              <span style={{ fontSize: '11px', backgroundColor: '#e6ffed', color: '#38a169', padding: '3px 8px', borderRadius: '12px', fontWeight: '700', marginRight: '8px' }}>
+                Free Tier (500 MB)
+              </span>
               <CheckCircle2 size={14} /> Healthy
             </div>
           </div>

@@ -24,6 +24,7 @@ export default function GeneralEnquiry() {
   // Bot protection
   const honeypotRef = useRef('');
   const formOpenedAt = useRef(getFormOpenTime());
+  const isSubmittingRef = useRef(false);
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const [formData, setFormData] = useState({
@@ -78,16 +79,20 @@ export default function GeneralEnquiry() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmittingRef.current) return;
+    isSubmittingRef.current = true;
 
     // Email format validation requiring @ and domain dot
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(formData.email.trim())) {
       alert('Please enter a valid business email address containing @ and a valid domain (e.g. name@domain.com)');
+      isSubmittingRef.current = false;
       return;
     }
 
     if (!formData.phone || !formData.phone.trim()) {
       alert('Please enter a valid WhatsApp / Phone number.');
+      isSubmittingRef.current = false;
       return;
     }
 
@@ -96,6 +101,7 @@ export default function GeneralEnquiry() {
     // Layer 1 & 2: Honeypot + Time check
     const botCheck = clientBotCheck(honeypotRef.current, formOpenedAt.current);
     if (botCheck.blocked) {
+      isSubmittingRef.current = false;
       setLoading(false);
       setSuccess(true); // fake success
       return;
@@ -107,6 +113,7 @@ export default function GeneralEnquiry() {
       const isHuman = await verifyRecaptchaToken(token);
       if (!isHuman) {
         alert('Verification failed. Please try again.');
+        isSubmittingRef.current = false;
         setLoading(false);
         return;
       }
@@ -138,6 +145,7 @@ export default function GeneralEnquiry() {
     } else {
       setSuccess(true);
     }
+    isSubmittingRef.current = false;
     setLoading(false);
   };
 

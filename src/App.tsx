@@ -52,18 +52,21 @@ function AppRoutes() {
       touchMultiplier: 2,
     });
 
+    let rafId: number;
+
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     // Scroll to top on route change
     window.scrollTo(0, 0);
 
     return () => {
       lenis.destroy();
+      cancelAnimationFrame(rafId);
     };
   }, [location.pathname]);
 
