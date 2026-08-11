@@ -69,122 +69,142 @@ export default function Header() {
         return {
             display: 'flex',
             alignItems: 'center',
-            color: active ? 'var(--primary-brown)' : 'var(--text-dark)',
+            justifyContent: 'space-between',
+            color: active ? 'var(--primary-brown)' : '#2c2c2c',
             textDecoration: 'none',
             fontSize: '18px',
-            fontWeight: active ? '600' as const : '500' as const,
-            borderBottom: '1px solid var(--border-color)',
-            padding: '16px 20px',
-            backgroundColor: active ? 'rgba(121,85,72,0.05)' : 'transparent',
-            borderLeft: active ? '4px solid var(--primary-brown)' : '4px solid transparent',
-            transition: 'all 0.2s ease'
+            fontFamily: "'Manrope', sans-serif",
+            fontWeight: active ? '700' as const : '500' as const,
+            padding: '16px 4px',
+            borderBottom: '1px solid #eee7df',
+            transition: 'all 0.2s cubic-bezier(0.2, 0, 0, 1)'
         };
     };
 
     return (
         <>
             {/* Fixed height spacer to prevent page layout jumps during header resize */}
-            <div style={{ height: '80px' }} />
+            <div style={{ height: '76px' }} />
             <header style={{ 
-                padding: isScrolled ? '12px 0' : '20px 0',
+                padding: '18px 0',
                 backgroundColor: isScrolled ? 'rgba(248, 246, 243, 0.95)' : 'var(--bg-beige)',
-                backdropFilter: isScrolled ? 'blur(10px)' : 'none',
+                backdropFilter: isScrolled ? 'blur(12px)' : 'none',
+                WebkitBackdropFilter: isScrolled ? 'blur(12px)' : 'none',
+                boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.06)' : 'none',
+                borderBottom: isScrolled ? '1px solid rgba(121,85,72,0.08)' : '1px solid transparent',
                 position: 'fixed',
                 top: 0,
                 left: 0,
                 right: 0,
+                width: '100%',
                 zIndex: 1000,
-                borderBottom: '1px solid rgba(0,0,0,0.05)',
-                boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.06)' : 'none',
-                transition: 'padding 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                opacity: isMobileMenuOpen ? 0 : 1,
+                pointerEvents: isMobileMenuOpen ? 'none' : 'auto',
+                transition: 'background-color 0.25s cubic-bezier(0.2, 0, 0, 1), backdrop-filter 0.25s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.25s cubic-bezier(0.2, 0, 0, 1), border-color 0.25s cubic-bezier(0.2, 0, 0, 1), opacity 0.22s ease'
             }}>
-                <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0' }}>
-
-                    {/* Logo - Smooth scaling */}
-                    <Link to="/" style={{ display: 'block', width: isScrolled ? '140px' : '170px', transition: 'width 0.15s ease-out' }}>
-                        <img src="/logo1.webp" alt="Petricor" style={{ width: '100%', height: 'auto' }} />
+                <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    
+                    {/* Logo - Fixed height for 100% smooth scroll without layout shifts */}
+                    <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+                        <img 
+                            src="/logo1.webp" 
+                            alt="Petricor" 
+                            style={{ height: '40px', width: 'auto', display: 'block' }}
+                        />
                     </Link>
 
-                    {/* Desktop Nav (Centered) */}
-                    <nav className="desktop-nav" style={{ display: 'none', gap: '40px', alignItems: 'center', margin: '0 auto' }}>
+                    {/* Desktop Navigation */}
+                    <nav className="desktop-nav" style={{ display: 'none', alignItems: 'center', gap: '35px' }}>
                         <Link to="/" style={getLinkStyle('/')}>Home</Link>
                         <Link to="/products" style={getLinkStyle('/products')}>Products</Link>
-
-                        {/* Categories Dropdown Container */}
-                        <div
+                        
+                        {/* Desktop Category Dropdown */}
+                        <div 
                             style={{ position: 'relative' }}
+                            onMouseEnter={() => setShowCategoriesMenu(true)}
+                            onMouseLeave={() => setShowCategoriesMenu(false)}
                         >
                             <button 
-                                onClick={() => setShowCategoriesMenu(!showCategoriesMenu)} 
-                                style={{ ...getLinkStyle('/products'), display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', border: 'none', background: 'none' }}
+                                style={{
+                                    ...getLinkStyle('/products?category='),
+                                    background: 'none',
+                                    border: 'none',
+                                    padding: '0 0 4px 0',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px'
+                                }}
                             >
                                 Category
-                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: showCategoriesMenu ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
-                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: showCategoriesMenu ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
+                                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                 </svg>
                             </button>
 
-                            {/* Dropdown Menu */}
+                            {/* Dropdown Content */}
                             {showCategoriesMenu && (
                                 <div style={{
                                     position: 'absolute',
                                     top: '100%',
                                     left: '50%',
                                     transform: 'translateX(-50%)',
-                                    backgroundColor: '#fff',
-                                    boxShadow: '0 10px 40px rgba(0,0,0,0.12)',
-                                    borderRadius: '8px',
-                                    minWidth: '240px',
+                                    paddingTop: '12px',
                                     zIndex: 1000,
-                                    marginTop: '20px',
-                                    border: '1px solid var(--border-color)',
-                                    borderTop: '3px solid var(--primary-brown)'
+                                    width: '260px'
                                 }}>
-                                    {/* Triangle pointer */}
                                     <div style={{
-                                        position: 'absolute',
-                                        top: '-11px',
-                                        left: '50%',
-                                        transform: 'translateX(-50%)',
-                                        width: '0',
-                                        height: '0',
-                                        borderLeft: '8px solid transparent',
-                                        borderRight: '8px solid transparent',
-                                        borderBottom: '8px solid var(--primary-brown)'
-                                    }}></div>
-
-                                    {/* Scrollable category list */}
-                                    <div className="nav-dropdown-scroll" style={{
-                                        maxHeight: '60vh',
-                                        overflowY: 'auto',
-                                        padding: '10px 0',
-                                        borderRadius: '0 0 8px 8px'
+                                        backgroundColor: '#ffffff',
+                                        borderRadius: '8px',
+                                        boxShadow: '0 10px 30px rgba(0,0,0,0.12)',
+                                        border: '1px solid rgba(0,0,0,0.06)',
+                                        overflow: 'hidden'
                                     }}>
-                                        {categories.map(category => (
-                                            <Link
-                                                key={category.id}
-                                                to={`/products?category=${encodeURIComponent(category.name)}`}
-                                                style={{
-                                                    display: 'block',
-                                                    padding: '12px 24px',
-                                                    color: '#4a4a4a',
-                                                    textDecoration: 'none',
-                                                    fontSize: '14px',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                                onClick={() => setShowCategoriesMenu(false)}
-                                                onMouseOver={(e) => {
-                                                    e.currentTarget.style.backgroundColor = '#fdfbf9';
-                                                    e.currentTarget.style.color = '#8b6352';
-                                                }}
-                                                onMouseOut={(e) => {
-                                                    e.currentTarget.style.backgroundColor = 'transparent';
-                                                    e.currentTarget.style.color = '#4a4a4a';
-                                                }}
-                                            >
-                                                {category.name}
-                                            </Link>
-                                        ))}
+                                        <div style={{
+                                            position: 'absolute',
+                                            top: '4px',
+                                            left: '50%',
+                                            transform: 'translateX(-50%)',
+                                            width: '0',
+                                            height: '0',
+                                            borderLeft: '8px solid transparent',
+                                            borderRight: '8px solid transparent',
+                                            borderBottom: '8px solid var(--primary-brown)'
+                                        }}></div>
+
+                                        {/* Scrollable category list */}
+                                        <div className="nav-dropdown-scroll" style={{
+                                            maxHeight: '60vh',
+                                            overflowY: 'auto',
+                                            padding: '10px 0',
+                                            borderRadius: '0 0 8px 8px'
+                                        }}>
+                                            {categories.map(category => (
+                                                <Link
+                                                    key={category.id}
+                                                    to={`/products?category=${encodeURIComponent(category.name)}`}
+                                                    style={{
+                                                        display: 'block',
+                                                        padding: '12px 24px',
+                                                        color: '#4a4a4a',
+                                                        textDecoration: 'none',
+                                                        fontSize: '14px',
+                                                        transition: 'all 0.2s ease'
+                                                    }}
+                                                    onClick={() => setShowCategoriesMenu(false)}
+                                                    onMouseOver={(e) => {
+                                                        e.currentTarget.style.backgroundColor = '#fdfbf9';
+                                                        e.currentTarget.style.color = '#8b6352';
+                                                    }}
+                                                    onMouseOut={(e) => {
+                                                        e.currentTarget.style.backgroundColor = 'transparent';
+                                                        e.currentTarget.style.color = '#4a4a4a';
+                                                    }}
+                                                >
+                                                    {category.name}
+                                                </Link>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -215,7 +235,7 @@ export default function Header() {
                     </div>
                 </div>
 
-                {/* Basic responsive CSS & animations injected safely */}
+                {/* Responsive CSS & animations */}
                 <style dangerouslySetInnerHTML={{
                     __html: `
                     @media (min-width: 992px) {
@@ -232,55 +252,60 @@ export default function Header() {
                         border: none;
                         cursor: pointer;
                         padding: 0;
-                        z-index: 1001; /* Above the mobile menu */
+                        z-index: 1001;
                         display: block;
                     }
                     .hamburger span {
                         display: block;
                         position: absolute;
-                        height: 2px;
+                        height: 2.5px;
                         width: 100%;
-                        background: #4a4a4a;
+                        background: #2c2c2c;
                         border-radius: 2px;
                         opacity: 1;
                         left: 0;
                         transform: rotate(0deg);
-                        transition: .25s ease-in-out;
+                        transition: .25s cubic-bezier(0.2, 0, 0, 1);
                     }
                     .hamburger span:nth-child(1) { top: 0px; }
-                    .hamburger span:nth-child(2) { top: 9px; }
-                    .hamburger span:nth-child(3) { top: 18px; }
+                    .hamburger span:nth-child(2) { top: 8px; }
+                    .hamburger span:nth-child(3) { top: 16px; }
 
                     .hamburger.open span:nth-child(1) {
-                        top: 9px;
+                        top: 8px;
                         transform: rotate(135deg);
+                        background: var(--primary-brown);
                     }
                     .hamburger.open span:nth-child(2) {
                         opacity: 0;
                         left: -60px;
                     }
                     .hamburger.open span:nth-child(3) {
-                        top: 9px;
+                        top: 8px;
                         transform: rotate(-135deg);
+                        background: var(--primary-brown);
                     }
 
-                    /* Slide-in Mobile Drawer */
+                    /* Slide-in Mobile Drawer (App-Themed Luxury UI) */
                     .mobile-nav-drawer {
                         position: fixed;
                         top: 0;
                         right: 0;
-                        width: 300px;
+                        width: 320px;
+                        max-width: 88vw;
                         height: 100vh;
-                        height: 100dvh; /* Better for mobile Safari */
-                        background-color: #ffffff;
-                        box-shadow: -10px 0 30px rgba(0,0,0,0.08);
-                        z-index: 999;
+                        height: 100dvh;
+                        background: linear-gradient(180deg, #fbf9f6 0%, #f4f0e9 100%);
+                        box-shadow: -15px 0 45px rgba(0,0,0,0.18);
+                        z-index: 1002;
                         display: flex;
                         flex-direction: column;
                         transform: translateX(100%);
-                        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+                        transition: transform 0.22s cubic-bezier(0.2, 0, 0, 1);
                         overflow: hidden;
                         overscroll-behavior: none;
+                        border-top-left-radius: 24px;
+                        border-bottom-left-radius: 24px;
                     }
                     .mobile-nav-drawer.open {
                         transform: translateX(0);
@@ -294,35 +319,20 @@ export default function Header() {
                         width: 100vw;
                         height: 100vh;
                         height: 100dvh;
-                        background-color: rgba(0,0,0,0.6);
-                        z-index: 998;
+                        background-color: rgba(0,0,0,0.5);
+                        z-index: 1001;
                         opacity: 0;
                         pointer-events: none;
-                        transition: opacity 0.4s ease;
+                        transition: opacity 0.22s cubic-bezier(0.2, 0, 0, 1);
                         overscroll-behavior: none;
                     }
                     .mobile-nav-overlay.open {
                         opacity: 1;
                         pointer-events: auto;
-                        backdrop-filter: blur(3px);
+                        backdrop-filter: blur(4px);
+                        -webkit-backdrop-filter: blur(4px);
                     }
-
-                    /* Custom scrollbar for nav dropdowns */
-                    .nav-dropdown-scroll::-webkit-scrollbar {
-                        width: 5px;
-                    }
-                    .nav-dropdown-scroll::-webkit-scrollbar-track {
-                        background: transparent;
-                        border-radius: 4px;
-                    }
-                    .nav-dropdown-scroll::-webkit-scrollbar-thumb {
-                        background: #dcdcdc;
-                        border-radius: 4px;
-                    }
-                    .nav-dropdown-scroll::-webkit-scrollbar-thumb:hover {
-                        background: #b28b74;
-                    }
-                `}} />
+                ` }} />
             </header>
 
             {/* Mobile Nav Overlay (Backdrop) */}
@@ -333,12 +343,75 @@ export default function Header() {
 
             {/* Mobile Nav Drawer */}
             <div className={`mobile-nav-drawer ${isMobileMenuOpen ? 'open' : ''}`}>
-                <div style={{ flex: '1', overflowY: 'auto', padding: '90px 0 20px', display: 'flex', flexDirection: 'column' }}>
-                    <Link to="/" style={getMobileLinkStyle('/')}>Home</Link>
-                    <Link to="/products" style={getMobileLinkStyle('/products')}>Products</Link>
+                {/* Header branding & close button inside drawer */}
+                <div style={{ padding: '22px 20px 18px 20px', borderBottom: '1px solid #eae4dc', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                        <img 
+                            src="/logo1.webp" 
+                            alt="Petricor Logo" 
+                            style={{ height: '36px', width: 'auto', objectFit: 'contain' }}
+                        />
+                        <div style={{ 
+                            display: 'inline-flex', 
+                            alignItems: 'center', 
+                            gap: '5px', 
+                            backgroundColor: '#f2eae2', 
+                            color: '#795548', 
+                            padding: '3px 10px', 
+                            borderRadius: '20px', 
+                            fontSize: '9.5px', 
+                            fontWeight: '700', 
+                            letterSpacing: '0.6px', 
+                            marginTop: '8px', 
+                            textTransform: 'uppercase' 
+                        }}>
+                            <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#795548' }}></span>
+                            Grown in Neemuch • Export Verified
+                        </div>
+                    </div>
 
-                    {/* Mobile Category Dropdown */}
-                    <div style={{ borderBottom: '1px solid #f0f0f0' }}>
+                    {/* Luxury SVG Close Button */}
+                    <button
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        aria-label="Close Menu"
+                        style={{
+                            width: '38px',
+                            height: '38px',
+                            borderRadius: '50%',
+                            backgroundColor: '#ffffff',
+                            border: '1px solid #e5dfd6',
+                            color: '#2c2c2c',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
+                            transition: 'all 0.15s ease',
+                            flexShrink: 0
+                        }}
+                    >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2c2c2c" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                {/* Drawer Menu Items */}
+                <div style={{ flex: '1', overflowY: 'auto', padding: '20px 20px', display: 'flex', flexDirection: 'column' }}>
+                    
+                    <Link to="/" style={getMobileLinkStyle('/')}>
+                        <span>Home</span>
+                        <span style={{ fontSize: '14px', color: '#795548' }}>→</span>
+                    </Link>
+
+                    <Link to="/products" style={getMobileLinkStyle('/products')}>
+                        <span>All Products</span>
+                        <span style={{ fontSize: '14px', color: '#795548' }}>→</span>
+                    </Link>
+
+                    {/* Mobile Category Collapsible */}
+                    <div style={{ borderBottom: '1px solid #eee7df' }}>
                         <button
                             onClick={() => setIsMobileCategoryOpen(!isMobileCategoryOpen)}
                             style={{
@@ -346,69 +419,94 @@ export default function Header() {
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
                                 width: '100%',
-                                color: '#4a4a4a',
+                                color: isMobileCategoryOpen ? 'var(--primary-brown)' : '#2c2c2c',
                                 fontSize: '18px',
-                                fontWeight: '500',
-                                padding: '16px 20px',
+                                fontFamily: "'Manrope', sans-serif",
+                                fontWeight: isMobileCategoryOpen ? '700' : '500',
+                                padding: '16px 4px',
                                 backgroundColor: 'transparent',
                                 border: 'none',
-                                borderLeft: '4px solid transparent',
                                 cursor: 'pointer',
                                 transition: 'all 0.2s ease'
                             }}
                         >
-                            Category
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isMobileCategoryOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <span>Categories</span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <span style={{ fontSize: '11px', backgroundColor: '#f3ece6', color: '#795548', padding: '2px 8px', borderRadius: '12px', fontWeight: '700' }}>
+                                    {categories.length}
+                                </span>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isMobileCategoryOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s ease' }}>
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
                         </button>
 
-                        <div className="nav-dropdown-scroll" style={{
+                        <div style={{
                             maxHeight: isMobileCategoryOpen ? '50vh' : '0px',
                             overflowY: 'auto',
-                            transition: 'max-height 0.3s ease',
-                            backgroundColor: '#fdfbf9'
+                            transition: 'max-height 0.3s cubic-bezier(0.2, 0, 0, 1)',
+                            backgroundColor: 'transparent'
                         }}>
-                            {categories.map(category => (
-                                <Link
-                                    key={category.id}
-                                    to={`/products?category=${encodeURIComponent(category.name)}`}
-                                    style={{
-                                        display: 'block',
-                                        padding: '12px 20px 12px 40px',
-                                        color: '#8b6352',
-                                        textDecoration: 'none',
-                                        fontSize: '15px'
-                                    }}
-                                >
-                                    {category.name}
-                                </Link>
-                            ))}
+                            <div style={{ padding: '0 0 12px 12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                {categories.map(category => (
+                                    <Link
+                                        key={category.id}
+                                        to={`/products?category=${encodeURIComponent(category.name)}`}
+                                        style={{
+                                            display: 'block',
+                                            padding: '6px 0',
+                                            color: '#666666',
+                                            textDecoration: 'none',
+                                            fontSize: '14px',
+                                            fontFamily: "'Inter', sans-serif",
+                                            fontWeight: '500',
+                                            transition: 'color 0.15s ease'
+                                        }}
+                                    >
+                                        • {category.name}
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
                     </div>
 
-                    <Link to="/about-us" style={getMobileLinkStyle('/about-us')}>About Us</Link>
-                    <Link to="/contact-us" style={getMobileLinkStyle('/contact-us')}>Contact Us</Link>
+                    <Link to="/about-us" style={getMobileLinkStyle('/about-us')}>
+                        <span>About Us</span>
+                        <span style={{ fontSize: '14px', color: '#795548' }}>→</span>
+                    </Link>
+
+                    <Link to="/contact-us" style={getMobileLinkStyle('/contact-us')}>
+                        <span>Contact Us</span>
+                        <span style={{ fontSize: '14px', color: '#795548' }}>→</span>
+                    </Link>
                 </div>
 
-                <div style={{ padding: '20px', borderTop: '1px solid #eee', backgroundColor: '#fff' }}>
+                {/* Drawer Footer CTA */}
+                <div style={{ padding: '20px', borderTop: '1px solid #eae4dc', backgroundColor: '#faf6f0', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     <Link to="/general-enquiry" style={{
-                        display: 'block',
-                        backgroundColor: '#8b6352',
-                        color: 'white',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        backgroundColor: 'var(--primary-brown)',
+                        color: '#ffffff',
                         padding: '14px',
                         textAlign: 'center',
-                        borderRadius: '4px',
+                        borderRadius: '6px',
                         textDecoration: 'none',
                         fontWeight: '600',
-                        fontSize: '16px',
-                        boxShadow: '0 4px 10px rgba(139, 99, 82, 0.2)'
+                        fontSize: '14px',
+                        letterSpacing: '0.3px',
+                        boxShadow: '0 4px 14px rgba(121, 85, 72, 0.2)',
+                        transition: 'all 0.2s ease'
                     }}>
-                        Enquire Now
+                        Enquire Now  →
                     </Link>
+                    <div style={{ textAlign: 'center', fontSize: '10.5px', color: '#888', fontWeight: '500', letterSpacing: '0.5px', textTransform: 'uppercase', marginTop: '4px' }}>
+                        NABL Testing Verified • DGFT Exporter
+                    </div>
                 </div>
             </div>
         </>
     );
 }
-
