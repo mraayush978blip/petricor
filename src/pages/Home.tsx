@@ -134,7 +134,7 @@ export default function Home() {
         <div style={{ paddingBottom: '0' }}>
             {/* HERO SECTION */}
             <div className="hero-wrapper" style={{ borderBottom: 'none' }}>
-                <div className="container hero-container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0' }}>
+                <div className="container hero-container" style={{ maxWidth: '1550px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0' }}>
                     
                     {/* LEFT COLUMN - TEXT */}
                     <div className="hero-left" style={{ flex: '1 1 50%', borderRight: '1px solid var(--border-color)' }}>
@@ -216,7 +216,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '80px auto 0', padding: '0' }}>
+            <div className="container" style={{ maxWidth: '1550px', width: '95%', margin: '80px auto 0', padding: '0' }}>
                 <div style={{ marginBottom: '30px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: '#8b6352', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '15px' }}>
                         BOTANICAL INGREDIENTS <span style={{ display: 'inline-block', width: '40px', height: '1px', backgroundColor: '#8b6352' }}></span>
@@ -337,7 +337,7 @@ export default function Home() {
 
             {/* FORMULATION-READY SETS */}
             <div className="formulation-section-wrapper" style={{ backgroundColor: '#fdfbf9', padding: '60px 0 40px' }}>
-                <div className="container formulation-header-container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', marginBottom: '25px' }}>
+                <div className="container formulation-header-container" style={{ maxWidth: '1550px', width: '95%', margin: '0 auto', marginBottom: '25px' }}>
                     <div style={{ fontSize: '12px', color: '#8b6352', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '15px' }}>
                         FORMULATION-READY SETS
                     </div>
@@ -352,7 +352,7 @@ export default function Home() {
                     </p>
                 </div>
 
-                <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', padding: '0' }}>
+                <div className="container" style={{ maxWidth: '1550px', width: '95%', margin: '0 auto', padding: '0' }}>
                     <div className="formulation-grid">
                                     {[
                                         { emoji: '⚡', icon: '🌿', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'], bg: '#f4f7f4', accent: '#4a6b55' },
@@ -431,7 +431,7 @@ export default function Home() {
 
             {/* BUILT FOR BUSINESS BUYERS */}
             <div style={{ backgroundColor: '#fcfaf7', color: '#333', padding: '80px 15px' }}>
-                <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto' }}>
+                <div className="container" style={{ maxWidth: '1550px', width: '95%', margin: '0 auto' }}>
                     <div className="b2b-header" style={{ marginBottom: '50px' }}>
                         <div style={{ fontSize: '11px', color: '#999', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>
                             BUILT FOR B2B INGREDIENTS
@@ -480,7 +480,7 @@ export default function Home() {
 
             {/* MAP SECTION */}
             <div style={{ backgroundColor: '#fff', padding: '60px 0 80px 0' }}>
-                <div className="container" style={{ maxWidth: '1350px', width: '95%', margin: '0 auto', padding: '0' }}>
+                <div className="container" style={{ maxWidth: '1550px', width: '95%', margin: '0 auto', padding: '0' }}>
                     <ExportMap />
                 </div>
             </div>
