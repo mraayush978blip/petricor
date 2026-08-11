@@ -651,8 +651,8 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Responsive Overrides for Mobile */
-@media (max-width: 768px) {
+/* Responsive Overrides for Mobile & Desktop Mode on Mobile Devices */
+@media (max-width: 1024px) {
   /* Remove unwanted thin divider lines under compliance credentials/hero stats */
   .hero-wrapper,
   .hero-container,
