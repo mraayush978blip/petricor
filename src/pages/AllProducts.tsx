@@ -51,7 +51,7 @@ export default function AllProducts() {
         return [...new Set(cats)].sort();
     }, [productsData]);
 
-    const productsPerPage = 12;
+    const productsPerPage = 16;
     const totalPages = Math.max(1, Math.ceil(filteredProducts.length / productsPerPage));
 
     const indexOfLastProduct = currentPage * productsPerPage;
@@ -88,7 +88,7 @@ export default function AllProducts() {
                         minWidth: '220px',
                         boxShadow: '0 2px 10px rgba(0,0,0,0.02)',
                         transition: 'border-color 0.2s',
-                        appearance: 'none', // removes default arrow for custom styling
+                        appearance: 'none', 
                         backgroundImage: `url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234a4a4a%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")`,
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'right 15px top 50%',
@@ -106,11 +106,11 @@ export default function AllProducts() {
 
             <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '60px auto 0', padding: '0' }}>
                 {loading ? (
-                    <div className="all-products-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '30px', marginBottom: '60px' }}>
+                    <div className="all-products-grid">
                         {[...Array(8)].map((_, i) => <ProductSkeleton key={i} />)}
                     </div>
                 ) : (
-                <div className="all-products-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '30px', marginBottom: '60px' }}>
+                <div className="all-products-grid">
                     {currentProducts.map((product, idx) => (
                         <div key={idx} className="product-card" style={{ display: 'flex', flexDirection: 'column', border: '1px solid #eaeaea', borderRadius: '4px', overflow: 'hidden', backgroundColor: '#fff', transition: 'transform 0.2s', boxShadow: '0 2px 10px rgba(0,0,0,0.02)', height: '100%' }}>
                             <Link 
@@ -126,11 +126,11 @@ export default function AllProducts() {
                                     style={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', display: 'block' }} 
                                 />
                             </Link>
-                            <div style={{ padding: '10px 12px 12px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                                <Link to={`/product/${product.slug}`} style={{ display: 'block', fontSize: '15px', color: '#222', textDecoration: 'none', fontWeight: '700', marginBottom: '3px', lineHeight: '1.3' }}>
+                            <div className="product-card-content" style={{ padding: '10px 12px 12px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                                <Link to={`/product/${product.slug}`} className="product-card-title" style={{ display: 'block', fontSize: '15px', color: '#222', textDecoration: 'none', fontWeight: '700', marginBottom: '3px', lineHeight: '1.3' }}>
                                     {product.title}
                                 </Link>
-                                <Link to={`/products?category=${encodeURIComponent(product.category)}`} style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
+                                <Link to={`/products?category=${encodeURIComponent(product.category)}`} className="product-card-category" style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
                                     {product.category}
                                 </Link>
                                 <button 
@@ -138,6 +138,7 @@ export default function AllProducts() {
                                         setSelectedProduct(product);
                                         setIsModalOpen(true);
                                     }}
+                                    className="product-card-button"
                                     style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#6b4236', color: '#fff', padding: '12px 8px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: '600', marginTop: '12px' }}
                                 >
                                     Enquire Now

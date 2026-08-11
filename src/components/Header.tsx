@@ -11,12 +11,12 @@ export default function Header() {
 
     const location = useLocation();
 
-    // Handle scroll transition
+    // Handle scroll transition with smooth threshold
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
+            setIsScrolled(window.scrollY > 40);
         };
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -82,11 +82,11 @@ export default function Header() {
 
     return (
         <>
-            {/* Spacer to prevent content from hiding under fixed header */}
-            <div style={{ height: isScrolled ? '65px' : '85px', transition: 'height 0.15s ease-out' }} />
+            {/* Fixed height spacer to prevent page layout jumps during header resize */}
+            <div style={{ height: '80px' }} />
             <header style={{ 
-                padding: isScrolled ? '10px 0' : '20px 0',
-                backgroundColor: isScrolled ? 'rgba(243, 243, 243, 0.95)' : 'var(--bg-beige)',
+                padding: isScrolled ? '12px 0' : '20px 0',
+                backgroundColor: isScrolled ? 'rgba(248, 246, 243, 0.95)' : 'var(--bg-beige)',
                 backdropFilter: isScrolled ? 'blur(10px)' : 'none',
                 position: 'fixed',
                 top: 0,
@@ -95,7 +95,7 @@ export default function Header() {
                 zIndex: 1000,
                 borderBottom: '1px solid rgba(0,0,0,0.05)',
                 boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.06)' : 'none',
-                transition: 'all 0.15s ease-out'
+                transition: 'padding 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
             }}>
                 <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0' }}>
 

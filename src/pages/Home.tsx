@@ -86,7 +86,7 @@ export default function Home() {
     return (
         <div style={{ paddingBottom: '0' }}>
             {/* HERO SECTION */}
-            <div className="hero-wrapper" style={{ borderBottom: '1px solid #dcdcdc', minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center' }}>
+            <div className="hero-wrapper" style={{ borderBottom: 'none', minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center' }}>
                 <div className="container hero-container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0' }}>
                     
                     {/* LEFT COLUMN - TEXT */}
@@ -136,7 +136,7 @@ export default function Home() {
                         <div className="compliance-wrapper credentials-container-bg">
                             <h4 className="compliance-title" style={{ fontSize: '13px', color: '#777', marginBottom: '18px', fontWeight: '600', paddingLeft: '2px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Compliance Credentials</h4>
                             
-                            <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            <div className="credentials-list" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                 {[
                                     { title: '✓ IEC - Import Export Code', sub: 'Directorate General of Foreign Trade (DGFT)', desc: 'Registered Indian exporter under DGFT. All international shipments dispatched under valid IEC.' },
                                     { title: '✓ FSSAI - Food Safety Licensed', sub: 'Food Safety & Standards Authority of India', desc: 'FSSAI-licensed facility. Compliant with Indian food safety standards for export of botanical ingredients.' },
@@ -150,16 +150,16 @@ export default function Home() {
                                         style={{ 
                                             backgroundColor: activeCredentialIndex === idx ? '#fcf8f4' : '#ffffff', 
                                             border: activeCredentialIndex === idx ? '1.5px solid #7c5847' : '1px solid #e0e0e0', 
-                                            boxShadow: activeCredentialIndex === idx ? '0 4px 14px rgba(124,88,71,0.12)' : '0 2px 6px rgba(0,0,0,0.02)', 
-                                            borderRadius: '8px', 
-                                            padding: '16px 18px',
+                                            boxShadow: activeCredentialIndex === idx ? '0 3px 10px rgba(124,88,71,0.12)' : '0 1px 4px rgba(0,0,0,0.02)', 
+                                            borderRadius: '6px', 
+                                            padding: '10px 14px',
                                             cursor: 'pointer',
                                             transition: 'all 0.2s ease'
                                         }}
                                     >
-                                        <h3 style={{ fontSize: '15px', color: activeCredentialIndex === idx ? '#7c5847' : 'var(--text-dark)', margin: '0 0 3px 0', fontWeight: '700' }}>{item.title}</h3>
-                                        {item.sub && <p style={{ fontSize: '13px', color: '#666', margin: '0 0 4px 0', fontWeight: '500' }}>{item.sub}</p>}
-                                        <p style={{ fontSize: '13px', color: '#555', margin: 0, lineHeight: '1.4' }}>{item.desc}</p>
+                                        <h3 style={{ fontSize: '13.5px', color: activeCredentialIndex === idx ? '#7c5847' : 'var(--text-dark)', margin: '0 0 2px 0', fontWeight: '700' }}>{item.title}</h3>
+                                        {item.sub && <p style={{ fontSize: '11.5px', color: '#666', margin: '0 0 2px 0', fontWeight: '500' }}>{item.sub}</p>}
+                                        <p style={{ fontSize: '11.5px', color: '#555', margin: 0, lineHeight: '1.35' }}>{item.desc}</p>
                                     </div>
                                 ))}
                             </div>
@@ -262,11 +262,11 @@ export default function Home() {
                                     )}
                                 </div>
                             </Link>
-                            <div style={{ padding: '10px 12px 12px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                                <Link to={`/product/${product.slug}`} style={{ display: 'block', fontSize: '15px', color: '#222', textDecoration: 'none', fontWeight: '700', marginBottom: '3px', lineHeight: '1.3' }}>
+                            <div className="product-card-content" style={{ padding: '10px 12px 12px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                                <Link to={`/product/${product.slug}`} className="product-card-title" style={{ display: 'block', fontSize: '15px', color: '#222', textDecoration: 'none', fontWeight: '700', marginBottom: '3px', lineHeight: '1.3' }}>
                                     {product.title || product.name}
                                 </Link>
-                                <Link to={`/?category=${encodeURIComponent(product.category)}`} style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
+                                <Link to={`/?category=${encodeURIComponent(product.category)}`} className="product-card-category" style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
                                     {product.category}
                                 </Link>
                                 <button 
@@ -276,6 +276,7 @@ export default function Home() {
                                         setSelectedProduct(product);
                                         setIsModalOpen(true);
                                     }}
+                                    className="product-card-button"
                                     style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#6b4236', color: '#fff', padding: '12px 8px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: '600', marginTop: '12px' }}
                                 >
                                     Enquiry
@@ -305,7 +306,7 @@ export default function Home() {
                 </div>
 
                 <div className="container" style={{ maxWidth: '1500px', width: '95%', margin: '0 auto', padding: '0' }}>
-                    <div className="formulation-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', alignItems: 'stretch' }}>
+                    <div className="formulation-grid">
                                     {[
                                         { emoji: '⚡', icon: '🌿', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'], bg: '#f4f7f4', accent: '#4a6b55' },
                                         { emoji: '🦴', icon: '🦴', title: 'Joint & Mobility', desc: 'Anti-inflammation, arthritis, sports recovery', herbs: ['Turmeric 95%', 'Boswellia', 'Ginger'], bg: '#fdf7f2', accent: '#c86b2e' },
@@ -392,7 +393,7 @@ export default function Home() {
                         <h2 className="section-title-italic" style={{ fontSize: '36px', color: '#777', margin: 0, fontWeight: '400', fontStyle: 'italic', letterSpacing: '-1px' }}>across 30+ countries</h2>
                     </div>
 
-                    <div className="b2b-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', alignItems: 'stretch' }}>
+                    <div className="b2b-grid">
                         {[
                             { icon: '💊', title: 'Supplement Brands', desc: 'Nutraceutical brands needing certified, spec-compliant raw material' },
                             { icon: '🏭', title: 'Contract Manufacturers', desc: 'CMOs and OEM manufacturers sourcing consistent, traceable extracts at scale' },
