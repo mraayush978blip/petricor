@@ -86,6 +86,11 @@ export default function GeneralEnquiry() {
       return;
     }
 
+    if (!formData.phone || !formData.phone.trim()) {
+      alert('Please enter a valid WhatsApp / Phone number.');
+      return;
+    }
+
     setLoading(true);
 
     // Layer 1 & 2: Honeypot + Time check

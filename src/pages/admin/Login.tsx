@@ -1,12 +1,12 @@
 import { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { Lock, Mail, Eye, EyeOff, ShieldAlert } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, ShieldAlert, ArrowLeft } from 'lucide-react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { clientBotCheck, verifyRecaptchaToken, getFormOpenTime } from '../../lib/botProtection';
 
 // ── Brute-force config ──────────────────────────────────────────────────────
-const MAX_ATTEMPTS = 5;           // failed tries before lockout
+const MAX_ATTEMPTS = 10;          // failed tries before lockout
 const LOCKOUT_MS = 15 * 60 * 1000; // 15 minutes
 const STORAGE_KEY = '__admin_lock';
 
@@ -129,7 +129,21 @@ const Login = () => {
   const isLocked = lockRemaining > 0;
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f9f9f9', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 20px' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#f9f9f9', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 20px', position: 'relative' }}>
+      
+      {/* Back to Home Button */}
+      <div style={{ position: 'absolute', top: '30px', left: '30px' }}>
+        <button 
+          onClick={() => navigate('/')} 
+          style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'none', border: 'none', cursor: 'pointer', color: '#7c5847', fontSize: '14px', fontWeight: '500', padding: '8px 12px', borderRadius: '6px', transition: 'background-color 0.2s' }}
+          onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(124, 88, 71, 0.1)'}
+          onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+        >
+          <ArrowLeft size={16} />
+          <span>Back to Website</span>
+        </button>
+      </div>
+
       <div style={{ margin: '0 auto', width: '100%', maxWidth: '400px' }}>
 
         {/* Logo */}

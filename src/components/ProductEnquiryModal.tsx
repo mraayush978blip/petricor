@@ -65,6 +65,12 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
 
     setLoading(true);
 
+    if (!formData.phone || !formData.phone.trim()) {
+      alert('Please enter your phone number.');
+      setLoading(false);
+      return;
+    }
+
     // Layer 1 & 2: Honeypot + Time check
     const botCheck = clientBotCheck(honeypotRef.current, formOpenedAt.current);
     if (botCheck.blocked) {
@@ -185,6 +191,7 @@ export default function ProductEnquiryModal({ isOpen, onClose, product }: Produc
                   international
                   defaultCountry="IN"
                   limitMaxLength={true}
+                  placeholder="Phone Number *"
                   value={formData.phone}
                   onChange={(value: any) => setFormData({ ...formData, phone: value || '' })}
                   required

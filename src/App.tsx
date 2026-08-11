@@ -21,6 +21,7 @@ import Categories from './pages/admin/Categories';
 import Products from './pages/admin/Products';
 import ProductForm from './pages/admin/ProductForm';
 import Settings from './pages/admin/Settings';
+import StorageCleanup from './pages/admin/StorageCleanup';
 
 // Page transition wrapper
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
@@ -89,6 +90,7 @@ function AppRoutes() {
             <Route path="products/new" element={<ProductForm />} />
             <Route path="products/edit/:id" element={<ProductForm />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="storage-cleanup" element={<StorageCleanup />} />
           </Route>
         </Route>
 

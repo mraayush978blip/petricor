@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { Plus, Edit, Trash2, Upload, X } from 'lucide-react';
+import { Plus, Edit, Trash2, Upload, X, Search, Filter, ArrowLeft } from 'lucide-react';
 import { slugify } from '../../lib/utils';
 
 interface Product {
@@ -12,9 +12,14 @@ interface Product {
 }
 
 const Products = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   
+  // Search & Filter state
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+
   // Bulk add state
   const [showBulkModal, setShowBulkModal] = useState(false);
   const [bulkCategory, setBulkCategory] = useState('');
@@ -49,18 +54,82 @@ const Products = () => {
     setLoading(false);
   };
 
-  const handleDelete = async (id: string) => {
-    if (!window.confirm('Are you sure you want to delete this product?')) return;
-    
-    const { error } = await supabase
-      .from('products')
-      .delete()
-      .eq('id', id);
+  const filteredProducts = products.filter((product) => {
+    const matchesSearch = product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          (product.categories?.name || '').toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory ? product.categories?.name === selectedCategory : true;
+    return matchesSearch && matchesCategory;
+  });
 
-    if (error) {
-      alert('Error deleting product: ' + error.message);
-    } else {
-      fetchProducts();
+  const extractStoragePath = (url: string): string | null => {
+    if (!url) return null;
+    const bucketName = 'product-images';
+    if (url.includes(`/${bucketName}/`)) {
+      const parts = url.split(`/${bucketName}/`);
+      if (parts[1]) {
+        return decodeURIComponent(parts[1].split('?')[0]);
+      }
+    }
+    return null;
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!window.confirm('Are you sure you want to delete this product? All attached images will also be removed from storage.')) return;
+    
+    try {
+      // 1. Fetch product image URLs from database
+      const { data: product } = await supabase
+        .from('products')
+        .select('primary_image_url, hover_image_url, images')
+        .eq('id', id)
+        .single();
+
+      if (product) {
+        const imagePaths: string[] = [];
+
+        if (product.primary_image_url) {
+          const path = extractStoragePath(product.primary_image_url);
+          if (path) imagePaths.push(path);
+        }
+
+        if (product.hover_image_url) {
+          const path = extractStoragePath(product.hover_image_url);
+          if (path) imagePaths.push(path);
+        }
+
+        if (Array.isArray(product.images)) {
+          product.images.forEach((imgUrl: string) => {
+            const path = extractStoragePath(imgUrl);
+            if (path && !imagePaths.includes(path)) imagePaths.push(path);
+          });
+        }
+
+        // 2. Remove files from Supabase Storage bucket
+        if (imagePaths.length > 0) {
+          const { error: storageError } = await supabase.storage
+            .from('product-images')
+            .remove(imagePaths);
+
+          if (storageError) {
+            console.warn('Storage file deletion note:', storageError.message);
+          }
+        }
+      }
+
+      // 3. Delete database record
+      const { error: dbError } = await supabase
+        .from('products')
+        .delete()
+        .eq('id', id);
+
+      if (dbError) {
+        alert('Error deleting product: ' + dbError.message);
+      } else {
+        fetchProducts();
+      }
+    } catch (err: any) {
+      console.error('Error deleting product and images:', err);
+      alert('Error during deletion: ' + (err.message || err));
     }
   };
 
@@ -96,8 +165,18 @@ const Products = () => {
 
   return (
     <div>
+      <button onClick={() => navigate(-1)} className="admin-back-btn">
+        <ArrowLeft size={16} />
+        <span>Back</span>
+      </button>
+
       <div className="admin-header-action">
-        <h1 className="admin-page-title">Products</h1>
+        <div>
+          <h1 className="admin-page-title" style={{ marginBottom: '4px' }}>Products</h1>
+          <span style={{ fontSize: '13px', color: '#666' }}>
+            Showing {filteredProducts.length} of {products.length} products
+          </span>
+        </div>
         <div style={{ display: 'flex', gap: '10px' }}>
           <button 
             onClick={() => setShowBulkModal(true)} 
@@ -114,6 +193,54 @@ const Products = () => {
         </div>
       </div>
 
+      {/* Product Search & Category Filter Bar */}
+      <div style={{ 
+        display: 'flex', 
+        flexWrap: 'wrap', 
+        gap: '12px', 
+        marginBottom: '20px', 
+        backgroundColor: '#ffffff', 
+        padding: '16px', 
+        borderRadius: '8px', 
+        border: '1px solid #eaeaea', 
+        boxShadow: '0 2px 6px rgba(0,0,0,0.02)' 
+      }}>
+        <div style={{ flex: '1', minWidth: '240px', position: 'relative', display: 'flex', alignItems: 'center' }}>
+          <Search size={18} style={{ position: 'absolute', left: '12px', color: '#999' }} />
+          <input 
+            type="text"
+            placeholder="Search products by title or category..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="admin-form-input"
+            style={{ paddingLeft: '38px', paddingRight: searchQuery ? '36px' : '12px' }}
+          />
+          {searchQuery && (
+            <button 
+              onClick={() => setSearchQuery('')}
+              style={{ position: 'absolute', right: '10px', background: 'none', border: 'none', cursor: 'pointer', color: '#999', padding: '4px' }}
+            >
+              <X size={16} />
+            </button>
+          )}
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: '180px' }}>
+          <Filter size={18} style={{ color: '#7c5847' }} />
+          <select 
+            value={selectedCategory} 
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="admin-form-input"
+            style={{ padding: '10px 12px' }}
+          >
+            <option value="">All Categories ({categories.length})</option>
+            {categories.map(cat => (
+              <option key={cat.id} value={cat.name}>{cat.name}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
       <div className="admin-table-container">
         <table className="admin-table">
           <thead>
@@ -125,12 +252,14 @@ const Products = () => {
             </tr>
           </thead>
           <tbody>
-            {products.length === 0 ? (
+            {filteredProducts.length === 0 ? (
               <tr>
-                <td colSpan={4} style={{ textAlign: 'center', color: '#888' }}>No products found.</td>
+                <td colSpan={4} style={{ textAlign: 'center', padding: '40px 20px', color: '#888' }}>
+                  {searchQuery || selectedCategory ? 'No matching products found.' : 'No products found.'}
+                </td>
               </tr>
             ) : (
-              products.map((product) => (
+              filteredProducts.map((product) => (
                 <tr key={product.id}>
                   <td>
                     <div style={{ height: '50px', width: '50px', backgroundColor: '#f4f4f4', borderRadius: '4px', overflow: 'hidden' }}>

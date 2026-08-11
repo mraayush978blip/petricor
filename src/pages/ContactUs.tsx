@@ -33,6 +33,12 @@ export default function ContactUs() {
             return;
         }
 
+        if (!phone || !phone.trim()) {
+            setError('Please enter a valid phone number.');
+            setLoading(false);
+            return;
+        }
+
         // Layer 1 & 2: Honeypot + Time check
         const botCheck = clientBotCheck(honeypotRef.current, formOpenedAt.current);
         if (botCheck.blocked) {
@@ -53,11 +59,15 @@ export default function ContactUs() {
             }
         }
 
-        const finalMessage = `Phone: ${phone}\n\n${message}`;
-
         const { error: submitError } = await supabase
             .from('enquiries')
-            .insert([{ name: name.trim(), email: email.trim(), message: finalMessage.trim() }]);
+            .insert([{ 
+                type: 'contact',
+                name: name.trim(), 
+                email: email.trim(), 
+                phone: phone.trim(),
+                message: message.trim() 
+            }]);
 
         if (submitError) {
             setError('There was an error sending your message. Please try again.');
@@ -163,6 +173,7 @@ export default function ContactUs() {
                             international
                             defaultCountry="IN"
                             limitMaxLength={true}
+                            placeholder="Phone Number *"
                             value={phone}
                             onChange={(value: any) => setPhone(value || '')}
                             required

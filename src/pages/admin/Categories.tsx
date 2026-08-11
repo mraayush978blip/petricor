@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { Plus, Trash2, Edit2, Check, X } from 'lucide-react';
+import { Plus, Trash2, Edit2, Check, X, ArrowLeft } from 'lucide-react';
 
 interface Category {
   id: string;
@@ -9,6 +10,7 @@ interface Category {
 }
 
 const Categories = () => {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [newCategoryName, setNewCategoryName] = useState('');
@@ -93,6 +95,11 @@ const Categories = () => {
 
   return (
     <div>
+      <button onClick={() => navigate(-1)} className="admin-back-btn">
+        <ArrowLeft size={16} />
+        <span>Back</span>
+      </button>
+
       <h1 className="admin-page-title">Categories</h1>
 
       {/* Add Category Form */}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { Upload, Loader } from 'lucide-react';
+import { Upload, Loader, ArrowLeft } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import imageCompression from 'browser-image-compression';
 import { slugify } from '../../lib/utils';
@@ -181,6 +181,11 @@ const ProductForm = () => {
 
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+      <button onClick={() => navigate(-1)} className="admin-back-btn">
+        <ArrowLeft size={16} />
+        <span>Back</span>
+      </button>
+
       <div className="admin-header-action">
         <h1 className="admin-page-title">{isEditing ? 'Edit Product' : 'Add New Product'}</h1>
       </div>
