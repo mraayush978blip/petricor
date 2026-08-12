@@ -117,18 +117,20 @@ export default function AllProducts() {
                                 to={`/product/${product.slug}`} 
                                 style={{ display: 'block', backgroundColor: '#f9f9f9', padding: '0' }}
                             >
-                                <div className="product-img-wrapper" style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', overflow: 'hidden' }}>
-                                    <ProgressiveImage 
-                                        src={product.images[0]} 
-                                        alt={product.title} 
-                                        className="product-img-primary"
-                                    />
-                                    {product.images && product.images[1] && (
+                                <div className="product-image-wrapper" style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', overflow: 'hidden' }}>
+                                    <div className="product-img-primary">
                                         <ProgressiveImage 
-                                            src={product.images[1]} 
+                                            src={product.images[0]} 
                                             alt={product.title} 
-                                            className="product-img-secondary"
                                         />
+                                    </div>
+                                    {product.images && product.images[1] && (
+                                        <div className="product-img-secondary">
+                                            <ProgressiveImage 
+                                                src={product.images[1]} 
+                                                alt={product.title} 
+                                            />
+                                        </div>
                                     )}
                                 </div>
                             </Link>

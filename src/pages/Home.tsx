@@ -296,17 +296,19 @@ export default function Home() {
                                 style={{ display: 'block', padding: '0' }}
                             >
                                 <div className="product-image-wrapper">
-                                    <ProgressiveImage 
-                                        src={product.images ? product.images[0] : ''} 
-                                        alt={product.title || product.name} 
-                                        className="product-img-primary"
-                                    />
-                                    {product.images && product.images[1] && (
+                                    <div className="product-img-primary">
                                         <ProgressiveImage 
-                                            src={product.images[1]} 
+                                            src={product.images ? product.images[0] : ''} 
                                             alt={product.title || product.name} 
-                                            className="product-img-secondary"
                                         />
+                                    </div>
+                                    {product.images && product.images[1] && (
+                                        <div className="product-img-secondary">
+                                            <ProgressiveImage 
+                                                src={product.images[1]} 
+                                                alt={product.title || product.name} 
+                                            />
+                                        </div>
                                     )}
                                 </div>
                             </Link>
