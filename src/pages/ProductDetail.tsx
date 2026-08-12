@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
+import ProgressiveImage from '../components/ProgressiveImage';
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -104,7 +105,7 @@ export default function ProductDetail() {
                             backgroundColor: '#f9f9f9',
                             position: 'relative'
                         }}>
-                            <img 
+                            <ProgressiveImage 
                                 src={mainImage} 
                                 alt={product.title} 
                                 style={{ 
@@ -251,7 +252,7 @@ export default function ProductDetail() {
                                     transition: 'transform 0.3s ease, box-shadow 0.3s ease'
                                 }}>
                                     <Link to={`/product/${rp.slug}`} style={{ display: 'block', overflow: 'hidden' }}>
-                                        <img 
+                                        <ProgressiveImage 
                                             className="related-img"
                                             src={rp.images[0]} 
                                             alt={rp.title} 

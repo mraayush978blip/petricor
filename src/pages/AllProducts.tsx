@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
 import { ProductSkeleton } from '../components/Skeleton';
+import ProgressiveImage from '../components/ProgressiveImage';
 
 export default function AllProducts() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -117,13 +118,13 @@ export default function AllProducts() {
                                 style={{ display: 'block', backgroundColor: '#f9f9f9', padding: '0' }}
                             >
                                 <div className="product-img-wrapper" style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', overflow: 'hidden' }}>
-                                    <img 
+                                    <ProgressiveImage 
                                         src={product.images[0]} 
                                         alt={product.title} 
                                         className="product-img-primary"
                                     />
                                     {product.images && product.images[1] && (
-                                        <img 
+                                        <ProgressiveImage 
                                             src={product.images[1]} 
                                             alt={product.title} 
                                             className="product-img-secondary"

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
 import { ProductSkeleton } from '../components/Skeleton';
+import ProgressiveImage from '../components/ProgressiveImage';
 import ExportMap from '../components/ExportMap';
 
 const APP_START_TIME = Date.now();
@@ -295,13 +296,13 @@ export default function Home() {
                                 style={{ display: 'block', padding: '0' }}
                             >
                                 <div className="product-image-wrapper">
-                                    <img 
+                                    <ProgressiveImage 
                                         src={product.images ? product.images[0] : ''} 
                                         alt={product.title || product.name} 
                                         className="product-img-primary"
                                     />
                                     {product.images && product.images[1] && (
-                                        <img 
+                                        <ProgressiveImage 
                                             src={product.images[1]} 
                                             alt={product.title || product.name} 
                                             className="product-img-secondary"
