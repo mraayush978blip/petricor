@@ -7,6 +7,7 @@ if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
 }
 import { AnimatePresence, motion } from 'framer-motion';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import { Analytics } from '@vercel/analytics/react';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
@@ -126,6 +127,7 @@ function App() {
         </AnimatePresence>
         <AppRoutes />
       </BrowserRouter>
+      <Analytics />
     </GoogleReCaptchaProvider>
   );
 }
