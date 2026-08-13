@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://petricor.co.in/sitemap.xml
+Sitemap: https://petricor.co.in/sitemap.xml?v=2
