@@ -122,8 +122,9 @@ export default function AllProducts() {
                                 style={{
                                     position: 'absolute',
                                     top: '100%',
-                                    left: '50%',
-                                    transform: 'translateX(-50%)',
+                                    left: 0,
+                                    right: 0,
+                                    margin: '0 auto',
                                     backgroundColor: '#fff',
                                     border: '1px solid #eaeaea',
                                     borderRadius: '12px',
