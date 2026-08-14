@@ -208,29 +208,33 @@ export default function AllProducts() {
                     </AnimatePresence>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '15px' }}>
                     <motion.div 
                         initial={false}
                         animate={{ 
-                            width: (!isMobile || isSearchOpen) ? (isMobile ? 'calc(100vw - 30px)' : '400px') : '44px',
-                            backgroundColor: (!isMobile || isSearchOpen) ? '#fff' : 'transparent',
-                            borderColor: (!isMobile || isSearchOpen) ? '#ddd' : 'transparent',
-                            boxShadow: (!isMobile || isSearchOpen) ? '0 2px 10px rgba(0,0,0,0.05)' : 'none'
+                            width: (!isMobile || isSearchOpen) ? (isMobile ? 'calc(100vw - 40px)' : '420px') : '50px',
+                            backgroundColor: (!isMobile || isSearchOpen) ? '#ffffff' : 'rgba(255, 255, 255, 0.6)',
+                            borderColor: (!isMobile || isSearchOpen) ? '#e5e7eb' : 'rgba(0,0,0,0.06)',
+                            boxShadow: (!isMobile || isSearchOpen) 
+                                ? '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01)' 
+                                : '0 4px 6px -1px rgba(0, 0, 0, 0.05)'
                         }}
-                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                        transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                         style={{
                             display: 'flex',
                             alignItems: 'center',
-                            height: '44px',
-                            borderRadius: '22px',
+                            height: '50px',
+                            borderRadius: '25px',
                             border: '1px solid',
                             overflow: 'hidden',
-                            position: 'relative'
+                            position: 'relative',
+                            backdropFilter: 'blur(12px)',
+                            WebkitBackdropFilter: 'blur(12px)'
                         }}
                     >
                         <div 
                             style={{ 
-                                padding: '0 12px', 
+                                padding: '0 16px', 
                                 display: 'flex', 
                                 alignItems: 'center',
                                 cursor: isMobile && !isSearchOpen ? 'pointer' : 'default',
@@ -243,12 +247,12 @@ export default function AllProducts() {
                                 }
                             }}
                         >
-                            <Search size={20} color={isMobile && !isSearchOpen ? '#666' : '#999'} />
+                            <Search size={22} color={isMobile && !isSearchOpen ? '#4b5563' : '#9ca3af'} />
                         </div>
                         
                         <input
                             type="text"
-                            placeholder="Search products..."
+                            placeholder="Search our collection..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             style={{
@@ -257,12 +261,13 @@ export default function AllProducts() {
                                 width: '100%',
                                 height: '100%',
                                 padding: '0 10px 0 0',
-                                fontSize: '15px',
-                                color: '#333',
+                                fontSize: '16px',
+                                color: '#1f2937',
                                 backgroundColor: 'transparent',
                                 opacity: (!isMobile || isSearchOpen) ? 1 : 0,
                                 pointerEvents: (!isMobile || isSearchOpen) ? 'auto' : 'none',
                                 transition: 'opacity 0.2s',
+                                fontWeight: '400'
                             }}
                         />
                         
@@ -309,9 +314,28 @@ export default function AllProducts() {
                         {[...Array(8)].map((_, i) => <ProductSkeleton key={i} />)}
                     </div>
                 ) : filteredProducts.length === 0 ? (
-                    <div style={{ textAlign: 'center', padding: '100px 20px', color: '#666' }}>
-                        <h2 style={{ fontSize: '24px', color: '#333', marginBottom: '10px' }}>No products found</h2>
-                        <p style={{ fontSize: '16px' }}>There are no products matching your current search. Please check out our other products!</p>
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, ease: 'easeOut' }}
+                        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '100px 20px', color: '#666' }}
+                    >
+                        <div style={{
+                            width: '80px',
+                            height: '80px',
+                            borderRadius: '40px',
+                            backgroundColor: '#f3f4f6',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginBottom: '24px'
+                        }}>
+                            <Search size={32} color="#9ca3af" />
+                        </div>
+                        <h2 style={{ fontSize: '26px', color: '#111827', marginBottom: '12px', fontWeight: '600' }}>No products found</h2>
+                        <p style={{ fontSize: '16px', color: '#6b7280', maxWidth: '420px', lineHeight: '1.6', marginBottom: '32px' }}>
+                            We couldn't find anything matching <strong style={{ color: '#111827' }}>"{searchQuery}"</strong>. Try adjusting your search or browse our collections.
+                        </p>
                         <button 
                             onClick={() => {
                                 setSearchQuery('');
@@ -320,23 +344,31 @@ export default function AllProducts() {
                                 }
                             }}
                             style={{
-                                marginTop: '20px',
-                                padding: '10px 24px',
-                                backgroundColor: '#1a1a1a',
-                                color: '#fff',
+                                padding: '12px 32px',
+                                backgroundColor: '#111827',
+                                color: '#ffffff',
                                 border: 'none',
-                                borderRadius: '25px',
+                                borderRadius: '30px',
                                 cursor: 'pointer',
                                 fontSize: '15px',
-                                fontWeight: '500',
-                                transition: 'background-color 0.2s'
+                                fontWeight: '600',
+                                transition: 'all 0.2s ease',
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                             }}
-                            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#333')}
-                            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#1a1a1a')}
+                            onMouseOver={(e) => {
+                                e.currentTarget.style.backgroundColor = '#374151';
+                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.12)';
+                            }}
+                            onMouseOut={(e) => {
+                                e.currentTarget.style.backgroundColor = '#111827';
+                                e.currentTarget.style.transform = 'translateY(0)';
+                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                            }}
                         >
-                            View All Products
+                            Clear Search
                         </button>
-                    </div>
+                    </motion.div>
                 ) : (
                 <div className="all-products-grid">
                     {currentProducts.map((product, idx) => (
