@@ -27,7 +27,7 @@ export default function SplashScreen() {
                 style={{ textAlign: 'center' }}
             >
                 <motion.img
-                    src="/logo1.jpeg"
+                    src="/logo1_small.webp"
                     alt="Petricor"
                     initial={{ clipPath: "inset(0 100% 0 0)" }}
                     animate={{ clipPath: "inset(0 0% 0 0)" }}
