@@ -21,14 +21,17 @@ export default function SplashScreen() {
             }}
         >
             <motion.div
-                initial={{ scale: 0.85, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.9, ease: "easeOut" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
                 style={{ textAlign: 'center' }}
             >
-                <img
+                <motion.img
                     src="/logo1.jpeg"
                     alt="Petricor"
+                    initial={{ clipPath: "inset(0 100% 0 0)" }}
+                    animate={{ clipPath: "inset(0 0% 0 0)" }}
+                    transition={{ duration: 1.5, ease: "easeInOut", delay: 0.2 }}
                     style={{ width: '220px', maxWidth: '70vw', height: 'auto' }}
                 />
             </motion.div>
