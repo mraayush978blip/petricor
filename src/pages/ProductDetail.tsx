@@ -109,6 +109,7 @@ export default function ProductDetail() {
     if (!product) return null;
 
     const sections = [
+        { title: 'Category', content: product.categoryArray?.join(', ') || product.category },
         { title: 'Description', content: product.description },
         { title: 'Specification', content: product.specification },
         { title: 'Plant Part & Origin', content: product.plant_and_origin },
