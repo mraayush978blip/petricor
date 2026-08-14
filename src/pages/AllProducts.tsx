@@ -160,8 +160,8 @@ export default function AllProducts() {
                                 <Link to={`/product/${product.slug}`} className="product-card-title" style={{ display: 'block', fontSize: '15px', color: '#222', textDecoration: 'none', fontWeight: '700', marginBottom: '3px', lineHeight: '1.3' }}>
                                     {product.title}
                                 </Link>
-                                <Link to={`/products?category=${encodeURIComponent(product.categoryArray?.[0] || product.category)}`} className="product-card-category" style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
-                                    {product.categoryArray?.length > 1 ? `${product.categoryArray[0]} +${product.categoryArray.length - 1}` : (product.categoryArray?.[0] || product.category)}
+                                <Link to={`/products?category=${encodeURIComponent(categoryFilter && product.categoryArray?.includes(categoryFilter) ? categoryFilter : (product.categoryArray?.[0] || product.category))}`} className="product-card-category" style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
+                                    {product.categoryArray?.length > 1 ? `${categoryFilter && product.categoryArray.includes(categoryFilter) ? categoryFilter : product.categoryArray[0]} +${product.categoryArray.length - 1}` : (product.categoryArray?.[0] || product.category)}
                                 </Link>
                                 <button 
                                     onClick={() => {
