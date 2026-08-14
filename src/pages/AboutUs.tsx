@@ -1,4 +1,11 @@
+import { useSEO } from '../hooks/useSEO';
+
 export default function AboutUs() {
+    useSEO({
+        title: "About Us | Petricor Botanical Extracts",
+        description: "Learn about Petricor's mission, values, and our commitment to sourcing and manufacturing the finest botanical extracts from India to the world.",
+        url: "https://petricor.co.in/about-us"
+    });
     return (
         <div className="container" style={{ padding: '60px 15px', maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
             <h1 style={{ fontSize: '36px', color: '#7c5847', marginBottom: '20px', fontWeight: '600' }}>

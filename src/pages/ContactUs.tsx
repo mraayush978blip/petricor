@@ -5,7 +5,14 @@ import 'react-phone-number-input/style.css';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { clientBotCheck, verifyRecaptchaToken, getFormOpenTime } from '../lib/botProtection';
 
+import { useSEO } from '../hooks/useSEO';
+
 export default function ContactUs() {
+    useSEO({
+        title: "Contact Us | Petricor Botanical Extracts",
+        description: "Get in touch with Petricor for premium botanical extracts, wholesale inquiries, or general questions. We are globally rooted in India.",
+        url: "https://petricor.co.in/contact-us"
+    });
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');

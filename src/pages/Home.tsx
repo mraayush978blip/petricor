@@ -80,7 +80,15 @@ function AnimatedCounter({ end, suffix = '', delayOnLoad = false }: { end: numbe
     return <span ref={ref} style={{ display: 'inline-block', minWidth: '1.2em' }}>{count}{suffix}</span>;
 }
 
+import { useSEO } from '../hooks/useSEO';
+
 export default function Home() {
+    useSEO({
+        title: "Petricor | Premium Botanical Extracts",
+        description: "Petricor provides the highest quality botanical extracts, ethically sourced and scientifically formulated for your health and wellness.",
+        url: "https://petricor.co.in/"
+    });
+
     const location = useLocation();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('All');

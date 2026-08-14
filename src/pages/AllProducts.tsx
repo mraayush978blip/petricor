@@ -5,7 +5,14 @@ import ProductEnquiryModal from '../components/ProductEnquiryModal';
 import { ProductSkeleton } from '../components/Skeleton';
 import ProgressiveImage from '../components/ProgressiveImage';
 
+import { useSEO } from '../hooks/useSEO';
+
 export default function AllProducts() {
+    useSEO({
+        title: "All Products | Petricor Botanical Extracts",
+        description: "Browse Petricor's complete catalog of premium botanical extracts. High-quality, ethically sourced ingredients for your manufacturing needs.",
+        url: "https://petricor.co.in/products"
+    });
     const [currentPage, setCurrentPage] = useState(1);
     const [productsData, setProductsData] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);

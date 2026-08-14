@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
 import ProgressiveImage from '../components/ProgressiveImage';
+import { useSEO } from '../hooks/useSEO';
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -12,6 +13,12 @@ export default function ProductDetail() {
     const [mainImage, setMainImage] = useState('');
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useSEO({
+        title: product ? `${product.title} | Petricor` : "Product Details | Petricor Botanical Extracts",
+        description: product ? (product.short_description || `Discover ${product.title}, a premium botanical extract by Petricor.`) : "Premium botanical extract product details.",
+        url: product ? `https://petricor.co.in/product/${product.slug}` : "https://petricor.co.in/products"
+    });
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
