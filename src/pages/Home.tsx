@@ -120,14 +120,25 @@ export default function Home() {
             const { data: catData } = await supabase.from('categories').select('name').order('name');
             if (catData) setCategories(['All', ...catData.map(c => c.name)]);
             
-            const { data: prodData } = await supabase.from('products').select(`*, categories(name)`);
+            const { data: prodData } = await supabase.from('products').select(`*, categories(name), product_categories(categories(name))`);
             if (prodData) {
                 // Map the data to match the expected format in the UI
-                const mappedProducts = prodData.map(p => ({
-                    ...p,
-                    category: p.categories?.name || 'Uncategorized',
-                    images: [p.primary_image_url || '', p.hover_image_url || ''].filter(Boolean)
-                }));
+                const mappedProducts = prodData.map(p => {
+                    const cats = new Set<string>();
+                    if (p.categories?.name) cats.add(p.categories.name);
+                    if (p.product_categories) {
+                        p.product_categories.forEach((pc: any) => {
+                            if (pc.categories?.name) cats.add(pc.categories.name);
+                        });
+                    }
+                    const categoryArray = Array.from(cats);
+                    return {
+                        ...p,
+                        categoryArray,
+                        category: categoryArray[0] || 'Uncategorized',
+                        images: [p.primary_image_url || '', p.hover_image_url || ''].filter(Boolean)
+                    };
+                });
                 setProductsData(mappedProducts);
             }
             setLoading(false);
@@ -137,7 +148,7 @@ export default function Home() {
 
     const displayedProducts = activeTab === 'All' 
         ? productsData 
-        : productsData.filter(p => p.category === activeTab);
+        : productsData.filter(p => p.categoryArray?.includes(activeTab) || p.category === activeTab);
 
     return (
         <div style={{ paddingBottom: '0' }}>
@@ -324,8 +335,8 @@ export default function Home() {
                                 <Link to={`/product/${product.slug}`} className="product-card-title" style={{ display: 'block', fontSize: '15px', color: '#222', textDecoration: 'none', fontWeight: '700', marginBottom: '3px', lineHeight: '1.3' }}>
                                     {product.title || product.name}
                                 </Link>
-                                <Link to={`/?category=${encodeURIComponent(product.category)}`} className="product-card-category" style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
-                                    {product.category}
+                                <Link to={`/?category=${encodeURIComponent(product.categoryArray?.[0] || product.category)}`} className="product-card-category" style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
+                                    {product.categoryArray?.join(', ') || product.category}
                                 </Link>
                                 <button 
                                     onClick={(e) => {

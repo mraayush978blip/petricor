@@ -21,7 +21,7 @@ const ProductForm = () => {
   const [specification, setSpecification] = useState('');
   const [plantAndOrigin, setPlantAndOrigin] = useState('');
   const [usesAndBenefits, setUsesAndBenefits] = useState('');
-  const [categoryId, setCategoryId] = useState('');
+  const [categoryIds, setCategoryIds] = useState<string[]>([]);
   
   // Images
   const [primaryImage, setPrimaryImage] = useState<File | null>(null);
@@ -44,7 +44,7 @@ const ProductForm = () => {
   };
 
   const fetchProduct = async () => {
-    const { data } = await supabase.from('products').select('*').eq('id', id).single();
+    const { data } = await supabase.from('products').select('*, product_categories(category_id)').eq('id', id).single();
     if (data) {
       setTitle(data.title);
       setSlug(data.slug);
@@ -52,7 +52,14 @@ const ProductForm = () => {
       setSpecification(data.specification || '');
       setPlantAndOrigin(data.plant_and_origin || '');
       setUsesAndBenefits(data.uses_and_benefits || '');
-      setCategoryId(data.category_id || '');
+      
+      const cats = new Set<string>();
+      if (data.category_id) cats.add(data.category_id);
+      if (data.product_categories) {
+        data.product_categories.forEach((pc: any) => cats.add(pc.category_id));
+      }
+      setCategoryIds(Array.from(cats));
+
       setPrimaryImagePreview(data.primary_image_url);
       setHoverImagePreview(data.hover_image_url);
     }
@@ -155,15 +162,27 @@ const ProductForm = () => {
         specification,
         plant_and_origin: plantAndOrigin,
         uses_and_benefits: usesAndBenefits,
-        category_id: categoryId || null,
+        category_id: categoryIds.length > 0 ? categoryIds[0] : null,
         primary_image_url: finalPrimaryUrl,
         hover_image_url: finalHoverUrl,
       };
 
+      let productId = id;
       if (isEditing) {
         await supabase.from('products').update(productData).eq('id', id);
+        await supabase.from('product_categories').delete().eq('product_id', id);
       } else {
-        await supabase.from('products').insert([productData]);
+        const { data, error } = await supabase.from('products').insert([productData]).select('id').single();
+        if (error) throw error;
+        productId = data.id;
+      }
+
+      if (categoryIds.length > 0 && productId) {
+        const relations = categoryIds.map(catId => ({
+          product_id: productId,
+          category_id: catId
+        }));
+        await supabase.from('product_categories').insert(relations);
       }
 
       navigate('/ad/products');
@@ -220,17 +239,26 @@ const ProductForm = () => {
           </div>
 
           <div className="admin-form-group" style={{ gridColumn: '1 / -1', marginBottom: 0 }}>
-            <label className="admin-form-label">Category</label>
-            <select
-              value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
-              className="admin-form-input"
-            >
-              <option value="">Select a category</option>
+            <label className="admin-form-label">Categories</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', padding: '10px 0' }}>
               {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                <label key={cat.id} style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+                  <input
+                    type="checkbox"
+                    checked={categoryIds.includes(cat.id)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setCategoryIds([...categoryIds, cat.id]);
+                      } else {
+                        setCategoryIds(categoryIds.filter(id => id !== cat.id));
+                      }
+                    }}
+                    style={{ cursor: 'pointer', width: '16px', height: '16px', accentColor: '#7c5847' }}
+                  />
+                  <span style={{ fontSize: '14px' }}>{cat.name}</span>
+                </label>
               ))}
-            </select>
+            </div>
           </div>
 
           <div className="admin-form-group" style={{ gridColumn: '1 / -1', marginBottom: 0 }}>

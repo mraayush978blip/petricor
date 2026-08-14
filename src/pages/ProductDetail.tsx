@@ -26,14 +26,29 @@ export default function ProductDetail() {
             setLoading(true);
             const { data: prodData } = await supabase
                 .from('products')
-                .select(`*, categories(name)`)
+                .select(`*, categories(name), product_categories(category_id, categories(name))`)
                 .eq('slug', id)
                 .single();
 
             if (prodData) {
+                const cats = new Set<string>();
+                const catIds = new Set<string>();
+                if (prodData.categories?.name) cats.add(prodData.categories.name);
+                if (prodData.category_id) catIds.add(prodData.category_id);
+                
+                if (prodData.product_categories) {
+                    prodData.product_categories.forEach((pc: any) => {
+                        if (pc.categories?.name) cats.add(pc.categories.name);
+                        if (pc.category_id) catIds.add(pc.category_id);
+                    });
+                }
+                const categoryArray = Array.from(cats);
+                const categoryIdArray = Array.from(catIds);
+
                 const mappedProduct = {
                     ...prodData,
-                    category: prodData.categories?.name || 'Uncategorized',
+                    categoryArray,
+                    category: categoryArray[0] || 'Uncategorized',
                     images: [prodData.primary_image_url, prodData.hover_image_url].filter(Boolean)
                 };
                 setProduct(mappedProduct);
@@ -41,19 +56,34 @@ export default function ProductDetail() {
                     setMainImage(mappedProduct.images[0]);
                 }
 
-                // Fetch related products
+                // Fetch related products (small catalog, so fetching all and filtering is fine)
                 const { data: relatedData } = await supabase
                     .from('products')
-                    .select(`*, categories(name)`)
-                    .neq('id', prodData.id)
-                    .eq('category_id', prodData.category_id)
-                    .limit(4);
+                    .select(`*, categories(name), product_categories(category_id, categories(name))`)
+                    .neq('id', prodData.id);
 
-                let related = (relatedData || []).map(p => ({
-                    ...p,
-                    category: p.categories?.name || 'Uncategorized',
-                    images: [p.primary_image_url, p.hover_image_url].filter(Boolean)
-                }));
+                let related = (relatedData || [])
+                    .filter(p => {
+                        const pCats = new Set<string>();
+                        if (p.category_id) pCats.add(p.category_id);
+                        if (p.product_categories) p.product_categories.forEach((pc: any) => pCats.add(pc.category_id));
+                        return Array.from(pCats).some(c => categoryIdArray.includes(c));
+                    })
+                    .slice(0, 4)
+                    .map(p => {
+                        const c = new Set<string>();
+                        if (p.categories?.name) c.add(p.categories.name);
+                        if (p.product_categories) p.product_categories.forEach((pc: any) => {
+                            if (pc.categories?.name) c.add(pc.categories.name);
+                        });
+                        const arr = Array.from(c).filter(Boolean);
+                        return {
+                            ...p,
+                            categoryArray: arr,
+                            category: arr[0] || 'Uncategorized',
+                            images: [p.primary_image_url, p.hover_image_url].filter(Boolean)
+                        };
+                    });
                 
                 setRelatedProducts(related);
             } else {
@@ -158,10 +188,10 @@ export default function ProductDetail() {
                             fontSize: '13px', 
                             fontWeight: '600', 
                             letterSpacing: '1.5px',
-                            marginBottom: '10px',
-                            display: 'block'
+                            display: 'block',
+                            marginBottom: '10px'
                         }}>
-                            {product.category}
+                            {product.categoryArray?.join(', ') || product.category}
                         </span>
                         
                         <h1 style={{ 
@@ -274,7 +304,9 @@ export default function ProductDetail() {
                                     </Link>
                                     <div style={{ padding: '25px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                                         <div style={{ color: '#7c5847', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', marginBottom: '8px' }}>
-                                            {rp.category}
+                                            <Link to={`/products?category=${encodeURIComponent(rp.categoryArray?.[0] || rp.category)}`} style={{ fontSize: '12px', color: '#888', textDecoration: 'none' }}>
+                                                {rp.categoryArray?.join(', ') || rp.category}
+                                            </Link>
                                         </div>
                                         <h4 style={{ fontSize: '18px', margin: '0 0 20px 0', fontWeight: '600', lineHeight: '1.4' }}>
                                             <Link to={`/product/${rp.slug}`} style={{ color: '#1a1a1a', textDecoration: 'none' }}>{rp.title}</Link>

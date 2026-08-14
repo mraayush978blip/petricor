@@ -25,13 +25,24 @@ export default function AllProducts() {
     useEffect(() => {
         const fetchProducts = async () => {
             setLoading(true);
-            const { data } = await supabase.from('products').select(`*, categories(name)`);
+            const { data } = await supabase.from('products').select(`*, categories(name), product_categories(categories(name))`);
             if (data) {
-                const mappedProducts = data.map(p => ({
-                    ...p,
-                    category: p.categories?.name || 'Uncategorized',
-                    images: [p.primary_image_url || '', p.hover_image_url || ''].filter(Boolean)
-                }));
+                const mappedProducts = data.map(p => {
+                    const cats = new Set<string>();
+                    if (p.categories?.name) cats.add(p.categories.name);
+                    if (p.product_categories) {
+                        p.product_categories.forEach((pc: any) => {
+                            if (pc.categories?.name) cats.add(pc.categories.name);
+                        });
+                    }
+                    const categoryArray = Array.from(cats);
+                    return {
+                        ...p,
+                        categoryArray,
+                        category: categoryArray[0] || 'Uncategorized',
+                        images: [p.primary_image_url || '', p.hover_image_url || ''].filter(Boolean)
+                    };
+                });
                 setProductsData(mappedProducts);
             }
             setLoading(false);
@@ -45,7 +56,7 @@ export default function AllProducts() {
     
     const filteredProducts = useMemo(() => {
         if (!categoryFilter) return productsData;
-        return productsData.filter(p => p.category === categoryFilter);
+        return productsData.filter(p => p.categoryArray?.includes(categoryFilter) || p.category === categoryFilter);
     }, [productsData, categoryFilter]);
 
     // Reset pagination when category changes
@@ -54,8 +65,12 @@ export default function AllProducts() {
     }, [categoryFilter]);
 
     const uniqueCategories = useMemo(() => {
-        const cats = productsData.map(p => p.category);
-        return [...new Set(cats)].sort();
+        const cats = new Set<string>();
+        productsData.forEach(p => {
+            if (p.categoryArray) p.categoryArray.forEach((c: string) => cats.add(c));
+            else if (p.category) cats.add(p.category);
+        });
+        return Array.from(cats).sort();
     }, [productsData]);
 
     const productsPerPage = 16;
@@ -145,8 +160,8 @@ export default function AllProducts() {
                                 <Link to={`/product/${product.slug}`} className="product-card-title" style={{ display: 'block', fontSize: '15px', color: '#222', textDecoration: 'none', fontWeight: '700', marginBottom: '3px', lineHeight: '1.3' }}>
                                     {product.title}
                                 </Link>
-                                <Link to={`/products?category=${encodeURIComponent(product.category)}`} className="product-card-category" style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
-                                    {product.category}
+                                <Link to={`/products?category=${encodeURIComponent(product.categoryArray?.[0] || product.category)}`} className="product-card-category" style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
+                                    {product.categoryArray?.join(', ') || product.category}
                                 </Link>
                                 <button 
                                     onClick={() => {

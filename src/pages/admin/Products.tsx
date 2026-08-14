@@ -9,6 +9,7 @@ interface Product {
   title: string;
   primary_image_url: string;
   categories: { name: string };
+  product_categories?: { categories: { name: string } }[];
 }
 
 const Products = () => {
@@ -45,7 +46,8 @@ const Products = () => {
         id,
         title,
         primary_image_url,
-        categories (name)
+        categories (name),
+        product_categories (categories (name))
       `)
       .order('created_at', { ascending: false });
 
@@ -55,9 +57,19 @@ const Products = () => {
   };
 
   const filteredProducts = products.filter((product) => {
+    const cats = new Set<string>();
+    if (product.categories?.name) cats.add(product.categories.name);
+    if (product.product_categories) {
+      product.product_categories.forEach((pc: any) => {
+        if (pc.categories?.name) cats.add(pc.categories.name);
+      });
+    }
+    const categoryString = Array.from(cats).join(', ');
+
     const matchesSearch = product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          (product.categories?.name || '').toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory ? product.categories?.name === selectedCategory : true;
+                          categoryString.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory ? cats.has(selectedCategory) : true;
+
     return matchesSearch && matchesCategory;
   });
 
@@ -147,12 +159,15 @@ const Products = () => {
       slug: slugify(title),
       category_id: bulkCategory || null
     }));
+    const { data, error } = await supabase.from('products').insert(productsToInsert).select('id');
 
-    const { error } = await supabase.from('products').insert(productsToInsert);
-    
     if (error) {
       alert('Error adding products: ' + error.message);
     } else {
+      if (data && bulkCategory) {
+        const relations = data.map(p => ({ product_id: p.id, category_id: bulkCategory }));
+        await supabase.from('product_categories').insert(relations);
+      }
       setShowBulkModal(false);
       setBulkTitles('');
       setBulkCategory('');
@@ -272,7 +287,18 @@ const Products = () => {
                   </td>
                   <td style={{ fontWeight: '500' }}>{product.title}</td>
                   <td>
-                    <span className="admin-badge gray">{product.categories?.name || 'Uncategorized'}</span>
+                    <span className="admin-badge gray">
+                      {(() => {
+                        const cats = new Set<string>();
+                        if (product.categories?.name) cats.add(product.categories.name);
+                        if (product.product_categories) {
+                          product.product_categories.forEach((pc: any) => {
+                            if (pc.categories?.name) cats.add(pc.categories.name);
+                          });
+                        }
+                        return Array.from(cats).join(', ') || 'Uncategorized';
+                      })()}
+                    </span>
                   </td>
                   <td style={{ textAlign: 'right' }}>
                     <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
