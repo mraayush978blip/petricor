@@ -120,7 +120,7 @@ export default function Home() {
             const { data: catData } = await supabase.from('categories').select('name').order('name');
             if (catData) setCategories(['All', ...catData.map(c => c.name)]);
             
-            const { data: prodData } = await supabase.from('products').select(`*, categories(name), product_categories(categories(name))`);
+            const { data: prodData } = await supabase.from('products').select(`*, categories!products_category_id_fkey(name), product_categories(categories(name))`);
             if (prodData) {
                 // Map the data to match the expected format in the UI
                 const mappedProducts = prodData.map(p => {

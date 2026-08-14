@@ -25,7 +25,7 @@ export default function AllProducts() {
     useEffect(() => {
         const fetchProducts = async () => {
             setLoading(true);
-            const { data } = await supabase.from('products').select(`*, categories(name), product_categories(categories(name))`);
+            const { data } = await supabase.from('products').select(`*, categories!products_category_id_fkey(name), product_categories(categories(name))`);
             if (data) {
                 const mappedProducts = data.map(p => {
                     const cats = new Set<string>();

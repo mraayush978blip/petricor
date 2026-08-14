@@ -26,7 +26,7 @@ export default function ProductDetail() {
             setLoading(true);
             const { data: prodData } = await supabase
                 .from('products')
-                .select(`*, categories(name), product_categories(category_id, categories(name))`)
+                .select(`*, categories!products_category_id_fkey(name), product_categories(category_id, categories(name))`)
                 .eq('slug', id)
                 .single();
 
@@ -59,7 +59,7 @@ export default function ProductDetail() {
                 // Fetch related products (small catalog, so fetching all and filtering is fine)
                 const { data: relatedData } = await supabase
                     .from('products')
-                    .select(`*, categories(name), product_categories(category_id, categories(name))`)
+                    .select(`*, categories!products_category_id_fkey(name), product_categories(category_id, categories(name))`)
                     .neq('id', prodData.id);
 
                 let related = (relatedData || [])
