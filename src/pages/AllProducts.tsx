@@ -4,6 +4,8 @@ import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
 import { ProductSkeleton } from '../components/Skeleton';
 import ProgressiveImage from '../components/ProgressiveImage';
+import { ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { useSEO } from '../hooks/useSEO';
 
@@ -21,6 +23,7 @@ export default function AllProducts() {
     
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -87,39 +90,100 @@ export default function AllProducts() {
                     <Link to="/" style={{ color: '#888', textDecoration: 'none' }}>Home</Link> / 
                     <span style={{ color: '#333', fontWeight: '500', marginLeft: '5px' }}>{categoryFilter ? categoryFilter : 'All Products'}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px' }}>
-                    <select 
-                        value={categoryFilter || ''}
-                        onChange={(e) => {
-                            if (e.target.value) {
-                                navigate(`/products?category=${encodeURIComponent(e.target.value)}`);
-                            } else {
-                                navigate(`/products`);
-                            }
-                        }}
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '40px', position: 'relative' }}>
+                    <div 
+                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                         style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            cursor: 'pointer',
                             fontSize: 'clamp(28px, 4vw, 42px)',
                             color: '#333',
                             fontWeight: 'bold',
-                            border: 'none',
-                            backgroundColor: 'transparent',
-                            outline: 'none',
-                            cursor: 'pointer',
-                            appearance: 'none', 
-                            backgroundImage: `url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")`,
-                            backgroundRepeat: 'no-repeat',
-                            backgroundPosition: 'right 10px center',
-                            backgroundSize: '20px auto',
-                            paddingRight: '45px',
-                            textAlign: 'center',
-                            margin: 0
                         }}
                     >
-                    <option value="">View All Products</option>
-                    {uniqueCategories.map(cat => (
-                        <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                    </select>
+                        <span>{categoryFilter ? categoryFilter : 'View All Products'}</span>
+                        <motion.div 
+                            animate={{ rotate: isDropdownOpen ? 180 : 0 }} 
+                            transition={{ duration: 0.3 }}
+                            style={{ display: 'flex', alignItems: 'center', marginLeft: '10px' }}
+                        >
+                            <ChevronDown size={36} color="#333" />
+                        </motion.div>
+                    </div>
+
+                    <AnimatePresence>
+                        {isDropdownOpen && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.2 }}
+                                style={{
+                                    position: 'absolute',
+                                    top: '100%',
+                                    left: '50%',
+                                    transform: 'translateX(-50%)',
+                                    backgroundColor: '#fff',
+                                    border: '1px solid #eaeaea',
+                                    borderRadius: '12px',
+                                    boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
+                                    zIndex: 50,
+                                    width: '100%',
+                                    maxWidth: '300px',
+                                    overflow: 'hidden',
+                                    maxHeight: '300px',
+                                    overflowY: 'auto'
+                                }}
+                            >
+                                <div 
+                                    onClick={() => {
+                                        navigate(`/products`);
+                                        setIsDropdownOpen(false);
+                                    }}
+                                    style={{
+                                        padding: '12px 20px',
+                                        cursor: 'pointer',
+                                        borderBottom: '1px solid #f0f0f0',
+                                        fontWeight: categoryFilter ? 'normal' : '600',
+                                        backgroundColor: categoryFilter ? 'transparent' : '#f9f9f9',
+                                        color: '#333',
+                                        fontSize: '15px',
+                                        textAlign: 'center',
+                                        transition: 'background-color 0.2s'
+                                    }}
+                                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f4f4f4'}
+                                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = categoryFilter ? 'transparent' : '#f9f9f9'}
+                                >
+                                    View All Products
+                                </div>
+                                {uniqueCategories.map(cat => (
+                                    <div 
+                                        key={cat}
+                                        onClick={() => {
+                                            navigate(`/products?category=${encodeURIComponent(cat)}`);
+                                            setIsDropdownOpen(false);
+                                        }}
+                                        style={{
+                                            padding: '12px 20px',
+                                            cursor: 'pointer',
+                                            borderBottom: '1px solid #f0f0f0',
+                                            fontWeight: categoryFilter === cat ? '600' : 'normal',
+                                            backgroundColor: categoryFilter === cat ? '#f9f9f9' : 'transparent',
+                                            color: '#333',
+                                            fontSize: '15px',
+                                            textAlign: 'center',
+                                            transition: 'background-color 0.2s'
+                                        }}
+                                        onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f4f4f4'}
+                                        onMouseOut={(e) => e.currentTarget.style.backgroundColor = categoryFilter === cat ? '#f9f9f9' : 'transparent'}
+                                    >
+                                        {cat}
+                                    </div>
+                                ))}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
 
