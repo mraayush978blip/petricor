@@ -46,7 +46,7 @@ const Products = () => {
         id,
         title,
         primary_image_url,
-        categories (name),
+        categories!products_category_id_fkey (name),
         product_categories (categories (name))
       `)
       .order('created_at', { ascending: false });
