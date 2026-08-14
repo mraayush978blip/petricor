@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
 import { ProductSkeleton } from '../components/Skeleton';
 import ProgressiveImage from '../components/ProgressiveImage';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Search, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { useSEO } from '../hooks/useSEO';
@@ -24,6 +24,16 @@ export default function AllProducts() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -58,14 +68,25 @@ export default function AllProducts() {
     const categoryFilter = queryParams.get('category');
     
     const filteredProducts = useMemo(() => {
-        if (!categoryFilter) return productsData;
-        return productsData.filter(p => p.categoryArray?.includes(categoryFilter) || p.category === categoryFilter);
-    }, [productsData, categoryFilter]);
+        let result = productsData;
+        if (categoryFilter) {
+            result = result.filter(p => p.categoryArray?.includes(categoryFilter) || p.category === categoryFilter);
+        }
+        if (searchQuery.trim()) {
+            const query = searchQuery.toLowerCase();
+            result = result.filter(p => 
+                p.title?.toLowerCase().includes(query) || 
+                p.name?.toLowerCase().includes(query) || 
+                p.description?.toLowerCase().includes(query)
+            );
+        }
+        return result;
+    }, [productsData, categoryFilter, searchQuery]);
 
-    // Reset pagination when category changes
+    // Reset pagination when category or search changes
     useEffect(() => {
         setCurrentPage(1);
-    }, [categoryFilter]);
+    }, [categoryFilter, searchQuery]);
 
     const uniqueCategories = useMemo(() => {
         const cats = new Set<string>();
@@ -185,6 +206,100 @@ export default function AllProducts() {
                             </motion.div>
                         )}
                     </AnimatePresence>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
+                    <motion.div 
+                        initial={false}
+                        animate={{ 
+                            width: (!isMobile || isSearchOpen) ? (isMobile ? 'calc(100vw - 30px)' : '400px') : '44px',
+                            backgroundColor: (!isMobile || isSearchOpen) ? '#fff' : 'transparent',
+                            borderColor: (!isMobile || isSearchOpen) ? '#ddd' : 'transparent',
+                            boxShadow: (!isMobile || isSearchOpen) ? '0 2px 10px rgba(0,0,0,0.05)' : 'none'
+                        }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            height: '44px',
+                            borderRadius: '22px',
+                            border: '1px solid',
+                            overflow: 'hidden',
+                            position: 'relative'
+                        }}
+                    >
+                        <div 
+                            style={{ 
+                                padding: '0 12px', 
+                                display: 'flex', 
+                                alignItems: 'center',
+                                cursor: isMobile && !isSearchOpen ? 'pointer' : 'default',
+                                height: '100%',
+                                zIndex: 2
+                            }}
+                            onClick={() => {
+                                if (isMobile && !isSearchOpen) {
+                                    setIsSearchOpen(true);
+                                }
+                            }}
+                        >
+                            <Search size={20} color={isMobile && !isSearchOpen ? '#666' : '#999'} />
+                        </div>
+                        
+                        <input
+                            type="text"
+                            placeholder="Search products..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            style={{
+                                border: 'none',
+                                outline: 'none',
+                                width: '100%',
+                                height: '100%',
+                                padding: '0 10px 0 0',
+                                fontSize: '15px',
+                                color: '#333',
+                                backgroundColor: 'transparent',
+                                opacity: (!isMobile || isSearchOpen) ? 1 : 0,
+                                pointerEvents: (!isMobile || isSearchOpen) ? 'auto' : 'none',
+                                transition: 'opacity 0.2s',
+                            }}
+                        />
+                        
+                        {isMobile && isSearchOpen && (
+                            <div 
+                                onClick={() => {
+                                    setIsSearchOpen(false);
+                                    if (!searchQuery) {
+                                        // just close
+                                    }
+                                }}
+                                style={{
+                                    padding: '0 12px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    cursor: 'pointer',
+                                    height: '100%'
+                                }}
+                            >
+                                <X size={18} color="#999" />
+                            </div>
+                        )}
+                        {!isMobile && searchQuery && (
+                            <div 
+                                onClick={() => setSearchQuery('')}
+                                style={{
+                                    padding: '0 12px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    cursor: 'pointer',
+                                    height: '100%'
+                                }}
+                            >
+                                <X size={18} color="#999" />
+                            </div>
+                        )}
+                    </motion.div>
                 </div>
             </div>
 
