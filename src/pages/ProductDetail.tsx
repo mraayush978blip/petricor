@@ -183,18 +183,7 @@ export default function ProductDetail() {
 
                     {/* Right Details */}
                     <div style={{ flex: '1 1 45%', minWidth: '300px', display: 'flex', flexDirection: 'column' }}>
-                        <span style={{ 
-                            color: '#7c5847', 
-                            textTransform: 'uppercase', 
-                            fontSize: '13px', 
-                            fontWeight: '600', 
-                            letterSpacing: '1.5px',
-                            display: 'block',
-                            marginBottom: '10px'
-                        }}>
-                            {product.categoryArray?.length > 1 ? `${product.categoryArray[0]} +${product.categoryArray.length - 1}` : (product.categoryArray?.[0] || product.category)}
-                        </span>
-                        
+
                         <h1 style={{ 
                             fontSize: 'clamp(28px, 4vw, 42px)', 
                             color: '#1a1a1a', 
