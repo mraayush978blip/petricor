@@ -106,12 +106,12 @@ export default function AllProducts() {
 
     return (
         <div style={{ backgroundColor: '#f9f9f9', paddingBottom: '80px' }}>
-            <div style={{ textAlign: 'center', padding: '60px 15px', backgroundColor: '#fff', borderBottom: '1px solid #eaeaea' }}>
+            <div style={{ textAlign: 'center', padding: isMobile ? '30px 15px 20px' : '60px 15px', backgroundColor: '#fff', borderBottom: '1px solid #eaeaea' }}>
                 <div style={{ fontSize: '14px', color: '#888', marginBottom: '10px' }}>
                     <Link to="/" style={{ color: '#888', textDecoration: 'none' }}>Home</Link> / 
                     <span style={{ color: '#333', fontWeight: '500', marginLeft: '5px' }}>{categoryFilter ? categoryFilter : 'All Products'}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '40px', position: 'relative' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: isMobile ? '20px' : '40px', position: 'relative' }}>
                     <div 
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                         style={{
@@ -303,7 +303,7 @@ export default function AllProducts() {
                 </div>
             </div>
 
-            <div className="container" style={{ maxWidth: '1150px', width: '95%', margin: '60px auto 0', padding: '0' }}>
+            <div className="container" style={{ maxWidth: '1150px', width: '95%', margin: isMobile ? '30px auto 0' : '60px auto 0', padding: '0' }}>
                 {loading ? (
                     <div className="all-products-grid">
                         {[...Array(8)].map((_, i) => <ProductSkeleton key={i} />)}
