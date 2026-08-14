@@ -191,7 +191,7 @@ export default function ProductDetail() {
                             display: 'block',
                             marginBottom: '10px'
                         }}>
-                            {product.categoryArray?.join(', ') || product.category}
+                            {product.categoryArray?.length > 1 ? `${product.categoryArray[0]} +${product.categoryArray.length - 1}` : (product.categoryArray?.[0] || product.category)}
                         </span>
                         
                         <h1 style={{ 
@@ -305,7 +305,7 @@ export default function ProductDetail() {
                                     <div style={{ padding: '25px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                                         <div style={{ color: '#7c5847', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', marginBottom: '8px' }}>
                                             <Link to={`/products?category=${encodeURIComponent(rp.categoryArray?.[0] || rp.category)}`} style={{ fontSize: '12px', color: '#888', textDecoration: 'none' }}>
-                                                {rp.categoryArray?.join(', ') || rp.category}
+                                                {rp.categoryArray?.length > 1 ? `${rp.categoryArray[0]} +${rp.categoryArray.length - 1}` : (rp.categoryArray?.[0] || rp.category)}
                                             </Link>
                                         </div>
                                         <h4 style={{ fontSize: '18px', margin: '0 0 20px 0', fontWeight: '600', lineHeight: '1.4' }}>
