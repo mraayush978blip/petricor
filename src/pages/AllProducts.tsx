@@ -308,6 +308,35 @@ export default function AllProducts() {
                     <div className="all-products-grid">
                         {[...Array(8)].map((_, i) => <ProductSkeleton key={i} />)}
                     </div>
+                ) : filteredProducts.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '100px 20px', color: '#666' }}>
+                        <h2 style={{ fontSize: '24px', color: '#333', marginBottom: '10px' }}>No products found</h2>
+                        <p style={{ fontSize: '16px' }}>There are no products matching your current search. Please check out our other products!</p>
+                        <button 
+                            onClick={() => {
+                                setSearchQuery('');
+                                if (categoryFilter) {
+                                    navigate('/products');
+                                }
+                            }}
+                            style={{
+                                marginTop: '20px',
+                                padding: '10px 24px',
+                                backgroundColor: '#1a1a1a',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: '25px',
+                                cursor: 'pointer',
+                                fontSize: '15px',
+                                fontWeight: '500',
+                                transition: 'background-color 0.2s'
+                            }}
+                            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#333')}
+                            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#1a1a1a')}
+                        >
+                            View All Products
+                        </button>
+                    </div>
                 ) : (
                 <div className="all-products-grid">
                     {currentProducts.map((product, idx) => (
