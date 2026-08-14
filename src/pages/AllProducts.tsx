@@ -129,8 +129,8 @@ export default function AllProducts() {
                                     borderRadius: '12px',
                                     boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
                                     zIndex: 50,
-                                    width: '100%',
-                                    maxWidth: '300px',
+                                    width: '90vw',
+                                    maxWidth: '320px',
                                     overflow: 'hidden',
                                     maxHeight: '300px',
                                     overflowY: 'auto'
