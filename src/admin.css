@@ -496,3 +496,15 @@ form, input, textarea, select {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+@media (max-width: 768px) {
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

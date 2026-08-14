@@ -68,7 +68,9 @@ const ProductForm = () => {
       const options = {
         maxSizeMB: 1, // Compress to max 1MB
         maxWidthOrHeight: 1920,
-        useWebWorker: true
+        useWebWorker: true,
+        fileType: 'image/webp',
+        initialQuality: 0.9
       };
       
       const compressedFile = await imageCompression(file, options);
@@ -191,7 +193,7 @@ const ProductForm = () => {
       </div>
 
       <form onSubmit={handleSubmit} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', border: '1px solid #eaeaea' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '25px', marginBottom: '30px' }}>
+        <div className="admin-form-grid">
           
           <div className="admin-form-group" style={{ marginBottom: 0 }}>
             <label className="admin-form-label">Title</label>
