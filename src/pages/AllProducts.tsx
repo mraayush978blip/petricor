@@ -161,7 +161,7 @@ export default function AllProducts() {
                                     {product.title}
                                 </Link>
                                 <Link to={`/products?category=${encodeURIComponent(product.categoryArray?.[0] || product.category)}`} className="product-card-category" style={{ display: 'block', fontSize: '12px', color: '#888', marginBottom: '0', lineHeight: '1.4', textDecoration: 'none', flexGrow: 1 }}>
-                                    {product.categoryArray?.join(', ') || product.category}
+                                    {product.categoryArray?.length > 1 ? `${product.categoryArray[0]} +${product.categoryArray.length - 1}` : (product.categoryArray?.[0] || product.category)}
                                 </Link>
                                 <button 
                                     onClick={() => {
