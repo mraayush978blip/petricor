@@ -261,16 +261,19 @@ h1, h2, h3, h4, h5, h6 {
     scrollbar-width: none !important;
     gap: 15px !important;
     padding-bottom: 10px !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-padding: 0 15px !important;
   }
   .formulation-grid::-webkit-scrollbar {
     display: none;
   }
   .formulation-card {
-    flex: 0 0 65vw !important;
+    flex: 0 0 70vw !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-start !important;
     padding: 20px !important;
+    scroll-snap-align: center !important;
   }
 
   /* B2B Grid */
