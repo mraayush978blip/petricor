@@ -8,35 +8,7 @@
   ],
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/products",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/product/(.*)",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/about-us",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/contact-us",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/general-enquiry",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/ad",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/ad/(.*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],

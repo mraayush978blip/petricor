@@ -15,6 +15,7 @@ import AllProducts from './pages/AllProducts';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import GeneralEnquiry from './pages/GeneralEnquiry';
+import NotFound from './pages/NotFound';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminLayout from './components/AdminLayout';
@@ -80,7 +81,7 @@ function AppRoutes() {
         </Route>
 
         {/* Catch-all route to placeholder */}
-        <Route path="*" element={<PageTransition><ProductDetail /></PageTransition>} />
+        <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>
   );
