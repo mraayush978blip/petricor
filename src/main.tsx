@@ -1,11 +1,23 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
+import * as Sentry from "@sentry/react";
+import ErrorFallback from './components/ErrorFallback'
 import './index.css'
+
+Sentry.init({
+  dsn: "https://6cbe67fe7375a7dc8ef4273020d80791@o4511924551811072.ingest.us.sentry.io/4511924553842689",
+  dataCollection: {
+    // userInfo: false,
+    // httpBodies: []
+  }
+});
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <Sentry.ErrorBoundary fallback={({ error, resetError }) => <ErrorFallback error={error as Error} resetError={resetError} />}>
+      <App />
+    </Sentry.ErrorBoundary>
   </StrictMode>,
 )
 
