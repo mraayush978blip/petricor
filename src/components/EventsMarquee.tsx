@@ -52,11 +52,7 @@ const EventsMarquee = () => {
               <img 
                 src={event.image_url} 
                 alt={event.title || 'Event'} 
-                style={{ 
-                  width: '60px', 
-                  height: '40px', 
-                  objectFit: 'contain'
-                }} 
+                className="marquee-image"
               />
               {event.title && (
                 <span style={{ fontSize: '12px', color: '#333', marginTop: '8px', fontWeight: '500', whiteSpace: 'normal', textAlign: 'center', lineHeight: '1.2' }}>
@@ -96,14 +92,24 @@ const EventsMarquee = () => {
           display: inline-flex;
           flex-direction: column;
           align-items: center;
-          margin: 0 25px;
-          width: 120px;
+          margin: 0 35px;
+          width: 160px;
+        }
+
+        .marquee-image {
+          width: 140px;
+          height: 80px;
+          object-fit: contain;
         }
 
         @media (max-width: 768px) {
           .marquee-item {
-            margin: 0 12px;
-            width: 90px;
+            margin: 0 15px;
+            width: 120px;
+          }
+          .marquee-image {
+            width: 100px;
+            height: 60px;
           }
         }
       `}</style>
