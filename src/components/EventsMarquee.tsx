@@ -33,9 +33,14 @@ const EventsMarquee = () => {
     return null; // Don't show anything if no events or still loading
   }
 
-  // Duplicate events to create a seamless infinite scrolling effect
-  // Depending on screen size, we might need multiple copies
-  const displayEvents = [...events, ...events, ...events, ...events];
+  // To create a seamless infinite scrolling effect, the content must be wider than the screen.
+  // We ensure the base set of events has at least 15 items (approx 3500px wide).
+  const minItems = 15;
+  const repeatsNeeded = Math.max(1, Math.ceil(minItems / events.length));
+  const baseRepeatedEvents = Array.from({ length: repeatsNeeded }).flatMap(() => events);
+  
+  // Duplicate the base set so we can translate by exactly 50% and loop seamlessly
+  const displayEvents = [...baseRepeatedEvents, ...baseRepeatedEvents];
 
   return (
     <div style={{ backgroundColor: '#eaeaea', padding: '15px 0', overflow: 'hidden', position: 'relative', borderTop: '1px solid #dcdcdc' }}>

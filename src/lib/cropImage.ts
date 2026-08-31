@@ -83,11 +83,11 @@ export default async function getCroppedImg(
     canvas.toBlob((file) => {
       if (file) {
         // Convert Blob to File
-        const croppedFile = new File([file], "cropped-image.jpeg", { type: "image/jpeg" })
+        const croppedFile = new File([file], "cropped-image.png", { type: "image/png" })
         resolve(croppedFile)
       } else {
         reject(new Error('Canvas is empty'))
       }
-    }, 'image/jpeg')
+    }, 'image/png')
   })
 }
