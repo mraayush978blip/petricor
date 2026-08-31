@@ -7,7 +7,8 @@ const Dashboard = () => {
   const [stats, setStats] = useState({
     enquiries: 0,
     products: 0,
-    categories: 0
+    categories: 0,
+    events: 0
   });
 
   const [storageInfo, setStorageInfo] = useState({
@@ -40,10 +41,15 @@ const Dashboard = () => {
       .from('categories')
       .select('*', { count: 'exact', head: true });
 
+    const { count: eventsCount } = await supabase
+      .from('events')
+      .select('*', { count: 'exact', head: true });
+
     setStats({
       enquiries: enquiriesCount || 0,
       products: productsCount || 0,
-      categories: categoriesCount || 0
+      categories: categoriesCount || 0,
+      events: eventsCount || 0
     });
     
     setLoading(false);
@@ -145,6 +151,17 @@ const Dashboard = () => {
           </div>
           <ArrowRight size={18} color="#aaa" />
         </Link>
+
+        <Link to="/ad/events" className="admin-stat-card-link">
+          <div className="admin-stat-icon" style={{ backgroundColor: '#fff4eb', color: '#7c5847' }}>
+            <Package size={26} />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div className="admin-stat-label">Total Events</div>
+            <div className="admin-stat-value">{stats.events}</div>
+          </div>
+          <ArrowRight size={18} color="#aaa" />
+        </Link>
       </div>
 
       {/* Supabase Storage & Database Usage Overview Widgets */}
@@ -216,7 +233,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', textAlign: 'center', padding: '12px 0', backgroundColor: '#faf8f5', borderRadius: '6px', marginBottom: '8px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', textAlign: 'center', padding: '12px 0', backgroundColor: '#faf8f5', borderRadius: '6px', marginBottom: '8px' }}>
             <div>
               <div style={{ fontSize: '16px', fontWeight: '700', color: '#7c5847' }}>{stats.products}</div>
               <div style={{ fontSize: '11px', color: '#777' }}>Products</div>
@@ -229,10 +246,14 @@ const Dashboard = () => {
               <div style={{ fontSize: '16px', fontWeight: '700', color: '#7c5847' }}>{stats.enquiries}</div>
               <div style={{ fontSize: '11px', color: '#777' }}>Enquiries</div>
             </div>
+            <div>
+              <div style={{ fontSize: '16px', fontWeight: '700', color: '#7c5847' }}>{stats.events}</div>
+              <div style={{ fontSize: '11px', color: '#777' }}>Events</div>
+            </div>
           </div>
 
           <div style={{ fontSize: '12px', color: '#666', textAlign: 'center', paddingTop: '4px' }}>
-            Total Database Records: <strong>{stats.products + stats.categories + stats.enquiries} entries</strong>
+            Total Database Records: <strong>{stats.products + stats.categories + stats.enquiries + stats.events} entries</strong>
           </div>
         </div>
       </div>

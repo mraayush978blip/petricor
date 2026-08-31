@@ -105,6 +105,14 @@ const AdminLayout = () => {
                 <ChevronRight size={16} opacity={0.5} />
               </Link>
 
+              <Link to="/ad/events" className={`admin-popup-nav-item ${isActive('/ad/events') ? 'active' : ''}`}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                  <Package size={20} />
+                  <span>Events & Exhibitions</span>
+                </div>
+                <ChevronRight size={16} opacity={0.5} />
+              </Link>
+
               <Link to="/ad/settings" className={`admin-popup-nav-item ${isActive('/ad/settings') ? 'active' : ''}`}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                   <SettingsIcon size={20} />

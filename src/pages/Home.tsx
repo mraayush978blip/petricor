@@ -6,6 +6,7 @@ import ProductEnquiryModal from '../components/ProductEnquiryModal';
 import { ProductSkeleton } from '../components/Skeleton';
 import ProgressiveImage from '../components/ProgressiveImage';
 import ExportMap from '../components/ExportMap';
+import EventsMarquee from '../components/EventsMarquee';
 
 const APP_START_TIME = Date.now();
 
@@ -729,6 +730,9 @@ export default function Home() {
                     <ExportMap />
                 </div>
             </div>
+
+            {/* EVENTS MARQUEE */}
+            <EventsMarquee />
             
             <ProductEnquiryModal 
                 isOpen={isModalOpen} 
