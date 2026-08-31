@@ -88,24 +88,24 @@ const EventsMarquee = () => {
           display: inline-flex;
           flex-direction: column;
           align-items: center;
-          margin: 0 35px;
-          width: 160px;
+          margin: 0 40px;
+          width: 250px;
         }
 
         .marquee-image {
-          width: 140px;
-          height: 80px;
+          width: 220px;
+          height: 120px;
           object-fit: contain;
         }
 
         @media (max-width: 768px) {
           .marquee-item {
-            margin: 0 15px;
-            width: 120px;
+            margin: 0 20px;
+            width: 160px;
           }
           .marquee-image {
-            width: 100px;
-            height: 60px;
+            width: 140px;
+            height: 80px;
           }
         }
       `}</style>
