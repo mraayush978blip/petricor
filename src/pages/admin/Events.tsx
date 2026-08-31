@@ -4,6 +4,9 @@ import { supabase } from '../../lib/supabase';
 import { Plus, Trash2, Upload, Loader, ArrowLeft } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import imageCompression from 'browser-image-compression';
+import Cropper from 'react-easy-crop';
+import getCroppedImg from '../../lib/cropImage';
+import { useCallback } from 'react';
 
 interface Event {
   id: string;
@@ -24,6 +27,13 @@ const Events = () => {
   const [compressing, setCompressing] = useState(false);
   const [dragActive, setDragActive] = useState(false);
 
+  // Cropper states
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [showCropper, setShowCropper] = useState(false);
+  const [imageToCrop, setImageToCrop] = useState<string | null>(null);
+
   useEffect(() => {
     fetchEvents();
   }, []);
@@ -40,13 +50,29 @@ const Events = () => {
     setLoading(false);
   };
 
-  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setCompressing(true);
+    const objectUrl = URL.createObjectURL(file);
+    setImageToCrop(objectUrl);
+    setShowCropper(true);
+    setCrop({ x: 0, y: 0 });
+    setZoom(1);
+  };
+
+  const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: any) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
+
+  const handleConfirmCrop = async () => {
+    if (!imageToCrop || !croppedAreaPixels) return;
     
+    setCompressing(true);
     try {
+      const croppedFile = await getCroppedImg(imageToCrop, croppedAreaPixels);
+      if (!croppedFile) throw new Error("Failed to crop image");
+      
       const options = {
         maxSizeMB: 1, 
         maxWidthOrHeight: 1920,
@@ -55,12 +81,14 @@ const Events = () => {
         initialQuality: 0.9
       };
       
-      const compressedFile = await imageCompression(file, options);
+      const compressedFile = await imageCompression(croppedFile, options);
       setImage(compressedFile);
       setImagePreview(URL.createObjectURL(compressedFile));
+      setShowCropper(false);
+      setImageToCrop(null);
     } catch (error) {
-      console.error('Error compressing image:', error);
-      alert('Error compressing image. Please try another file.');
+      console.error('Error cropping/compressing image:', error);
+      alert('Error processing image. Please try again.');
     } finally {
       setCompressing(false);
     }
@@ -274,6 +302,58 @@ const Events = () => {
           </tbody>
         </table>
       </div>
+
+      {showCropper && imageToCrop && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, 
+          backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 9999,
+          display: 'flex', flexDirection: 'column'
+        }}>
+          <div style={{ flex: 1, position: 'relative' }}>
+            <Cropper
+              image={imageToCrop}
+              crop={crop}
+              zoom={zoom}
+              aspect={4 / 3}
+              onCropChange={setCrop}
+              onCropComplete={onCropComplete}
+              onZoomChange={setZoom}
+            />
+          </div>
+          <div style={{ padding: '20px', backgroundColor: 'white', display: 'flex', justifyContent: 'center', gap: '20px', alignItems: 'center' }}>
+            <span style={{ fontSize: '14px', fontWeight: '500', color: '#555' }}>Zoom:</span>
+            <input
+              type="range"
+              value={zoom}
+              min={1}
+              max={3}
+              step={0.1}
+              aria-labelledby="Zoom"
+              onChange={(e) => setZoom(Number(e.target.value))}
+              style={{ width: '200px' }}
+            />
+            <button 
+              type="button"
+              onClick={() => { setShowCropper(false); setImageToCrop(null); }}
+              className="admin-btn admin-btn-secondary"
+            >
+              Cancel
+            </button>
+            <button 
+              type="button"
+              onClick={handleConfirmCrop}
+              disabled={compressing}
+              className="admin-btn admin-btn-primary"
+            >
+              {compressing ? (
+                <>
+                  <Loader size={16} className="animate-spin" /> Processing...
+                </>
+              ) : 'Confirm Crop'}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
