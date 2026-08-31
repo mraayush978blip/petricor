@@ -118,7 +118,7 @@ const StorageCleanup = () => {
       if (subFiles) {
         subFiles.forEach(f => {
           if (f.metadata && f.metadata.size) {
-            rawFileList.push({ name: f.name, fullPath: \`products/\${f.name}\`, size: f.metadata.size, created: f.created_at || f.updated_at || new Date().toISOString(), bucket: 'product-images' });
+            rawFileList.push({ name: f.name, fullPath: `products/${f.name}`, size: f.metadata.size, created: f.created_at || f.updated_at || new Date().toISOString(), bucket: 'product-images' });
           }
         });
       }
@@ -127,7 +127,7 @@ const StorageCleanup = () => {
       if (eventFiles) {
         eventFiles.forEach(f => {
           if (f.metadata && f.metadata.size) {
-            rawFileList.push({ name: f.name, fullPath: \`events/\${f.name}\`, size: f.metadata.size, created: f.created_at || f.updated_at || new Date().toISOString(), bucket: 'site-assets' });
+            rawFileList.push({ name: f.name, fullPath: `events/${f.name}`, size: f.metadata.size, created: f.created_at || f.updated_at || new Date().toISOString(), bucket: 'site-assets' });
           }
         });
       }
