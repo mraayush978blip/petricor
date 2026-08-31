@@ -129,7 +129,7 @@ const Login = () => {
   const isLocked = lockRemaining > 0;
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f9f9f9', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 20px', position: 'relative' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#f9f9f9', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 20px 10vh 20px', position: 'relative' }}>
       
       {/* Back to Home Button */}
       <div style={{ position: 'absolute', top: '30px', left: '30px' }}>
