@@ -14,6 +14,7 @@ interface StorageFile {
   rawCreatedAt: string;
   isUsed: boolean;
   linkedProductTitle: string | null;
+  bucket: string;
 }
 
 const StorageCleanup = () => {
@@ -36,7 +37,7 @@ const StorageCleanup = () => {
     setMessage(null);
     setSelectedPaths([]);
     try {
-      // 1. Fetch ALL active products from database (select valid columns: primary_image_url, hover_image_url)
+      // 1. Fetch ALL active products from database
       const { data: dbProducts, error: dbError } = await supabase
         .from('products')
         .select('id, title, primary_image_url, hover_image_url');
@@ -45,50 +46,70 @@ const StorageCleanup = () => {
         console.error('Error fetching database products:', dbError.message);
       }
 
-      // Map of image identifier -> product title
+      // Fetch ALL active events from database
+      const { data: dbEvents, error: dbEventsError } = await supabase
+        .from('events')
+        .select('id, title, image_url');
+
+      if (dbEventsError) {
+        console.error('Error fetching database events:', dbEventsError.message);
+      }
+
+      // Map of image identifier -> title
       const productMap = new Map<string, string>();
 
-      const registerUrlToProduct = (rawUrl: string, productTitle: string) => {
+      const registerUrlToProduct = (rawUrl: string, title: string) => {
         if (!rawUrl) return;
         
         // Exact raw URL
-        productMap.set(rawUrl.trim(), productTitle);
+        productMap.set(rawUrl.trim(), title);
         
         // Decoded URL
         const decoded = decodeURIComponent(rawUrl).trim();
-        productMap.set(decoded, productTitle);
+        productMap.set(decoded, title);
 
         // Extract filename from URL
         const cleanPath = decoded.split('?')[0];
         const fileName = cleanPath.split('/').pop();
         if (fileName) {
-          productMap.set(fileName.trim(), productTitle);
-          productMap.set(decodeURIComponent(fileName).trim(), productTitle);
+          productMap.set(fileName.trim(), title);
+          productMap.set(decodeURIComponent(fileName).trim(), title);
         }
 
         // Extract relative path if includes bucket name
         if (cleanPath.includes('product-images/')) {
           const relPath = cleanPath.split('product-images/')[1];
-          if (relPath) productMap.set(relPath.trim(), productTitle);
+          if (relPath) productMap.set(relPath.trim(), title);
+        }
+        if (cleanPath.includes('site-assets/')) {
+          const relPath = cleanPath.split('site-assets/')[1];
+          if (relPath) productMap.set(relPath.trim(), title);
         }
       };
 
       if (dbProducts) {
         dbProducts.forEach(p => {
           const title = p.title || 'Untitled Product';
-          if (p.primary_image_url) registerUrlToProduct(p.primary_image_url, title);
-          if (p.hover_image_url) registerUrlToProduct(p.hover_image_url, title);
+          if (p.primary_image_url) registerUrlToProduct(p.primary_image_url, `Product: ${title}`);
+          if (p.hover_image_url) registerUrlToProduct(p.hover_image_url, `Product: ${title}`);
         });
       }
 
-      // 2. Fetch storage files from product-images bucket (root & products/ subfolder)
-      const rawFileList: { name: string; fullPath: string; size: number; created: string }[] = [];
+      if (dbEvents) {
+        dbEvents.forEach(e => {
+          const title = e.title || 'Untitled Event';
+          if (e.image_url) registerUrlToProduct(e.image_url, `Event: ${title}`);
+        });
+      }
+
+      // 2. Fetch storage files from product-images and site-assets buckets
+      const rawFileList: { name: string; fullPath: string; size: number; created: string; bucket: string }[] = [];
 
       const { data: rootFiles } = await supabase.storage.from('product-images').list('', { limit: 1000 });
       if (rootFiles) {
         rootFiles.forEach(f => {
           if (f.metadata && f.metadata.size) {
-            rawFileList.push({ name: f.name, fullPath: f.name, size: f.metadata.size, created: f.created_at || f.updated_at || new Date().toISOString() });
+            rawFileList.push({ name: f.name, fullPath: f.name, size: f.metadata.size, created: f.created_at || f.updated_at || new Date().toISOString(), bucket: 'product-images' });
           }
         });
       }
@@ -97,7 +118,16 @@ const StorageCleanup = () => {
       if (subFiles) {
         subFiles.forEach(f => {
           if (f.metadata && f.metadata.size) {
-            rawFileList.push({ name: f.name, fullPath: `products/${f.name}`, size: f.metadata.size, created: f.created_at || f.updated_at || new Date().toISOString() });
+            rawFileList.push({ name: f.name, fullPath: \`products/\${f.name}\`, size: f.metadata.size, created: f.created_at || f.updated_at || new Date().toISOString(), bucket: 'product-images' });
+          }
+        });
+      }
+      
+      const { data: eventFiles } = await supabase.storage.from('site-assets').list('events', { limit: 1000 });
+      if (eventFiles) {
+        eventFiles.forEach(f => {
+          if (f.metadata && f.metadata.size) {
+            rawFileList.push({ name: f.name, fullPath: \`events/\${f.name}\`, size: f.metadata.size, created: f.created_at || f.updated_at || new Date().toISOString(), bucket: 'site-assets' });
           }
         });
       }
@@ -106,7 +136,7 @@ const StorageCleanup = () => {
       const processedFiles: StorageFile[] = [];
 
       rawFileList.forEach(file => {
-        const { data } = supabase.storage.from('product-images').getPublicUrl(file.fullPath);
+        const { data } = supabase.storage.from(file.bucket).getPublicUrl(file.fullPath);
         const publicUrl = data.publicUrl;
 
         const fileName = file.name.trim();
@@ -143,7 +173,8 @@ const StorageCleanup = () => {
           createdAtTime: createdObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
           rawCreatedAt: file.created,
           isUsed,
-          linkedProductTitle: linkedTitle
+          linkedProductTitle: linkedTitle,
+          bucket: file.bucket
         });
       });
 
@@ -232,12 +263,35 @@ const StorageCleanup = () => {
     }
 
     setDeleting(true);
+    let hasError = false;
+    let successCount = 0;
+
     try {
-      const { error } = await supabase.storage.from('product-images').remove(safePaths);
-      if (error) {
-        setMessage({ type: 'error', text: 'Error deleting images: ' + error.message });
-      } else {
-        setMessage({ type: 'success', text: `Successfully purged ${safePaths.length} unused image(s)!` });
+      // Group paths by bucket
+      const byBucket = safePaths.reduce((acc, path) => {
+        const file = allStorageFiles.find(f => f.fullPath === path);
+        if (file) {
+          if (!acc[file.bucket]) acc[file.bucket] = [];
+          acc[file.bucket].push(path);
+        }
+        return acc;
+      }, {} as Record<string, string[]>);
+
+      for (const [bucket, paths] of Object.entries(byBucket)) {
+        const { error } = await supabase.storage.from(bucket).remove(paths);
+        if (error) {
+          hasError = true;
+          setMessage({ type: 'error', text: 'Error deleting images: ' + error.message });
+        } else {
+          successCount += paths.length;
+        }
+      }
+
+      if (successCount > 0 && !hasError) {
+        setMessage({ type: 'success', text: `Successfully purged ${successCount} unused image(s)!` });
+        scanStorageImages();
+      } else if (successCount > 0 && hasError) {
+        setMessage({ type: 'error', text: `Partially purged ${successCount} images, but some failed.` });
         scanStorageImages();
       }
     } catch (err: any) {
@@ -308,13 +362,13 @@ const StorageCleanup = () => {
         }}>
           <div>
             <div style={{ fontSize: '13px', color: '#16a34a', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-              Active Product Images
+              Active Media Files
             </div>
             <div style={{ fontSize: '1.6rem', fontWeight: '700', color: '#2c2c2c', margin: '4px 0' }}>
               {scanning ? <div className="skeleton skeleton-title" style={{ width: '100px', height: '24px' }} /> : `${usedFiles.length} files`}
             </div>
             <span style={{ fontSize: '12px', color: '#888' }}>
-              Linked to active DB products
+              Linked to active DB records
             </span>
           </div>
           <div style={{ padding: '12px', backgroundColor: '#f0fdf4', borderRadius: '10px', color: '#16a34a' }}>
@@ -606,7 +660,7 @@ const StorageCleanup = () => {
                         </span>
                         {file.linkedProductTitle && (
                           <span style={{ fontSize: '11px', color: '#666', fontStyle: 'italic', marginLeft: '4px' }}>
-                            Product: {file.linkedProductTitle}
+                            {file.linkedProductTitle}
                           </span>
                         )}
                       </div>
@@ -647,7 +701,7 @@ const StorageCleanup = () => {
                         disabled
                         className="admin-btn"
                         style={{ padding: '6px 12px', fontSize: '12px', backgroundColor: '#f4f4f4', color: '#888', cursor: 'not-allowed', border: '1px solid #e2e2e2' }}
-                        title="Protected: Image is currently linked to an active product"
+                        title="Protected: Image is currently linked to an active record"
                       >
                         <Lock size={13} />
                         <span>Protected</span>

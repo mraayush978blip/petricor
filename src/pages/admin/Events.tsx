@@ -128,16 +128,10 @@ const Events = () => {
   };
 
   const handleDelete = async (event: Event) => {
-    if (!window.confirm('Are you sure you want to delete this event?')) return;
+    if (!window.confirm('Are you sure you want to delete this event? The image will be moved to the Storage Bucket Manager unused tab for cleanup.')) return;
     
     try {
-      // Extract file path from public URL
-      const pathParts = event.image_url.split('/site-assets/');
-      if (pathParts.length > 1) {
-        const filePath = pathParts[1];
-        await supabase.storage.from('site-assets').remove([filePath]);
-      }
-
+      // Intentionally NOT deleting the storage file here so it can be managed by the Storage Bucket Manager
       const { error } = await supabase
         .from('events')
         .delete()
