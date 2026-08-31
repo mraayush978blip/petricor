@@ -75,10 +75,6 @@ const EventsMarquee = () => {
           animation: marquee 40s linear infinite;
         }
 
-        .marquee-content:hover {
-          animation-play-state: paused;
-        }
-
         @keyframes marquee {
           0% {
             transform: translateX(0);
