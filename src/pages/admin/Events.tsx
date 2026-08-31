@@ -257,7 +257,7 @@ const Events = () => {
               events.map((event) => (
                 <tr key={event.id}>
                   <td>
-                    <img src={event.image_url} alt={event.title || 'Event'} style={{ height: '50px', width: '80px', objectFit: 'cover', borderRadius: '4px' }} />
+                    <img src={event.image_url} alt={event.title || 'Event'} style={{ height: '50px', width: '80px', objectFit: 'contain' }} />
                   </td>
                   <td style={{ fontWeight: '500' }}>
                     {event.title || <span style={{ color: '#aaa', fontStyle: 'italic' }}>No title</span>}

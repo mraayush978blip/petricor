@@ -55,9 +55,7 @@ const EventsMarquee = () => {
                 style={{ 
                   width: '60px', 
                   height: '40px', 
-                  objectFit: 'cover', 
-                  borderRadius: '4px',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                  objectFit: 'contain'
                 }} 
               />
               {event.title && (
