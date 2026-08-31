@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import ProductEnquiryModal from '../components/ProductEnquiryModal';
@@ -99,35 +98,6 @@ export default function Home() {
     const [productsData, setProductsData] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth <= 768);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    const carouselRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({ target: carouselRef });
-    const carouselX = useTransform(scrollYProgress, [0, 1], ["0%", "-85%"]);
-
-    // Dynamic Opacities for 6 formulation backgrounds
-    const formBg1Opacity = useTransform(scrollYProgress, [0, 0.16], [1, 0]);
-    const formBg2Opacity = useTransform(scrollYProgress, [0.05, 0.16, 0.33], [0, 1, 0]);
-    const formBg3Opacity = useTransform(scrollYProgress, [0.2, 0.33, 0.5], [0, 1, 0]);
-    const formBg4Opacity = useTransform(scrollYProgress, [0.37, 0.5, 0.66], [0, 1, 0]);
-    const formBg5Opacity = useTransform(scrollYProgress, [0.55, 0.66, 0.83], [0, 1, 0]);
-    const formBg6Opacity = useTransform(scrollYProgress, [0.72, 0.85, 1], [0, 1, 1]);
-
-    const compRef = useRef<HTMLElement>(null);
-    const { scrollYProgress: compScrollY } = useScroll({ target: compRef });
-    const compX = useTransform(compScrollY, [0, 1], ["0%", "-75%"]);
-    
-    // Dynamic Opacities for 4 backgrounds
-    const bg1Opacity = useTransform(compScrollY, [0, 0.25], [1, 0]);
-    const bg2Opacity = useTransform(compScrollY, [0.1, 0.33, 0.55], [0, 1, 0]);
-    const bg3Opacity = useTransform(compScrollY, [0.4, 0.66, 0.9], [0, 1, 0]);
-    const bg4Opacity = useTransform(compScrollY, [0.75, 1], [0, 1]);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
@@ -184,8 +154,8 @@ export default function Home() {
     return (
         <div style={{ paddingBottom: '0' }}>
             {/* HERO SECTION */}
-            <div className="hero-wrapper" style={{ borderBottom: 'none', minHeight: isMobile ? 'calc(100dvh - 80px)' : 'auto', display: isMobile ? 'flex' : 'block', alignItems: isMobile ? 'center' : 'stretch' }}>
-                <div className="container hero-container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0', flex: 1 }}>
+            <div className="hero-wrapper" style={{ borderBottom: 'none' }}>
+                <div className="container hero-container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto', display: 'flex', flexWrap: 'nowrap', padding: '0' }}>
                     
                     {/* LEFT COLUMN - TEXT */}
                     <div className="hero-left" style={{ flex: '1 1 50%', borderRight: '1px solid var(--border-color)' }}>
@@ -229,113 +199,43 @@ export default function Home() {
                         </div>
                     </div>
                     
-                    {/* RIGHT COLUMN - CREDENTIALS (Desktop Only) */}
-                    {!isMobile && (
-                        <div className="hero-right" style={{ flex: '1 1 50%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', paddingTop: '10px' }}>
-                            <div className="compliance-wrapper credentials-container-bg">
-                                <h4 className="compliance-title" style={{ fontSize: 'clamp(11px, 1vw, 13px)', color: '#777', marginBottom: 'clamp(10px, 1.5vh, 18px)', fontWeight: '600', paddingLeft: '2px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Compliance Credentials</h4>
-                                
-                                <div className="credentials-list" onMouseLeave={() => setActiveCredentialIndex(null)} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                    {[
-                                        { title: '✓ IEC - Import Export Code', sub: 'Directorate General of Foreign Trade (DGFT)', desc: 'Registered Indian exporter under DGFT. All international shipments dispatched under valid IEC.' },
-                                        { title: '✓ FSSAI - Food Safety Licensed', sub: 'Food Safety & Standards Authority of India', desc: 'FSSAI-licensed facility. Compliant with Indian food safety standards for export of botanical ingredients.' },
-                                        { title: '✓ NABL Accredited Lab Testing', sub: 'Every batch independently tested - HPLC quantified', desc: 'Active compound potency, heavy metals, pesticide residues, and microbial panels verified on every lot before dispatch.' },
-                                        { title: '📄 Complete documentation on every shipment', sub: '', desc: 'CoA - Phytosanitary - Certificate of Origin - MSDS - Allergen Declaration' }
-                                    ].map((item, idx) => (
-                                        <div 
-                                            key={idx} 
-                                            onMouseEnter={() => setActiveCredentialIndex(idx)}
-                                            onClick={() => setActiveCredentialIndex(idx)}
-                                            className="credential-card"
-                                            style={{ 
-                                                backgroundColor: activeCredentialIndex === idx ? '#fcf8f4' : '#ffffff', 
-                                                border: activeCredentialIndex === idx ? '1.5px solid #7c5847' : '1px solid #e0e0e0', 
-                                                boxShadow: activeCredentialIndex === idx ? '0 3px 10px rgba(124,88,71,0.12)' : '0 1px 4px rgba(0,0,0,0.02)', 
-                                                borderRadius: '6px', 
-                                                padding: '10px 14px',
-                                                cursor: 'pointer',
-                                                transition: 'all 0.2s ease'
-                                            }}
-                                        >
-                                            <h3 style={{ fontSize: '13.5px', color: activeCredentialIndex === idx ? '#7c5847' : 'var(--text-dark)', margin: '0 0 2px 0', fontWeight: '700' }}>{item.title}</h3>
-                                            {item.sub && <p style={{ fontSize: '11.5px', color: '#666', margin: '0 0 2px 0', fontWeight: '500' }}>{item.sub}</p>}
-                                            <p style={{ fontSize: '11.5px', color: '#555', margin: 0, lineHeight: '1.35' }}>{item.desc}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </div>
-
-            {/* MOBILE COMPLIANCE CREDENTIALS SCROLL-JACKING */}
-            {isMobile && (
-                <section ref={compRef} style={{ height: '300vh', position: 'relative', backgroundColor: '#fdfbf9', borderTop: '1px solid #eaeaea' }}>
-                    
-                    {/* Dynamic Cross-Fading Backgrounds */}
-                    <motion.div style={{ opacity: bg1Opacity, position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(to bottom, rgba(253,251,249,0.2), rgba(253,251,249,0.8)), url("/images/bg_leaf_shadow.webp")', backgroundSize: 'cover', backgroundPosition: 'center', pointerEvents: 'none' }} />
-                    <motion.div style={{ opacity: bg2Opacity, position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(to bottom, rgba(253,251,249,0.4), rgba(253,251,249,0.85)), url("/images/bg_botanical_leaves.webp")', backgroundSize: 'cover', backgroundPosition: 'center', pointerEvents: 'none' }} />
-                    <motion.div style={{ opacity: bg3Opacity, position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(to bottom, rgba(253,251,249,0.4), rgba(253,251,249,0.85)), url("/images/bg_dried_roots.webp")', backgroundSize: 'cover', backgroundPosition: 'center', pointerEvents: 'none' }} />
-                    <motion.div style={{ opacity: bg4Opacity, position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(to bottom, rgba(253,251,249,0.4), rgba(253,251,249,0.85)), url("/images/bg_botanical_lab.webp")', backgroundSize: 'cover', backgroundPosition: 'center', pointerEvents: 'none' }} />
-
-                    <div style={{ position: 'sticky', top: 0, height: '100dvh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                        
-                        {/* Header */}
-                        <div style={{ padding: '120px 20px 20px', flexShrink: 0 }}>
-                            <div style={{ fontSize: '11px', color: '#8b6352', fontWeight: '800', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '10px' }}>
-                                Verified Quality
-                            </div>
-                            <h2 style={{ fontSize: '26px', color: '#2c2c2c', margin: 0, fontWeight: '800', letterSpacing: '-0.5px', lineHeight: '1.1' }}>
-                                Compliance Credentials
-                            </h2>
-                            <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.5', margin: '10px 0 0 0' }}>
-                                Tested, verified, and documented for your import market.
-                            </p>
-                        </div>
-
-                        {/* Cards */}
-                        <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-                            <motion.div style={{ x: compX, display: 'flex', gap: '15px', padding: '0 20px' }}>
+                    {/* RIGHT COLUMN - CREDENTIALS */}
+                    <div className="hero-right" style={{ flex: '1 1 50%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', paddingTop: '10px' }}>
+                        <div className="compliance-wrapper credentials-container-bg">
+                            <h4 className="compliance-title" style={{ fontSize: 'clamp(11px, 1vw, 13px)', color: '#777', marginBottom: 'clamp(10px, 1.5vh, 18px)', fontWeight: '600', paddingLeft: '2px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Compliance Credentials</h4>
+                            
+                            <div className="credentials-list" onMouseLeave={() => setActiveCredentialIndex(null)} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                 {[
                                     { title: '✓ IEC - Import Export Code', sub: 'Directorate General of Foreign Trade (DGFT)', desc: 'Registered Indian exporter under DGFT. All international shipments dispatched under valid IEC.' },
                                     { title: '✓ FSSAI - Food Safety Licensed', sub: 'Food Safety & Standards Authority of India', desc: 'FSSAI-licensed facility. Compliant with Indian food safety standards for export of botanical ingredients.' },
                                     { title: '✓ NABL Accredited Lab Testing', sub: 'Every batch independently tested - HPLC quantified', desc: 'Active compound potency, heavy metals, pesticide residues, and microbial panels verified on every lot before dispatch.' },
                                     { title: '📄 Complete documentation on every shipment', sub: '', desc: 'CoA - Phytosanitary - Certificate of Origin - MSDS - Allergen Declaration' }
                                 ].map((item, idx) => (
-                                    <div key={idx} style={{ flex: '0 0 80vw' }}>
-                                        <div style={{ 
-                                            backgroundColor: '#ffffff', 
-                                            border: '1px solid #e0e0e0',
-                                            borderTop: '4px solid #7c5847',
-                                            boxShadow: '0 10px 30px rgba(0,0,0,0.04)',
-                                            borderRadius: '16px',
-                                            padding: '24px',
-                                            height: '240px',
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            justifyContent: 'center',
-                                            boxSizing: 'border-box'
-                                        }}>
-                                            <h3 style={{ fontSize: '18px', color: '#7c5847', margin: '0 0 8px 0', fontWeight: '800', lineHeight: '1.2' }}>{item.title}</h3>
-                                            {item.sub && <p style={{ fontSize: '13px', color: '#666', margin: '0 0 10px 0', fontWeight: '600' }}>{item.sub}</p>}
-                                            <p style={{ fontSize: '14px', color: '#444', margin: 0, lineHeight: '1.5' }}>{item.desc}</p>
-                                        </div>
+                                    <div 
+                                        key={idx} 
+                                        onMouseEnter={() => setActiveCredentialIndex(idx)}
+                                        onClick={() => setActiveCredentialIndex(idx)}
+                                        className="credential-card"
+                                        style={{ 
+                                            backgroundColor: activeCredentialIndex === idx ? '#fcf8f4' : '#ffffff', 
+                                            border: activeCredentialIndex === idx ? '1.5px solid #7c5847' : '1px solid #e0e0e0', 
+                                            boxShadow: activeCredentialIndex === idx ? '0 3px 10px rgba(124,88,71,0.12)' : '0 1px 4px rgba(0,0,0,0.02)', 
+                                            borderRadius: '6px', 
+                                            padding: '10px 14px',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.2s ease'
+                                        }}
+                                    >
+                                        <h3 style={{ fontSize: '13.5px', color: activeCredentialIndex === idx ? '#7c5847' : 'var(--text-dark)', margin: '0 0 2px 0', fontWeight: '700' }}>{item.title}</h3>
+                                        {item.sub && <p style={{ fontSize: '11.5px', color: '#666', margin: '0 0 2px 0', fontWeight: '500' }}>{item.sub}</p>}
+                                        <p style={{ fontSize: '11.5px', color: '#555', margin: 0, lineHeight: '1.35' }}>{item.desc}</p>
                                     </div>
                                 ))}
-                            </motion.div>
-                        </div>
-
-                        {/* Progress Bar */}
-                        <div style={{ padding: '20px', display: 'flex', justifyContent: 'center', flexShrink: 0, paddingBottom: '30px' }}>
-                            <div style={{ width: '120px', height: '4px', backgroundColor: 'rgba(0,0,0,0.08)', borderRadius: '4px', overflow: 'hidden' }}>
-                                <motion.div style={{ height: '100%', backgroundColor: '#7c5847', scaleX: compScrollY, transformOrigin: 'left' }} />
                             </div>
                         </div>
-
                     </div>
-                </section>
-            )}
+                </div>
+            </div>
 
             <div className="container" style={{ maxWidth: '1280px', width: '95%', margin: '80px auto 0', padding: '0', scrollMarginTop: '100px' }}>
                 <div style={{ marginBottom: '30px' }}>
@@ -459,217 +359,98 @@ export default function Home() {
             </div>
 
             {/* FORMULATION-READY SETS */}
-            {isMobile ? (
-                <section ref={carouselRef} style={{ 
-                    height: '400vh', 
-                    position: 'relative', 
-                    backgroundColor: '#fdfbf9',
-                    borderTop: '1px solid #eaeaea'
-                }}>
-                    {/* Dynamic Cross-Fading Backgrounds */}
-                    <motion.div style={{ opacity: formBg1Opacity, position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(to bottom, rgba(253,251,249,0.4), rgba(253,251,249,0.85)), url("/images/bg_form_adaptogen.webp")', backgroundSize: 'cover', backgroundPosition: 'center', pointerEvents: 'none' }} />
-                    <motion.div style={{ opacity: formBg2Opacity, position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(to bottom, rgba(253,251,249,0.4), rgba(253,251,249,0.85)), url("/images/bg_form_joint.webp")', backgroundSize: 'cover', backgroundPosition: 'center', pointerEvents: 'none' }} />
-                    <motion.div style={{ opacity: formBg3Opacity, position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(to bottom, rgba(253,251,249,0.4), rgba(253,251,249,0.85)), url("/images/bg_form_immunity.webp")', backgroundSize: 'cover', backgroundPosition: 'center', pointerEvents: 'none' }} />
-                    <motion.div style={{ opacity: formBg4Opacity, position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(to bottom, rgba(253,251,249,0.4), rgba(253,251,249,0.85)), url("/images/bg_form_metabolic.webp")', backgroundSize: 'cover', backgroundPosition: 'center', pointerEvents: 'none' }} />
-                    <motion.div style={{ opacity: formBg5Opacity, position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(to bottom, rgba(253,251,249,0.4), rgba(253,251,249,0.85)), url("/images/bg_form_digestive.webp")', backgroundSize: 'cover', backgroundPosition: 'center', pointerEvents: 'none' }} />
-                    <motion.div style={{ opacity: formBg6Opacity, position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(to bottom, rgba(253,251,249,0.4), rgba(253,251,249,0.85)), url("/images/bg_form_mens.webp")', backgroundSize: 'cover', backgroundPosition: 'center', pointerEvents: 'none' }} />
+            <div className="formulation-section-wrapper" style={{ backgroundColor: '#fdfbf9', padding: '60px 0 40px', scrollMarginTop: '90px' }}>
+                <div className="container formulation-header-container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto', marginBottom: '25px' }}>
+                    <div style={{ fontSize: '12px', color: '#8b6352', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '15px' }}>
+                        FORMULATION-READY SETS
+                    </div>
+                    <h2 style={{ fontSize: 'clamp(22px, 2.5vw, 32px)', color: '#222', margin: 0, fontWeight: '700', letterSpacing: '-0.5px' }}>
+                        Don't just buy ingredients.
+                    </h2>
+                    <h2 style={{ fontSize: 'clamp(20px, 2.2vw, 28px)', color: '#b28b74', margin: '5px 0 20px 0', fontWeight: '500', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
+                        Build product lines.
+                    </h2>
+                    <p style={{ fontSize: '15px', color: '#666', lineHeight: '1.6', marginTop: '15px', maxWidth: '600px' }}>
+                        Pre-validated ingredient combinations for common supplement categories. Each set ships with matching certifications and combined CoA documentation.
+                    </p>
+                </div>
 
-                    <div style={{ position: 'sticky', top: 0, height: '100dvh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                        
-                        {/* Header stays locked at the top during scroll */}
-                        <div style={{ padding: '120px 20px 20px', flexShrink: 0 }}>
-                            <div style={{ fontSize: '11px', color: '#8b6352', fontWeight: '800', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '10px' }}>
-                                Formulation-Ready Sets
-                            </div>
-                            <h2 style={{ fontSize: '26px', color: '#222', margin: 0, fontWeight: '800', letterSpacing: '-0.5px', lineHeight: '1.1' }}>
-                                Don't just buy ingredients.
-                            </h2>
-                            <h2 style={{ fontSize: '24px', color: '#b28b74', margin: '4px 0 12px 0', fontWeight: '500', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
-                                Build product lines.
-                            </h2>
-                            <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.5', margin: 0 }}>
-                                Pre-validated combinations. Ships with matching certifications.
-                            </p>
-                        </div>
-
-                        {/* Horizontally scrolling cards centered in remaining space */}
-                        <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-                            <motion.div style={{ x: carouselX, display: 'flex', gap: '15px', padding: '0 20px' }}>
-                                {[
-                                    { emoji: '⚡', icon: '🌿', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'], bg: '#f4f7f4', accent: '#4a6b55' },
-                                    { emoji: '🦴', icon: '🦴', title: 'Joint & Mobility', desc: 'Anti-inflammation, arthritis, sports recovery', herbs: ['Turmeric 95%', 'Boswellia', 'Ginger'], bg: '#fdf7f2', accent: '#c86b2e' },
-                                    { emoji: '🛡️', icon: '🛡️', title: 'Immunity Shield', desc: 'Immune support, Vitamin C, antimicrobial', herbs: ['Amla', 'Moringa', 'Giloy', 'Black Seed'], bg: '#fef5f6', accent: '#b94e5b' },
-                                    { emoji: '📊', icon: '🩸', title: 'Metabolic Support', desc: 'Blood sugar, diabetes management, weight', herbs: ['Gymnema', 'Fenugreek', 'Turmeric'], bg: '#f4f5f8', accent: '#4b5f83' },
-                                    { emoji: '🧘', icon: '💧', title: 'Digestive Wellness', desc: 'Gut health, detox, digestion', herbs: ['Triphala', 'Ginger', 'Fenugreek'], bg: '#fdf9f1', accent: '#b08d43' },
-                                    { emoji: '💪', icon: '💪', title: "Men's Performance", desc: 'Testosterone, energy, sports nutrition', herbs: ['Ashwagandha', 'Mucuna', 'Fenugreek'], bg: '#f5f4f6', accent: '#5c526b' }
-                                ].map((set, idx) => (
-                                    <div key={idx} style={{ flex: '0 0 80vw' }}>
-                                        <div className="formulation-card" style={{ 
+                <div className="container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto', padding: '0' }}>
+                    <div className="formulation-grid">
+                                    {[
+                                        { emoji: '⚡', icon: '🌿', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'], bg: '#f4f7f4', accent: '#4a6b55' },
+                                        { emoji: '🦴', icon: '🦴', title: 'Joint & Mobility', desc: 'Anti-inflammation, arthritis, sports recovery', herbs: ['Turmeric 95%', 'Boswellia', 'Ginger'], bg: '#fdf7f2', accent: '#c86b2e' },
+                                        { emoji: '🛡️', icon: '🛡️', title: 'Immunity Shield', desc: 'Immune support, Vitamin C, antimicrobial', herbs: ['Amla', 'Moringa', 'Giloy', 'Black Seed'], bg: '#fef5f6', accent: '#b94e5b' },
+                                        { emoji: '📊', icon: '🩸', title: 'Metabolic Support', desc: 'Blood sugar, diabetes management, weight', herbs: ['Gymnema', 'Fenugreek', 'Turmeric'], bg: '#f4f5f8', accent: '#4b5f83' },
+                                        { emoji: '🧘', icon: '💧', title: 'Digestive Wellness', desc: 'Gut health, detox, digestion', herbs: ['Triphala', 'Ginger', 'Fenugreek'], bg: '#fdf9f1', accent: '#b08d43' },
+                                        { emoji: '💪', icon: '💪', title: "Men's Performance", desc: 'Testosterone, energy, sports nutrition', herbs: ['Ashwagandha', 'Mucuna', 'Fenugreek'], bg: '#f5f4f6', accent: '#5c526b' }
+                                    ].map((set, idx) => (
+                                        <div key={idx} className="formulation-card" style={{ 
                                             backgroundColor: set.bg, 
                                             border: `1px solid rgba(0,0,0,0.04)`,
-                                            borderTop: `4px solid ${set.accent}`,
-                                            boxShadow: '0 20px 40px rgba(0,0,0,0.06)',
-                                            borderRadius: '16px',
-                                            padding: '24px',
+                                            borderTop: '4px solid #8b6352',
+                                            boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
+                                            borderRadius: '12px',
+                                            padding: '20px',
                                             overflow: 'hidden',
                                             position: 'relative',
                                             display: 'flex',
                                             flexDirection: 'column',
                                             justifyContent: 'space-between',
-                                            height: '400px', // Fixed height for a robust card feel
+                                            height: '100%',
                                             boxSizing: 'border-box'
                                         }}>
-                                            <div style={{ position: 'absolute', right: '-20px', bottom: '-30px', fontSize: '180px', opacity: 0.04, transform: 'rotate(-15deg)', pointerEvents: 'none' }}>
+                                            {/* Giant background icon/watermark */}
+                                            <div style={{ position: 'absolute', right: '-15px', bottom: '-25px', fontSize: '140px', opacity: 0.04, transform: 'rotate(-15deg)', pointerEvents: 'none' }}>
                                                 {set.icon}
                                             </div>
                                             
                                             <div>
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px', position: 'relative', zIndex: 1 }}>
+                                                {/* Top bar with icon and title */}
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '15px', position: 'relative', zIndex: 1 }}>
                                                     <div style={{ 
-                                                        fontSize: '28px', 
-                                                        background: 'linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.7) 100%)', 
+                                                        fontSize: '24px', 
+                                                        background: 'linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.6) 100%)', 
                                                         backdropFilter: 'blur(10px)', 
-                                                        border: '1px solid rgba(255,255,255,0.9)', 
-                                                        width: '60px', height: '60px', 
+                                                        border: '1px solid rgba(255,255,255,0.8)', 
+                                                        width: '50px', height: '50px', 
                                                         display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                                                        borderRadius: '16px', 
-                                                        color: set.accent, 
-                                                        boxShadow: '0 8px 24px rgba(0,0,0,0.06)' 
+                                                        borderRadius: '14px', 
+                                                        color: '#8b6352', 
+                                                        boxShadow: '0 4px 14px rgba(0,0,0,0.04)' 
                                                     }}>
                                                         {set.emoji}
                                                     </div>
                                                     <div>
-                                                        <h3 style={{ fontSize: '20px', color: '#111', margin: '0 0 4px', fontWeight: '800', letterSpacing: '-0.3px' }}>{set.title}</h3>
-                                                        <p style={{ fontSize: '11px', color: set.accent, margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.8px' }}>Formulation Set</p>
+                                                        <h3 style={{ fontSize: '18px', color: '#111', margin: '0 0 2px', fontWeight: '800', letterSpacing: '-0.3px' }}>{set.title}</h3>
+                                                        <p style={{ fontSize: '12px', color: '#8b6352', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Formulation Set</p>
                                                     </div>
                                                 </div>
                                                 
-                                                <p style={{ fontSize: '15px', color: '#555', marginBottom: '20px', lineHeight: '1.6', position: 'relative', zIndex: 1, fontWeight: '500' }}>{set.desc}</p>
+                                                <p style={{ fontSize: '14px', color: '#555', marginBottom: '20px', lineHeight: '1.5', position: 'relative', zIndex: 1, fontWeight: '500' }}>{set.desc}</p>
                                             </div>
                                             
                                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', position: 'relative', zIndex: 1, marginTop: 'auto' }}>
                                                 {set.herbs.map(h => (
                                                     <span key={h} style={{ 
-                                                        backgroundColor: 'rgba(255,255,255,0.7)', 
-                                                        border: `1px solid rgba(0,0,0,0.05)`, 
-                                                        color: '#333', 
-                                                        padding: '8px 16px', 
+                                                        backgroundColor: '#fff', 
+                                                        border: `1px solid rgba(0,0,0,0.06)`, 
+                                                        color: '#222', 
+                                                        padding: '6px 14px', 
                                                         borderRadius: '30px', 
-                                                        fontSize: '13px', 
+                                                        fontSize: '12px', 
                                                         fontWeight: '600', 
-                                                        boxShadow: '0 2px 8px rgba(0,0,0,0.03)' 
+                                                        boxShadow: '0 2px 6px rgba(0,0,0,0.02)' 
                                                     }}>
                                                         {h}
                                                     </span>
                                                 ))}
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </motion.div>
-                        </div>
-
-                        {/* Scroll Progress Bar at the bottom */}
-                        <div style={{ padding: '20px', display: 'flex', justifyContent: 'center', flexShrink: 0, paddingBottom: '30px' }}>
-                            <div style={{ width: '120px', height: '4px', backgroundColor: 'rgba(0,0,0,0.08)', borderRadius: '4px', overflow: 'hidden' }}>
-                                <motion.div style={{ height: '100%', backgroundColor: '#8b6352', scaleX: scrollYProgress, transformOrigin: 'left' }} />
-                            </div>
-                        </div>
-
-                    </div>
-                </section>
-            ) : (
-                <div className="formulation-section-wrapper" style={{ backgroundColor: '#fdfbf9', padding: '60px 0 40px', scrollMarginTop: '90px' }}>
-                    <div className="container formulation-header-container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto', marginBottom: '25px' }}>
-                        <div style={{ fontSize: '12px', color: '#8b6352', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '15px' }}>
-                            FORMULATION-READY SETS
-                        </div>
-                        <h2 style={{ fontSize: 'clamp(22px, 2.5vw, 32px)', color: '#222', margin: 0, fontWeight: '700', letterSpacing: '-0.5px' }}>
-                            Don't just buy ingredients.
-                        </h2>
-                        <h2 style={{ fontSize: 'clamp(20px, 2.2vw, 28px)', color: '#b28b74', margin: '5px 0 20px 0', fontWeight: '500', fontStyle: 'italic', letterSpacing: '-0.5px' }}>
-                            Build product lines.
-                        </h2>
-                        <p style={{ fontSize: '15px', color: '#666', lineHeight: '1.6', marginTop: '15px', maxWidth: '600px' }}>
-                            Pre-validated ingredient combinations for common supplement categories. Each set ships with matching certifications and combined CoA documentation.
-                        </p>
-                    </div>
-
-                    <div className="container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto', padding: '0' }}>
-                        <div className="formulation-grid">
-                            {[
-                                { emoji: '⚡', icon: '🌿', title: 'Adaptogen Stack', desc: 'Stress, energy, hormonal balance', herbs: ['Ashwagandha', 'Brahmi', 'Shatavari'], bg: '#f4f7f4', accent: '#4a6b55' },
-                                { emoji: '🦴', icon: '🦴', title: 'Joint & Mobility', desc: 'Anti-inflammation, arthritis, sports recovery', herbs: ['Turmeric 95%', 'Boswellia', 'Ginger'], bg: '#fdf7f2', accent: '#c86b2e' },
-                                { emoji: '🛡️', icon: '🛡️', title: 'Immunity Shield', desc: 'Immune support, Vitamin C, antimicrobial', herbs: ['Amla', 'Moringa', 'Giloy', 'Black Seed'], bg: '#fef5f6', accent: '#b94e5b' },
-                                { emoji: '📊', icon: '🩸', title: 'Metabolic Support', desc: 'Blood sugar, diabetes management, weight', herbs: ['Gymnema', 'Fenugreek', 'Turmeric'], bg: '#f4f5f8', accent: '#4b5f83' },
-                                { emoji: '🧘', icon: '💧', title: 'Digestive Wellness', desc: 'Gut health, detox, digestion', herbs: ['Triphala', 'Ginger', 'Fenugreek'], bg: '#fdf9f1', accent: '#b08d43' },
-                                { emoji: '💪', icon: '💪', title: "Men's Performance", desc: 'Testosterone, energy, sports nutrition', herbs: ['Ashwagandha', 'Mucuna', 'Fenugreek'], bg: '#f5f4f6', accent: '#5c526b' }
-                            ].map((set, idx) => (
-                                <div key={idx} className="formulation-card" style={{ 
-                                    backgroundColor: set.bg, 
-                                    border: `1px solid rgba(0,0,0,0.04)`,
-                                    borderTop: '4px solid #8b6352',
-                                    boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
-                                    borderRadius: '12px',
-                                    padding: '20px',
-                                    overflow: 'hidden',
-                                    position: 'relative',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'space-between',
-                                    height: '100%',
-                                    boxSizing: 'border-box'
-                                }}>
-                                    <div style={{ position: 'absolute', right: '-15px', bottom: '-25px', fontSize: '140px', opacity: 0.04, transform: 'rotate(-15deg)', pointerEvents: 'none' }}>
-                                        {set.icon}
-                                    </div>
-                                    
-                                    <div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '15px', position: 'relative', zIndex: 1 }}>
-                                            <div style={{ 
-                                                fontSize: '24px', 
-                                                background: 'linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.6) 100%)', 
-                                                backdropFilter: 'blur(10px)', 
-                                                border: '1px solid rgba(255,255,255,0.8)', 
-                                                width: '50px', height: '50px', 
-                                                display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                                                borderRadius: '14px', 
-                                                color: '#8b6352', 
-                                                boxShadow: '0 4px 14px rgba(0,0,0,0.04)' 
-                                            }}>
-                                                {set.emoji}
-                                            </div>
-                                            <div>
-                                                <h3 style={{ fontSize: '18px', color: '#111', margin: '0 0 2px', fontWeight: '800', letterSpacing: '-0.3px' }}>{set.title}</h3>
-                                                <p style={{ fontSize: '12px', color: '#8b6352', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Formulation Set</p>
-                                            </div>
-                                        </div>
-                                        
-                                        <p style={{ fontSize: '14px', color: '#555', marginBottom: '20px', lineHeight: '1.5', position: 'relative', zIndex: 1, fontWeight: '500' }}>{set.desc}</p>
-                                    </div>
-                                    
-                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', position: 'relative', zIndex: 1, marginTop: 'auto' }}>
-                                        {set.herbs.map(h => (
-                                            <span key={h} style={{ 
-                                                backgroundColor: '#fff', 
-                                                border: `1px solid rgba(0,0,0,0.06)`, 
-                                                color: '#222', 
-                                                padding: '6px 14px', 
-                                                borderRadius: '30px', 
-                                                fontSize: '12px', 
-                                                fontWeight: '600', 
-                                                boxShadow: '0 2px 6px rgba(0,0,0,0.02)' 
-                                            }}>
-                                                {h}
-                                            </span>
-                                        ))}
-                                    </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            )}
+                            </div>
+            </div>
 
             {/* BUILT FOR BUSINESS BUYERS */}
             <div style={{ backgroundColor: '#fcfaf7', color: '#333', padding: '80px 15px' }}>
@@ -691,12 +472,8 @@ export default function Home() {
                             { icon: '🛒', title: 'Importers & Distributors', desc: 'Regional distributors buying certified botanical ingredients for resale into local markets' },
                             { icon: '🍵', title: 'Food & Beverage', desc: 'Functional food, tea, and beverage brands sourcing food-grade standardised herbs' }
                         ].map((buyer, idx) => (
-                            <motion.div 
+                            <div 
                                 key={idx} 
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: false, amount: 0.1 }}
-                                transition={{ duration: 0.4, delay: idx * 0.1 }}
                                 onMouseEnter={() => setActiveBuyerIndex(idx)}
                                 onClick={() => setActiveBuyerIndex(idx)}
                                 style={{ 
@@ -709,7 +486,7 @@ export default function Home() {
                                     height: '100%',
                                     boxSizing: 'border-box',
                                     cursor: 'pointer',
-                                    transition: 'background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease',
+                                    transition: 'all 0.15s ease',
                                     boxShadow: activeBuyerIndex === idx ? '0 4px 14px rgba(124,88,71,0.12)' : 'none'
                                 }}
                             >
@@ -718,7 +495,7 @@ export default function Home() {
                                     <span>{buyer.title}</span>
                                 </h4>
                                 <p style={{ fontSize: '13px', color: '#666', lineHeight: '1.5', margin: 0 }}>{buyer.desc}</p>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
                 </div>
