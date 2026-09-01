@@ -159,7 +159,7 @@ export default function ExportMap() {
             >
                 <img
                     ref={imgRef}
-                    src="/images/map.webp"
+                    src="/images/map.webp?v=2"
                     alt="Global Export Map"
                     draggable={false}
                     style={{
