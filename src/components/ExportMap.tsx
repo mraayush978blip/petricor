@@ -60,7 +60,7 @@ export default function ExportMap() {
     }, [clampTranslate]);
 
     // --- TOUCH PINCH TO ZOOM ---
-    const getDistance = (a: Touch, b: Touch) =>
+    const getDistance = (a: React.Touch, b: React.Touch) =>
         Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
 
     const onTouchStart = useCallback((e: React.TouchEvent) => {
