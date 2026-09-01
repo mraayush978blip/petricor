@@ -502,7 +502,7 @@ export default function Home() {
             </div>
 
             {/* MAP SECTION */}
-            <div style={{ backgroundColor: '#fff', padding: '60px 0 80px 0' }}>
+            <div style={{ backgroundColor: '#fff', padding: '8px 0 8px 0' }}>
                 <div className="container" style={{ maxWidth: '1280px', width: '95%', margin: '0 auto', padding: '0' }}>
                     <ExportMap />
                 </div>
